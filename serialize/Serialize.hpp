@@ -60,3 +60,14 @@
 #include "serialize/config/ConfigEngine.hpp"
 #include "serialize/table/TableEngine.hpp"
 #include "serialize/userDefault/UserDefault.hpp"
+
+#include "handle/Context.hpp"
+#include "handle/IContextClone.hpp"
+#include "handle/Handle.hpp"
+#include "handle/HandleConfig.hpp"
+#include "handle/HandleCount.hpp"
+#include "handle/HandleEngine.hpp"
+
+extern void serializeInit();
+extern void serializeStart();
+

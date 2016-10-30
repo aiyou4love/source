@@ -87,6 +87,7 @@ namespace cc {
 		logging::core::get()->add_global_attribute("TimeStamp", attrs::local_clock());
 		
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
+		lifeCycle_.m_tRunLuaApi.connect(bind(&LogEngine::runLuaApi, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&LogEngine::runClear, this));
 	}
 	
