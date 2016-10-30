@@ -14,8 +14,17 @@
 #include "normal/count/BitCount.hpp"
 #include "normal/count/Int32Count.hpp"
 #include "normal/count/IntCount.hpp"
+#include "normal/value/Buffer.hpp"
+#include "normal/value/Value.hpp"
+#include "normal/value/IndexValue.hpp"
+#include "normal/value/PacketMgr.hpp"
+#include "normal/value/ValueMgr.hpp"
 
 #include "log/LogEngine.hpp"
+
+#include "lua/LuaWriter.hpp"
+#include "lua/LuaThread.hpp"
+#include "lua/LuaEngine.hpp"
 
 #include "workDirectory/EappType.hpp"
 #include "workDirectory/WorkDirectory.hpp"
