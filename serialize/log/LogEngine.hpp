@@ -16,7 +16,7 @@ namespace cc {
 		void runPreinit(const char * nPath);
 		void runClear();
 		
-		static void runLuaApi();
+		void runLuaApi();
 		
 		static LogEngine& instance();
 		
