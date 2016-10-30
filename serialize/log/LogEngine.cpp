@@ -54,6 +54,11 @@ namespace cc {
 		BOOST_LOG(mLogger) << "[METHOD]" << buf;
 	}
 	
+	void LogEngine::logLua(const char * nValue)
+	{
+		BOOST_LOG(mLogger) << "[LUA]" << nValue;
+	}
+	
 	void LogEngine::runPreinit(const char * nPath)
 	{
 		auto consoleSink = logging::add_console_log();
@@ -89,6 +94,17 @@ namespace cc {
 	{
 		logging::core::get()->flush();
 		logging::core::get()->remove_all_sinks();
+	}
+	
+	void printlog(const char * nValue)
+	{
+		LOGL(nValue);
+	}
+	
+	void LogEngine::runLuaApi()
+	{
+		LuaEngine& luaEngine_ = LuaEngine::instance();
+		luaEngine_.runFun(printlog, "printlog");
 	}
 	
 	LogEngine& LogEngine::instance()
