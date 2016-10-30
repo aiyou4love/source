@@ -17,6 +17,19 @@ void engineInit()
 	
 	PacketMgr& packetMgr_ = PacketMgr::instance();
 	packetMgr_.runPreinit();
+		
+	DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
+	dispatchEngine_.runPreinit();
 	
+	ConditionEngine& conditionEngine_ = ConditionEngine::instance();
+	conditionEngine_.runPreinit();
+	
+	RewardEngine& rewardEngine_ = RewardEngine::instance();
+	rewardEngine_.runPreinit();
+	
+	SelectEngine& selectEngine_ = SelectEngine::instance();
+	selectEngine_.runPreinit();
+	
+	AspectEngine::instance();
 	
 }
