@@ -32,4 +32,6 @@ void engineInit()
 	
 	AspectEngine::instance();
 	
+	CurlEngine& curlEngine_ = CurlEngine::instance();
+	curlEngine_.runPreinit();
 }

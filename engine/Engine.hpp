@@ -35,4 +35,14 @@
 #include "aspect/aspect/IAspect.hpp"
 #include "aspect/aspect/AspectEngine.hpp"
 
+#include "curl/CurlValue.hpp"
+#include "curl/CurlFile.hpp"
+#include "curl/CurlString.hpp"
+#include "curl/BaseCurl.hpp"
+#include "curl/HttpCurl.hpp"
+#include "curl/EcurlValue.hpp"
+#include "curl/MultiCurl.hpp"
+#include "curl/CurlContext.hpp"
+#include "curl/CurlEngine.hpp"
+
 extern void engineInit();
