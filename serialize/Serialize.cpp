@@ -22,15 +22,6 @@ void serializeInit()
 	workDirectory_.runLoad();
 	TableEngine::instance();
 	UserDefault::instance();
-	
-	ValueMgr& valueMgr_ = ValueMgr::instance();
-	valueMgr_.runPreinit();
-	
-	PacketMgr& packetMgr_ = PacketMgr::instance();
-	packetMgr_.runPreinit();
-	
-	HandleEngine& handleEngine_ = HandleEngine::instance();
-	handleEngine_.runPreinit();
 }
 
 void serializeStart()
