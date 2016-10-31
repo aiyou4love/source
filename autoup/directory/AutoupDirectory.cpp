@@ -113,7 +113,7 @@ namespace cc {
 	{
 		string result_ = stringTrim(nValue, "/\\");
 		for (size_t i = 0; i < result_.length(); ++i) {
-			if ((result_[i] == '\\')) {
+			if (result_[i] == '\\') {
 				result_[i] = '/';
 			}
 		}
