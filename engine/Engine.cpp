@@ -17,7 +17,7 @@ void engineInit()
 	
 	PacketMgr& packetMgr_ = PacketMgr::instance();
 	packetMgr_.runPreinit();
-		
+	
 	DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
 	dispatchEngine_.runPreinit();
 	
@@ -34,4 +34,7 @@ void engineInit()
 	
 	CurlEngine& curlEngine_ = CurlEngine::instance();
 	curlEngine_.runPreinit();
+	
+	UrlMgr& urlMgr_ = UrlMgr::instance();
+	urlMgr_.runPreinit();
 }

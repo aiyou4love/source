@@ -19,6 +19,7 @@
 #include <codecvt>
 #include <locale>
 #include <chrono>
+#include <iostream>
 
 #pragma warning(push)
 #pragma warning(disable:4819)

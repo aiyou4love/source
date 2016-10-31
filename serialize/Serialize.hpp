@@ -44,6 +44,8 @@
 #include "serialize/table/TableEngine.hpp"
 #include "serialize/userDefault/UserDefault.hpp"
 
+#include "plugin/IPlugin.hpp"
+
 extern void serializeInit();
 extern void serializeStart();
 

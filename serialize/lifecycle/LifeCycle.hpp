@@ -93,5 +93,5 @@ namespace cc {
 		
 		bool mPause;
 	};
-	
+
 }
