@@ -13,7 +13,7 @@ namespace cc {
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
-			nSerialize.runMapStreamPtrs<int32_t, TimeDurationPtr>(mTimeDurations, "timeDurations", "timeDuration");
+			nSerialize.template runMapStreamPtrs<int32_t, TimeDurationPtr>(mTimeDurations, "timeDurations", "timeDuration");
 		}
 		const char * streamName();
 		const char * streamUrl();

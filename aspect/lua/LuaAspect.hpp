@@ -13,11 +13,11 @@ namespace cc {
 		void headSerialize(T& nSerialize, const char * nName)
 		{
 			if ( 0 == strcmp(streamName(), nName) ) {
-				nSerialize.runNumbers<list<string>, string>(mLuaScripts, "luaScripts", "luaScript");
+				nSerialize.template runNumbers<list<string>, string>(mLuaScripts, "luaScripts", "luaScript");
 			} else if ( 0 == strcmp(conditionName(), nName) ) {
-				nSerialize.runMapStreamPtrs<int32_t, LuaConditionPtr>(mLuaConditions, "luaConditions", "luaCondition");
+				nSerialize.template runMapStreamPtrs<int32_t, LuaConditionPtr>(mLuaConditions, "luaConditions", "luaCondition");
 			} else if ( 0 == strcmp(rewardName(), nName) ) {
-				nSerialize.runMapStreamPtrs<int32_t, LuaRewardPtr>(mLuaRewards, "luaRewards", "luaReward");
+				nSerialize.template runMapStreamPtrs<int32_t, LuaRewardPtr>(mLuaRewards, "luaRewards", "luaReward");
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}
