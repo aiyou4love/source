@@ -18,9 +18,9 @@ namespace cc {
 			} else if ( 0 == strcmp(updateName(), nName) ) {
 				nSerialize.runNumber(mErrorCode, "mErrorCode");
 				nSerialize.runNumber(mUpdateNo, "mVersionNo");
-				nSerialize.template runMapStreamPtrs(mUpdateItems, "mUpdateItems", "updateItem");
+				nSerialize.template runMapStreamPtrs<string, AutoupItemPtr>(mUpdateItems, "mUpdateItems", "updateItem");
 			} else if ( 0 == strcmp(saveName(), nName) ) {
-				nSerialize.template runMapStreamPtrs(mSaveItems, "saveItems", "saveItem");
+				nSerialize.template runMapStreamPtrs<string, AutoupSavePtr>(mSaveItems, "saveItems", "saveItem");
 			} else {
 				LOGERROR("[%s]%s", __METHOD__, nName);
 			}
