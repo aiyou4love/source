@@ -70,6 +70,7 @@ namespace cc {
 	{
 		LKGUD<mutex> lock_(mMutex);
 		mSessions.clear();
+		mSessionId = 0;
 	}
 	
 	ConnectorMgr& ConnectorMgr::instance()

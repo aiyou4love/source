@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class AcceptorMgr: noncopyable
+	class AcceptorMgr : noncopyable
 	{
 	public:
 		void removeSession(int32_t nSessionId);

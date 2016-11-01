@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class SessionMgr: noncopyable
+	class SessionMgr : noncopyable
 	{
 	public:
 		void addSession(int16_t nAppType, int32_t nAppNo, SessionPtr& nSession);
