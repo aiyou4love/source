@@ -24,13 +24,13 @@ namespace cc {
 	
 	void Entity::pushValue(ValuePtr& nValue)
 	{
-		std::lock_guard<mutex> lock_(mMutex);
+		LKGUD<mutex> lock_(mMutex);
 		mValues.push_back(nValue);
 	}
 	
 	ValuePtr Entity::popValue()
 	{
-		std::lock_guard<mutex> lock_(mMutex);
+		LKGUD<mutex> lock_(mMutex);
 		ValuePtr value_;
 		if (mValues.size() > 0) {
 			value_ = mValues.front();

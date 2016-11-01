@@ -112,13 +112,13 @@ namespace cc {
 	
 	void ConsoleEngine::pushCommandArgs(CommandArgsPtr& nCommandArgs)
 	{
-		std::lock_guard<mutex> lock_(mMutex);
+		LKGUD<mutex> lock_(mMutex);
 		mCommandArgs.push_back(nCommandArgs);
 	}
 	
 	CommandArgsPtr ConsoleEngine::popCommandArgs()
 	{
-		std::lock_guard<mutex> lock_(mMutex);
+		LKGUD<mutex> lock_(mMutex);
 		CommandArgsPtr commandArgs_;
 		if (mCommandArgs.size() > 0) {
 			commandArgs_ = mCommandArgs.front();

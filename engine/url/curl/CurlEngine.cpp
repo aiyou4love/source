@@ -4,7 +4,7 @@ namespace cc {
 	
 	void CurlEngine::pushHandle(BaseCurlPtr& nBaseCurl)
 	{
-		std::lock_guard<mutex> lock_(mMutex);
+		LKGUD<mutex> lock_(mMutex);
 		mIndex++;
 		if ( mIndex == mMultiCurls.size() ) {
 			mIndex = 1;
