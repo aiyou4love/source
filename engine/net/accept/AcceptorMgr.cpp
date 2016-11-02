@@ -15,6 +15,7 @@ namespace cc {
 	
 	SessionPtr& AcceptorMgr::createSession()
 	{
+		AcceptRemove& acceptRemove_ = AcceptRemove::instance();
 		IoService& ioService_ = IoService::instance();
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();
 		
@@ -23,6 +24,7 @@ namespace cc {
 		session_->setDisconnect(mDisconnectId);
 		session_->setException(mExceptionId);
 		session_->setDispatch(mDispatchId);
+		session_->setRemove(&acceptRemove_);
 		mSessions[mSessionId] = session_;
 		return mSessions[mSessionId];
 	}

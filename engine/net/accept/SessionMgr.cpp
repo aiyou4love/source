@@ -27,19 +27,14 @@ namespace cc {
 		mSessions[appId_] = &nSession;
 	}
 	
-	void SessionMgr::removeSession(int16_t nAppType, int32_t nAppNo)
+	void SessionMgr::removeSession(int64_t nAppId)
 	{
-		int64_t appId_ = linkInt32(nAppType, nAppNo);
 		LKGUD<mutex> lock_(mMutex);
-		auto it = mSessions.find(appId_);
+		auto it = mSessions.find(nAppId);
 		if (it == mSessions.end()) {
-			LOGE("[%s]%d,%d", __METHOD__, nAppType, nAppNo);
+			LOGE("[%s]%d", __METHOD__, nAppId);
 			return;
 		}
-		SessionPtr * session_ = it->second;
-		int32_t sessionId_ = (*session_)->getSessionId();
-		AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
-		acceptorMgr_.removeSession(sessionId_);
 		mSessions.erase(it);
 	}
 	

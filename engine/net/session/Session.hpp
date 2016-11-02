@@ -39,6 +39,8 @@ namespace cc {
 		void setDispatch(int16_t nDispatchId);
 		void setSend(PropertyPtr& nSend);
 		
+		void setRemove(ISessionRemove * nSessionRemove);
+		
 		asio::ip::tcp::socket& getSocket();
 		
 		int32_t getSessionId();
@@ -66,8 +68,11 @@ namespace cc {
 		IDispatch * mDispatch;
 		PropertyPtr * mSend;
 		
+		ISessionRemove * mSessionRemove;
+		
+		atomic<bool> mClosed;
+		atomic<bool> mReading;
 		int32_t mSessionId;
-		bool mClosed;
 	};
 	typedef SPTR<Session> SessionPtr;
 	typedef WPTR<Session> SessionWtr;

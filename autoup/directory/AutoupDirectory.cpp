@@ -29,18 +29,18 @@ namespace cc {
 	
 	string AutoupDirectory::pluginDir()
 	{
-		return (mRootPath + "/plugin/");
+		return (mRootPath + "/aspect/");
 	}
 	
 	string AutoupDirectory::pluginPath()
 	{
-		string update_ = mRootPath + "/plugin/";
+		string update_ = mRootPath + "/aspect/";
 		update_ += SODLLNAME;
 		filesystem::path path_(update_);
 		if (filesystem::exists(update_)) {
 			return update_;
 		}
-		string value_ = mRootPath + "/asset/plugin/";
+		string value_ = mRootPath + "/asset/aspect/";
 		value_ += SODLLZIP;
 		if (filesystem::exists(value_)) {
 			string updatePath_ = this->pluginDir();
@@ -163,7 +163,7 @@ namespace cc {
 		}
 		{
 			filesystem::path path_(mRootPath);
-			path_ /= "plugin";
+			path_ /= "aspect";
 			if (!filesystem::exists(path_)) {
 				filesystem::create_directory(path_);
 			}

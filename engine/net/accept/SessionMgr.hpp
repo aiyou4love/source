@@ -6,7 +6,7 @@ namespace cc {
 	{
 	public:
 		void addSession(int16_t nAppType, int32_t nAppNo, SessionPtr& nSession);
-		void removeSession(int16_t nAppType, int32_t nAppNo);
+		void removeSession(int64_t nAppId);
 		
 		void sendValue(int16_t nAppType, int32_t nAppNo, ValuePtr& nValue);
 		

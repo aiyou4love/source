@@ -60,7 +60,7 @@ namespace cc {
 			return;
 		}
 		this->pushValue(nValue);
-		if (false == mWriting) {
+		if ( mReading && (!mWriting) ) {
 			this->internalWrite();
 			this->runWrite();
 		}
@@ -136,6 +136,9 @@ namespace cc {
 			mSocket.async_read_some(boost::asio::buffer(mReadBuffer),
 				boost::bind(&Session::handleRead, shared_from_this(),
 				asio::placeholders::error, asio::placeholders::bytes_transferred));
+			if ( !mReading ) {
+				mReading = true;
+			}
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
 			this->runException();
@@ -183,8 +186,11 @@ namespace cc {
 		mReadBuffer.fill(0);
 		mValues.clear();
 		
+		mSessionRemove = nullptr;
+		
 		mClosed = true;
 		mWriting = false;
+		mReading = false;
 	}
 	
 	void Session::initSelectId(ConnectInfoPtr& nConnectInfo)
@@ -246,17 +252,24 @@ namespace cc {
 		mSend = &nSend;
 	}
 	
+	void Session::setRemove(ISessionRemove * nSessionRemove)
+	{
+		mSessionRemove = nSessionRemove;
+	}
+	
 	Session::Session(int32_t nSessionId, asio::io_service& nHandle)
 		: mSocket (nHandle)
 		, mWriteTimer (nHandle)
 		, mReadTimer (nHandle)
-		, mClosed (true)
+		, mClosed (false)
 		, mWriting(false)
+		, mReading(false)
 		, mSessionId (nSessionId)
 		, mDisconnectId (0)
 		, mExceptionId (0)
 		, mDispatch (nullptr)
 		, mSend (nullptr)
+		, mSessionRemove (nullptr)
 	{
 		mReadBuffer.fill(0);
 		mValues.clear();

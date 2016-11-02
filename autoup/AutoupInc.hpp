@@ -34,11 +34,11 @@ using namespace boost;
 #define __METHOD__ __PRETTY_FUNCTION__
 #endif
 
-#define SODLLZIP "plugin.zip"
+#define SODLLZIP "aspect.zip"
 #ifdef __WINDOW__
-#define SODLLNAME "plugin.dll"
+#define SODLLNAME "aspect.dll"
 #else
-#define SODLLNAME "plugin.so"
+#define SODLLNAME "aspect.so"
 #endif
 
 #include "zip/miniz.h"
