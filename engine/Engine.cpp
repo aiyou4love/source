@@ -37,4 +37,28 @@ void engineInit()
 	
 	UrlMgr& urlMgr_ = UrlMgr::instance();
 	urlMgr_.runPreinit();
+	
+	NetIpMgr::instance();
+	
+	IoService& ioService_ = IoService::instance();
+	ioService_.runPreinit();
+		
+	AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
+	acceptorMgr_.runPreinit();
+	
+	SessionMgr& sessionMgr_ = SessionMgr::instance();
+	sessionMgr_.runPreinit();
+	
+	AcceptEngine& acceptEngine_ = AcceptEngine::instance();
+	acceptEngine_.runPreinit();
+	
+	AcceptRemove::instance();
+	
+	ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
+	connectorMgr_.runPreinit();
+	
+	ConnectEngine& connectEngine_ = ConnectEngine::instance();
+	connectEngine_.runPreinit();
+	
+	ConnectRemove::instance();
 }

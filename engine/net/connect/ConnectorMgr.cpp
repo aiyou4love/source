@@ -7,7 +7,7 @@ namespace cc {
 		int64_t appId_ = linkInt32(nAppType, nAppNo);
 		if ( !this->sendValue(appId_, nValue) ) {
 			ConnectEngine& connectEngine_ = ConnectEngine::instance();
-			connectEngine_initConnect(nAppType, nAppNo);
+			connectEngine_.initConnect(nAppType, nAppNo);
 			this->sendValue(appId_, nValue);
 		}
 	}
@@ -17,7 +17,7 @@ namespace cc {
 		int64_t appId_ = linkInt32(nAppType, 0);
 		if ( !this->sendValue(appId_, nValue) ) {
 			ConnectEngine& connectEngine_ = ConnectEngine::instance();
-			connectEngine_initConnect(nAppType);
+			connectEngine_.initConnect(nAppType);
 			this->sendValue(appId_, nValue);
 		}
 	}
@@ -37,14 +37,18 @@ namespace cc {
 	
 	SessionPtr& ConnectorMgr::createSession(int64_t nAppId)
 	{
+		ConnectRemove& connectRemove_ = ConnectRemove::instance();
+		IoService& ioService_ = IoService::instance();
+		
 		LKGUD<mutex> lock_(mMutex);
 		auto it = mSessions.find(nAppId);
 		if ( it != mSessions.end() ) {
 			return mSessions[nAppId];
 		}
-		IoService& ioService_ = IoService::instance();
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();
 		SessionPtr session_(new Session(++mSessionId, ioHandle_));
+		session_->setRemove(&connectRemove_);
+		session_->setAppId(nAppId);
 		mSessions[nAppId] = session_;
 		return mSessions[nAppId];
 	}

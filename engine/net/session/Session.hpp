@@ -12,26 +12,20 @@ namespace cc {
 		void handleWrite(const boost::system::error_code& nError);
 		void internalWrite();
 		void runWrite();
+		void startWrite();
+		
+		void runSend(ValuePtr& nValue);
 		
 		void pushValue(ValuePtr& nValue);
 		ValuePtr popValue();
-		
-		void runSend(ValuePtr& nValue);
 		
 		void handleRead(const boost::system::error_code& nError, size_t nBytes);
 		void handleReadTimeout(const boost::system::error_code& nError);
 		void internalRead(size_t nBytes);
 		void runRead();
-		
-		void runDisconnect();
-		void runException();
-		
-		void runClear();
-		void runClose();
+		void startRead();
 		
 		void initSelectId(ConnectInfoPtr& nConnectInfo);
-		void runSelectId(int32_t nSelectId);
-		void runValue(ValuePtr& nValue);
 		
 		void setDisconnect(int32_t nDisconnectId);
 		void setException(int32_t nExceptionId);
@@ -39,7 +33,17 @@ namespace cc {
 		void setDispatch(int16_t nDispatchId);
 		void setSend(PropertyPtr& nSend);
 		
+		void runDisconnect();
+		void runException();
+		
+		void runSelectId(int32_t nSelectId);
+		void runValue(ValuePtr& nValue);
+		
 		void setRemove(ISessionRemove * nSessionRemove);
+		void setAppId(int64_t nAppId);
+		
+		void runClose();
+		void runClear();
 		
 		asio::ip::tcp::socket& getSocket();
 		
@@ -69,9 +73,10 @@ namespace cc {
 		PropertyPtr * mSend;
 		
 		ISessionRemove * mSessionRemove;
+		int64_t mAppId;
 		
-		atomic<bool> mClosed;
 		atomic<bool> mReading;
+		atomic<bool> mClosed;
 		int32_t mSessionId;
 	};
 	typedef SPTR<Session> SessionPtr;

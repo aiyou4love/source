@@ -38,13 +38,13 @@ namespace cc {
 		}
 		ConnectInfoPtr& connectInfo_ = it0->second;
 		
+		IoService& ioService_ = IoService::instance();
 		LKGUD<mutex> lock_(mMutex);
 		auto it1 = mConnectors.find(appId_);
 		if (it1 != mConnectors.end()) {
 			LOGE("[%s]%d", __METHOD__, appId_);
 			return;
 		}
-		IoService& ioService_ = IoService::instance();
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();
 		
 		ConnectorPtr connector_(new Connector(appId_, ioHandle_));

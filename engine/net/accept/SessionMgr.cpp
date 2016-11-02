@@ -24,6 +24,7 @@ namespace cc {
 			LOGE("[%s]%d,%d", __METHOD__, nAppType, nAppNo);
 			return;
 		}
+		nSession->setAppId(appId_);
 		mSessions[appId_] = &nSession;
 	}
 	

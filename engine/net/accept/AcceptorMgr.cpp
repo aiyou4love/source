@@ -17,9 +17,9 @@ namespace cc {
 	{
 		AcceptRemove& acceptRemove_ = AcceptRemove::instance();
 		IoService& ioService_ = IoService::instance();
-		asio::io_service& ioHandle_ = ioService_.getIoHandle();
 		
 		LKGUD<mutex> lock_(mMutex);
+		asio::io_service& ioHandle_ = ioService_.getIoHandle();
 		SessionPtr session_(new Session(++mSessionId, ioHandle_));
 		session_->setDisconnect(mDisconnectId);
 		session_->setException(mExceptionId);
