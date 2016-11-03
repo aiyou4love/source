@@ -10,7 +10,7 @@ namespace cc {
 			LOGE("[%s]%d,%d", __METHOD__, nAppType, nAppNo);
 			return;
 		}
-		this->initConnect(*netIp_);
+		this->initConnect(*netIp_, false);
 	}
 	
 	void ConnectEngine::initConnect(int16_t nAppType)
@@ -21,10 +21,21 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, nAppType);
 			return;
 		}
-		this->initConnect(*netIp_);
+		this->initConnect(*netIp_, false);
 	}
 	
-	void ConnectEngine::initConnect(NetIpPtr& nNetIp)
+	void ConnectEngine::initConnect(int64_t nAppId)
+	{
+		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
+		NetIpPtr * netIp_ = netIpMgr_.findNetIp(nAppId);
+		if (nullptr == netIp_) {
+			LOGE("[%s]%d", __METHOD__, nAppId);
+			return;
+		}
+		this->initConnect(*netIp_, true);
+	}
+	
+	void ConnectEngine::initConnect(NetIpPtr& nNetIp, bool nReconnect)
 	{
 		const char * port_ = nNetIp->getPort();
 		const char * ip_ = nNetIp->getIp();
@@ -37,6 +48,9 @@ namespace cc {
 			return;
 		}
 		ConnectInfoPtr& connectInfo_ = it0->second;
+		if ( nReconnect && (!connectInfo_->isReconnect()) ) {
+			return;
+		}
 		
 		IoService& ioService_ = IoService::instance();
 		LKGUD<mutex> lock_(mMutex);

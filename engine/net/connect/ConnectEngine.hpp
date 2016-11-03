@@ -7,11 +7,12 @@ namespace cc {
 	public:
 		void initConnect(int16_t nAppType, int32_t nAppNo);
 		void initConnect(int16_t nAppType);
+		void initConnect(int64_t nAppId);
 		
 		void removeConnector(int64_t nAppId);
 		
 	private:
-		void initConnect(NetIpPtr& nNetIp);
+		void initConnect(NetIpPtr& nNetIp, bool nReconnect);
 		
 	public:
 		template<class T>

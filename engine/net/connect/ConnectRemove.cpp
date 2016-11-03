@@ -10,6 +10,9 @@ namespace cc {
 	{
 		ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
 		connectorMgr_.removeSession(nAppId);
+		
+		ConnectEngine& connectEngine_ = ConnectEngine::instance();
+		connectEngine_.initConnect(nAppId);
 	}
 	
 	ConnectRemove& ConnectRemove::instance()

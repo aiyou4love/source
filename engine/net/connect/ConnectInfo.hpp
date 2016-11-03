@@ -14,6 +14,8 @@ namespace cc {
 		int32_t getExceptionId();
 		int16_t getDispatchId();
 		
+		bool isReconnect();
+		
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{
@@ -27,6 +29,8 @@ namespace cc {
 			nSerialize->runNumber(mDisconnectId, "disconnectId");
 			nSerialize->runNumber(mExceptionId, "exceptionId");
 			nSerialize->runNumber(mDispatchId, "dispatchId");
+			
+			nSerialize->runNumber(mReconnect, "reconnect");
 		}
 		bool isDefault();
 		int16_t getKey();
@@ -45,6 +49,8 @@ namespace cc {
 		int32_t mDisconnectId;
 		int32_t mExceptionId;
 		int16_t mDispatchId;
+		
+		bool mReconnect;
 	};
 	typedef SPTR<ConnectInfo> ConnectInfoPtr;
 	

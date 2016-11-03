@@ -37,6 +37,11 @@ namespace cc {
 		return mDispatchId;
 	}
 	
+	bool ConnectInfo::isReconnect()
+	{
+		return mReconnect;
+	}
+	
 	bool ConnectInfo::isDefault()
 	{
 		return ((0 == mConnectId) || (0 == mTimeoutId) || (0 == mConnectErrorId) || (0 == mDisconnectId)
@@ -57,6 +62,7 @@ namespace cc {
 		, mDisconnectId (0)
 		, mExceptionId (0)
 		, mDispatchId (0)
+		, mReconnect (false)
 	{
 	}
 	
@@ -72,6 +78,8 @@ namespace cc {
 		mDisconnectId = 0;
 		mExceptionId = 0;
 		mDispatchId = 0;
+		
+		mReconnect = false;
 	}
 	
 }

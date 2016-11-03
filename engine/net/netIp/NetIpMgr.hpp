@@ -13,6 +13,7 @@ namespace cc {
 	public:
 		NetIpPtr * findNetIp(int16_t nAppType, int32_t nAppNo);
 		NetIpPtr * findNetIp(int16_t nAppType);
+		NetIpPtr * findNetIp(int64_t nAppId);
 		NetIpPtr * findNetIp();
 		
 		template<class T>

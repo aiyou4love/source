@@ -53,6 +53,17 @@ namespace cc {
 		return nullptr;
 	}
 	
+	NetIpPtr * NetIpMgr::findNetIp(int64_t nAppId)
+	{
+		auto it = mNetIps.find(nAppId);
+		if ( it == mNetIps.end() ) {
+			LOGE("[%s]%lld", __METHOD__, nAppId);
+			return nullptr;
+		}
+		NetIpPtr& netIp_ = it->second;
+		return (&netIp_);
+	}
+	
 	NetIpPtr * NetIpMgr::findNetIp()
 	{
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
