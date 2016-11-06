@@ -22,6 +22,11 @@ namespace cc {
 		return (&(it->second));
 	}
 	
+	list<TriggerPtr>& Entity::getTriggers()
+	{
+		return mTriggers;
+	}
+	
 	void Entity::pushValue(ValuePtr& nValue)
 	{
 		LKGUD<mutex> lock_(mMutex);

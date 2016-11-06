@@ -18,6 +18,11 @@ namespace cc {
 		curl_easy_setopt(mHandle, CURLOPT_WRITEDATA, curlValue_);
 	}
 	
+	void BaseCurl::setUrlInfo(UrlInfoPtr& nUrlInfo)
+	{
+		mUrlInfo = (&nUrlInfo);
+	}
+	
 	void BaseCurl::setValue(ValuePtr& nValue)
 	{
 		mValue = nValue;
@@ -31,7 +36,7 @@ namespace cc {
 		string value_ = mCurlValue->getValue();
 	#endif
 		mValue->pushString(value_.c_str());
-		int16_t dispatchId_ = mValue->getInt16(3);
+		int16_t dispatchId_ = mUrlInfo->getDispatchId();
 		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
 		IDispatch * dispatch_ = dispatchEngine_.findDispatch(dispatchId_);
 		dispatch_->pushValue(mValue);
@@ -72,6 +77,7 @@ namespace cc {
 	
 	BaseCurl::BaseCurl()
 		: mHandle (nullptr)
+		, mUrlInfo (nullptr)
 	{
 		mCurlValue.reset();
 	}
@@ -79,6 +85,7 @@ namespace cc {
 	BaseCurl::~BaseCurl()
 	{
 		mCurlValue.reset();
+		mUrlInfo = nullptr;
 		
 		curl_easy_cleanup(mHandle);
 		mHandle = nullptr;

@@ -2,9 +2,20 @@
 
 namespace cc {
 	
+	void SelectEngine::runIfSelectId(EntityPtr& nEntity, int32_t nSelectId, ValuePtr& nValue)
+	{
+		auto it = mIfSelects.find(nSelectId);
+		if ( it == mIfSelects.end() ) {
+			LOGE("[%s]%d", __METHOD__, nSelectId);
+			return;
+		}
+		IfSelectPtr& ifSelect_ = it->second;
+		ifSelect_->runIfSelect(nEntity, nValue);
+	}
+	
 	void SelectEngine::runIfSelect(EntityPtr& nEntity, ValuePtr& nValue)
 	{
-		int32_t ifSelectId_ = nValue->getInt32(2);
+		int32_t ifSelectId_ = nValue->getInt32(1);
 		auto it = mIfSelects.find(ifSelectId_);
 		if ( it == mIfSelects.end() ) {
 			LOGE("[%s]%d", __METHOD__, ifSelectId_);

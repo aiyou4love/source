@@ -11,6 +11,8 @@ namespace cc {
 		void pushValue(ValuePtr& nValue);
 		ValuePtr popValue();
 		
+		list<TriggerPtr>& getTriggers();
+		
 		void setState(int32_t nState);
 		int32_t getState();
 		

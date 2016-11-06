@@ -5,8 +5,9 @@ namespace cc {
 	class SelectEngine : noncopyable
 	{
 	public:
+		void runIfSelectId(EntityPtr& nEntity, int32_t nSelectId, ValuePtr& nValue);
 		void runIfSelect(EntityPtr& nEntity, ValuePtr& nValue);
-				
+		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{

@@ -213,6 +213,15 @@ namespace cc {
 		mIndexs.push_back(index_);
 	}
 	
+	void Value::setSelectId(int32_t nValue)
+	{
+		if ( mInt32s.size() <= 0 ) {
+			LOGE("[%s]", __METHOD__);
+			return;
+		}
+		mInt32s[0] = nValue;
+	}
+	
 	void Value::pushInt32(int32_t nValue)
 	{
 		mInt32s.push_back(nValue);

@@ -6,7 +6,7 @@ namespace cc {
 	{
 	public:
 		template <typename ... T1>
-		void runHttp(ValuePtr& nValue, int8_t& nType, const char * nUrl, T1 ... nArgs)
+		void runHttp(ValuePtr& nValue, const char * nUrl, T1 ... nArgs)
 		{
 			int32_t urlId_ = stringCrc(nUrl);
 			
@@ -16,12 +16,16 @@ namespace cc {
 				return;
 			}
 			UrlInfoPtr& urlInfo_ = it->second;
-			nType = urlInfo_->getType();
+			
+			int32_t selectId_ = urlInfo_->getSelectId();
+			nValue->setSelectId(selectId_);
 			
 			HttpCurl * httpCurl_ = new HttpCurl();
 			httpCurl_->runCurlValue(EcurlValue::mString);
 			urlInfo_->runHttpCurl(httpCurl_, nArgs ...);
 			BaseCurlPtr baseCurl_(httpCurl_);
+			baseCurl_->setValue(nValue);
+			baseCurl_->setUrlInfo(urlInfo_);
 			CurlEngine& curlEngine_ = CurlEngine::instance();
 			curlEngine_.pushHandle(baseCurl_);
 		}

@@ -2,11 +2,14 @@
 
 namespace cc {
 	
+	class UrlInfo;
+	typedef SPTR<UrlInfo> UrlInfoPtr;
 	class BaseCurl : noncopyable
 	{
 	public:
 		void runCurlValue(int16_t nValueType, const char * nPath = nullptr);
 		
+		void setUrlInfo(UrlInfoPtr& nUrlInfo);
 		void setValue(ValuePtr& nValue);
 		void runValue();
 		
@@ -24,7 +27,9 @@ namespace cc {
 	protected:
 		CurlValuePtr mCurlValue;
 		
+		UrlInfoPtr * mUrlInfo;
 		ValuePtr mValue;
+		
 		CURL * mHandle;
 	};
 	typedef SPTR<BaseCurl> BaseCurlPtr;

@@ -2,12 +2,7 @@
 
 namespace cc {
 	
-	int32_t Trigger::getTriggerId()
-	{
-		return mTriggerId;
-	}
-	
-	int16_t Trigger::getTriggerType()
+	int8_t Trigger::getTriggerType()
 	{
 		return mTriggerType;
 	}
@@ -17,25 +12,37 @@ namespace cc {
 		return mObjectId;
 	}
 	
-	int16_t Trigger::getCount()
+	int32_t Trigger::getTriggerId()
 	{
-		return mCount;
+		return mTriggerId;
+	}
+	
+	int32_t Trigger::getActionId()
+	{
+		return mActionId;
+	}
+	
+	int32_t Trigger::getDeleteId()
+	{
+		return mDeleteId;
 	}
 	
 	Trigger::Trigger()
-		: mTriggerId (0)
-		, mTriggerType (0)
+		: mTriggerType (0)
 		, mObjectId (0)
-		, mCount (0)
+		, mTriggerId (0)
+		, mActionId (0)
+		, mDeleteId (0)
 	{
 	}
 	
 	Trigger::~Trigger()
 	{
-		mTriggerId = 0;
 		mTriggerType = 0;
 		mObjectId = 0;
-		mCount = 0;
+		mTriggerId = 0;
+		mActionId = 0;
+		mDeleteId = 0;
 	}
 	
 }

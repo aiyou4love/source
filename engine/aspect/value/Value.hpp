@@ -11,6 +11,8 @@ namespace cc {
 		int16_t getInt16(int8_t nIndex);
 		void pushInt16(int16_t nValue);
 		
+		void setSelectId(int32_t nValue);
+		
 		int32_t getInt32(int8_t nIndex);
 		void pushInt32(int32_t nValue);
 		
