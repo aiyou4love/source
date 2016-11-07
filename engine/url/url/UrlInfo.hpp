@@ -99,6 +99,5 @@ namespace cc {
 		int8_t mType;
 		int32_t mId;
 	};
-	typedef SPTR<UrlInfo> UrlInfoPtr;
 	
 }

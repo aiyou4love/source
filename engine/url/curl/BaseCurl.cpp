@@ -36,7 +36,7 @@ namespace cc {
 		string value_ = mCurlValue->getValue();
 	#endif
 		mValue->pushString(value_.c_str());
-		int16_t dispatchId_ = mUrlInfo->getDispatchId();
+		int16_t dispatchId_ = (*mUrlInfo)->getDispatchId();
 		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
 		IDispatch * dispatch_ = dispatchEngine_.findDispatch(dispatchId_);
 		dispatch_->pushValue(mValue);
