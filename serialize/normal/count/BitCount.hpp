@@ -10,7 +10,9 @@ namespace cc {
 		bool isTrue(int16_t nId);
 		void runReset();
 		
+		void runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC);
 		void runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd);
+		
 		
 		BitCount();
 		BitCount(IntArray * nIntArray, int16_t nBegin, int16_t nEnd);

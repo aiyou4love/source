@@ -15,21 +15,21 @@ namespace cc {
 		
 		SelectEngine& selectEngine_ = SelectEngine::instance();
 		
-		list<TriggerPtr>& triggers_ = nEntity->getTriggers();
+		map<int32_t, TriggerPtr *>& triggers_ = nEntity->getTriggers();
 		auto it = triggers_.begin();
 		for ( ; it != triggers_.end(); ++it ) {
-			TriggerPtr& trigger_ = (*it);
-			int8_t triggerType_ = trigger_->getTriggerType();
+			TriggerPtr * trigger_ = it->second;
+			int8_t triggerType_ = (*trigger_)->getTriggerType();
 			if ( EtriggerType::mAspect != triggerType_ ) {
 				continue;
 			}
-			int32_t triggerId_ = trigger_->getTriggerId();
-			if ( mRewardId != triggerId_ ) {
+			int32_t selectId_ = (*trigger_)->getSelectId();
+			if ( mRewardId != selectId_ ) {
 				continue;
 			}
-			int32_t actionId_ = trigger_->getActionId();
+			int32_t actionId_ = (*trigger_)->getActionId();
 			selectEngine_.runIfSelectId(nEntity, actionId_, nValue);
-			int32_t deleteId_ = trigger_->getDeleteId();
+			int32_t deleteId_ = (*trigger_)->getDeleteId();
 			selectEngine_.runIfSelectId(nEntity, deleteId_, nValue);
 		}
 		return true;

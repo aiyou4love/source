@@ -11,7 +11,9 @@ namespace cc {
 		void pushValue(ValuePtr& nValue);
 		ValuePtr popValue();
 		
-		list<TriggerPtr>& getTriggers();
+		map<int32_t, TriggerPtr *>& getTriggers();
+		void pushTrigger(TriggerPtr& nTrigger);
+		void removeTrigger(int32_t nTriggerId);
 		
 		void setState(int32_t nState);
 		int32_t getState();
@@ -22,7 +24,7 @@ namespace cc {
 	private:
 		map<int32_t, PropertyPtr> mPropertys;
 		
-		list<TriggerPtr> mTriggers;
+		map<int32_t, TriggerPtr *> mTriggers;
 		int32_t mState;
 		
 		deque<ValuePtr> mValues;

@@ -38,7 +38,7 @@ void serializeStart()
 	lifeCycle_.initBegin();
 	lifeCycle_.initing();
 	lifeCycle_.initEnd();
-		
+	
 	lifeCycle_.startBegin();
 	lifeCycle_.starting();
 	lifeCycle_.startEnd();

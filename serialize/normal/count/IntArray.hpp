@@ -9,5 +9,6 @@ namespace cc {
 		
 		virtual void runDirty() = 0;
 	};
+	typedef SPTR<IntArray> IntArrayPtr;
 	
 }

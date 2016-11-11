@@ -68,7 +68,7 @@ namespace cc {
 	{
 		return mValue.c_str();
 	}
-
+	
 	LuaWriter::LuaWriter()
 		: mValue ("")
 		, mFirst (true)

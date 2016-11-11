@@ -86,6 +86,11 @@ namespace cc {
 		mIntArray->runDirty();
 	}
 	
+	void Int32Count::runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
+	{
+		this->runInit(nIntArray, nBegin, nEnd);
+	}
+	
 	void Int32Count::runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd)
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);

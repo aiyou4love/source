@@ -22,9 +22,25 @@ namespace cc {
 		return (&(it->second));
 	}
 	
-	list<TriggerPtr>& Entity::getTriggers()
+	map<int32_t, TriggerPtr *>& Entity::getTriggers()
 	{
 		return mTriggers;
+	}
+	
+	void Entity::pushTrigger(TriggerPtr& nTrigger)
+	{
+		int32_t triggerId_ = nTrigger->getTriggerId();
+		mTriggers[triggerId_] = &nTrigger;
+	}
+	
+	void Entity::removeTrigger(int32_t nTriggerId)
+	{
+		auto it = mTriggers.find(nTriggerId);
+		if ( it == mTriggers.end() ) {
+			LOGE("[%s]%d", __METHOD__, nTriggerId);
+			return;
+		}
+		mTriggers.erase(it);
 	}
 	
 	void Entity::pushValue(ValuePtr& nValue)

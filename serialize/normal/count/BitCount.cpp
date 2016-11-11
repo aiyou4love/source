@@ -47,6 +47,11 @@ namespace cc {
 		mIntArray->runDirty();
 	}
 	
+	void BitCount::runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
+	{
+		this->runInit(nIntArray, nBegin, nEnd);
+	}
+	
 	void BitCount::runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd)
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);

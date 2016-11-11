@@ -2,6 +2,11 @@
 
 namespace cc {
 	
+	int32_t Trigger::getTriggerId()
+	{
+		return mTriggerId;
+	}
+	
 	int8_t Trigger::getTriggerType()
 	{
 		return mTriggerType;
@@ -12,9 +17,9 @@ namespace cc {
 		return mObjectId;
 	}
 	
-	int32_t Trigger::getTriggerId()
+	int32_t Trigger::getSelectId()
 	{
-		return mTriggerId;
+		return mSelectId;
 	}
 	
 	int32_t Trigger::getActionId()
@@ -31,6 +36,7 @@ namespace cc {
 		: mTriggerType (0)
 		, mObjectId (0)
 		, mTriggerId (0)
+		, mSelectId (0)
 		, mActionId (0)
 		, mDeleteId (0)
 	{
@@ -41,6 +47,7 @@ namespace cc {
 		mTriggerType = 0;
 		mObjectId = 0;
 		mTriggerId = 0;
+		mSelectId = 0;
 		mActionId = 0;
 		mDeleteId = 0;
 	}
