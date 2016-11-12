@@ -10,8 +10,6 @@
 #include "normal/string/StringMethod.hpp"
 #include "normal/string/StringTable.hpp"
 #include "normal/count/IntArray.hpp"
-#include "normal/count/IntArrayN.hpp"
-#include "normal/count/IntArrayM.hpp"
 #include "normal/count/BitCount.hpp"
 #include "normal/count/Int32Count.hpp"
 #include "normal/count/IntCount.hpp"

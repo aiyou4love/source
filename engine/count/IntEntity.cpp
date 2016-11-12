@@ -2,31 +2,14 @@
 
 namespace cc {
 	
-	int16_t IntIndex::getN()
+	IntEntity::IntEntity()
 	{
-		return N;
+		mIntArrays.clear();
 	}
 	
-	bool IntIndex::isDefault()
+	IntEntity::~IntEntity()
 	{
-		return ( (0 == mId) || (0 == N) );
-	}
-	
-	int16_t IntIndex::getKey()
-	{
-		return mId;
-	}
-	
-	IntIndex::IntIndex()
-		: mId (0)
-		, N (0)
-	{
-	}
-	
-	IntIndex::~IntIndex()
-	{
-		mId = 0;
-		N = 0;
+		mIntArrays.clear();
 	}
 	
 }

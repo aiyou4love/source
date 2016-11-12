@@ -2,26 +2,42 @@
 
 namespace cc {
 	
-	void Int32Count::setInt(int16_t nId, int32_t nValue)
+	void Int16Count::setInt(int16_t nId, int16_t nValue)
 	{
-		if ( (nId < 1) || (nId > N) ) {
+		if ( (nId < 1) || (nId > (N * 2)) ) {
 			LOGE("[%s]%d,%d", __METHOD__, N, nId);
 			return;
 		}
-		mValue[nId - 1] = nValue;
+		int16_t id_ = (nId - 1) / 2;
+		int16_t bit_ = (nId - 1) % 2;
+		if (0 == bit_) {
+			int32_t value_ = (nValue << 16);
+			mValue[id_] &= 0xFFFF;
+			mValue[id_] |= value_;
+		} else {
+			mValue[id_] &= 0xFFFF0000;
+			mValue[id_] |= nValue;
+		}
 		(*mIntArray)->runDirty();
 	}
 	
-	int32_t Int32Count::getInt(int16_t nId)
+	int16_t Int16Count::getInt(int16_t nId)
 	{
-		if ( (nId < 1) || (nId > N) ) {
+		if ( (nId < 1) || (nId > (N * 2)) ) {
 			LOGE("[%s]%d,%d", __METHOD__, N, nId);
 			return 0;
 		}
-		return mValue[nId - 1];
+		int16_t id_ = (nId - 1) / 2;
+		int16_t bit_ = (nId - 1) % 2;
+		if (0 == bit_) {
+			return ( int16_t(mValue[id_] >> 16) );
+		} else {
+			mValue[id_] &= 0xFFFF0000;
+			mValue[id_] |= nValue;
+		}
 	}
 	
-	void Int32Count::addInt(int16_t nId, int32_t nValue)
+	void Int16Count::addInt(int16_t nId, int32_t nValue)
 	{
 		if ( (nId < 1) || (nId > N) ) {
 			LOGE("[%s]%d,%d", __METHOD__, N, nId);
@@ -31,7 +47,7 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void Int32Count::addInt(int16_t nId)
+	void Int16Count::addInt(int16_t nId)
 	{
 		if ( (nId < 1) || (nId > N) ) {
 			LOGE("[%s]%d,%d", __METHOD__, N, nId);
@@ -41,7 +57,7 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void Int32Count::pushInt(int32_t nValue)
+	void Int16Count::pushInt(int32_t nValue)
 	{
 		for (int16_t i = 0; i < N; ++i) {
 			if ( 0 == mValue[i] ) {
@@ -51,17 +67,7 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void Int32Count::popInt16(int16_t nValue)
-	{
-		for (int16_t i = 0; i < N; ++i) {
-			if ( nValue == int16_t(mValue[i] >> 16) ) {
-				mValue[i] = 0;
-			}
-		}
-		(*mIntArray)->runDirty();
-	}
-	
-	void Int32Count::popInt(int32_t nValue)
+	void Int16Count::popInt(int32_t nValue)
 	{
 		for (int16_t i = 0; i < N; ++i) {
 			if ( nValue == mValue[i] ) {
@@ -71,16 +77,17 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void Int32Count::runReset(int16_t nId)
+	void Int16Count::runReset(int16_t nId)
 	{
-		if ( (nId < 1) || (nId > N) ) {
+		if ( (nId < 1) || (nId > (N * 2)) ) {
 			LOGE("[%s]%d,%d", __METHOD__, N, nId);
 			return;
 		}
 		mValue[nId - 1] = 0;
+		(*mIntArray)->runDirty();
 	}
 	
-	void Int32Count::runReset()
+	void Int16Count::runReset()
 	{
 		for (int16_t i = 0; i < N; ++i) {
 			mValue[i] = 0;
@@ -88,31 +95,31 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void Int32Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
+	void Int16Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
 	{
 		this->runInit(nIntArray, nBegin, nEnd);
 	}
 	
-	void Int32Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
+	void Int16Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);
 		mIntArray = (&nIntArray);
 		N = nEnd - nBegin;
 	}
 	
-	Int32Count::Int32Count()
+	Int16Count::Int16Count()
 		: mIntArray (nullptr)
 		, mValue (nullptr)
 		, N (0)
 	{
 	}
 	
-	Int32Count::Int32Count(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
+	Int16Count::Int16Count(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
 	{
 		runInit(nIntArray, nBegin, nEnd);
 	}
 	
-	Int32Count::~Int32Count()
+	Int16Count::~Int16Count()
 	{
 		mIntArray = nullptr;
 		mValue = nullptr;

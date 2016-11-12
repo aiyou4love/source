@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	int32_t * IntArrayM::rangeInts(int16_t nBegin, int16_t nEnd)
+	int32_t * IntArray::rangeInts(int16_t nBegin, int16_t nEnd)
 	{
 		if ( (nBegin <= 0) || (nBegin >= N) 
 			|| (nEnd > N) || (nBegin >= nEnd) ) {
@@ -12,31 +12,41 @@ namespace cc {
 		return (mValue + nBegin - 1);
 	}
 	
-	void IntArrayM::runInit(int16_t nN)
+	void IntArray::runInit(int16_t nN)
 	{
 		mValue = new int32_t[nN];
 		memset(mValue, 0, 4 * N);
 		N = nN;
 	}
 	
-	void IntArrayM::runDirty()
+	void IntArray::runClear()
+	{
+		memset(mValue, 0, 4 * N);
+	}
+	
+	void IntArray::runDirty()
 	{
 		mIsDirty = true;
 	}
 	
-	bool IntArrayM::isDirty()
+	bool IntArray::isDirty()
 	{
 		return mIsDirty;
 	}
 	
-	IntArrayM::IntArrayM()
+	void IntArray::runSave()
+	{
+		mIsDirty = false;
+	}
+	
+	IntArray::IntArray()
 		: mIsDirty (false)
 		, mValue (nullptr)
 		, N (0)
 	{
 	}
 	
-	IntArrayM::~IntArrayM()
+	IntArray::~IntArray()
 	{
 		if ( nullptr != mValue ) {
 			delete [] mValue;

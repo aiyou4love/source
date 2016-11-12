@@ -53,12 +53,12 @@ namespace cc {
 		return "countIndex.json";
 	}
 	
-	const char * CountEngine::streamName()
+	const char * CountEngine::intName()
 	{
 		return "intIndex";
 	}
 	
-	const char * CountEngine::streamUrl()
+	const char * CountEngine::intUrl()
 	{
 		return "intIndex.json";
 	}

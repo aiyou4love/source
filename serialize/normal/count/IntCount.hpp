@@ -14,16 +14,16 @@ namespace cc {
 		void runReset(int16_t nId);
 		void runReset();
 		
-		void runInit(IntArray * nIntArray,
+		void runInit(IntArrayPtr& nIntArray,
 			int16_t nBegin, int16_t nEnd, int16_t nC);
 		
 		IntCount();
-		IntCount(IntArray * nIntArray, 
+		IntCount(IntArrayPtr& nIntArray, 
 			int16_t nBegin, int16_t nEnd, int16_t nC);
 		~IntCount();
 		
 	private:
-		IntArray * mIntArray;
+		IntArrayPtr * mIntArray;
 		int32_t * mValue;
 		int16_t N;
 		int16_t M;

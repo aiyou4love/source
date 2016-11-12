@@ -12,7 +12,7 @@ namespace cc {
 		int16_t bit_ = (nId - 1) % 32;
 		int32_t value_ = (~(0x1 << bit_));
 		mValue[id_] &= value_;
-		mIntArray->runDirty();
+		(*mIntArray)->runDirty();
 	}
 	
 	void BitCount::runTrue(int16_t nId)
@@ -24,7 +24,7 @@ namespace cc {
 		int16_t id_ = (nId - 1) / 32;
 		int16_t bit_ = (nId - 1) % 32;
 		mValue[id_] |= (0x1 << bit_);
-		mIntArray->runDirty();
+		(*mIntArray)->runDirty();
 	}
 	
 	bool BitCount::isTrue(int16_t nId)
@@ -44,18 +44,18 @@ namespace cc {
 		{
 			mValue[i] = 0;
 		}
-		mIntArray->runDirty();
+		(*mIntArray)->runDirty();
 	}
 	
-	void BitCount::runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
+	void BitCount::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
 	{
 		this->runInit(nIntArray, nBegin, nEnd);
 	}
 	
-	void BitCount::runInit(IntArray * nIntArray, int16_t nBegin, int16_t nEnd)
+	void BitCount::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);
-		mIntArray = nIntArray;
+		mIntArray = (&nIntArray);
 		N = nEnd - nBegin;
 	}
 	
@@ -66,7 +66,7 @@ namespace cc {
 	{
 	}
 	
-	BitCount::BitCount(IntArray * nIntArray, int16_t nBegin, int16_t nEnd)
+	BitCount::BitCount(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
 	{
 		runInit(nIntArray, nBegin, nEnd);
 	}
