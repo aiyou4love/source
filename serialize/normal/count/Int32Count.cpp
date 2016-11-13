@@ -46,6 +46,7 @@ namespace cc {
 		for (int16_t i = 0; i < N; ++i) {
 			if ( 0 == mValue[i] ) {
 				mValue[i] = nValue;
+				break;
 			}
 		}
 		(*mIntArray)->runDirty();
@@ -56,6 +57,7 @@ namespace cc {
 		for (int16_t i = 0; i < N; ++i) {
 			if ( nValue == int16_t(mValue[i] >> 16) ) {
 				mValue[i] = 0;
+				break;
 			}
 		}
 		(*mIntArray)->runDirty();
@@ -66,6 +68,7 @@ namespace cc {
 		for (int16_t i = 0; i < N; ++i) {
 			if ( nValue == mValue[i] ) {
 				mValue[i] = 0;
+				break;
 			}
 		}
 		(*mIntArray)->runDirty();

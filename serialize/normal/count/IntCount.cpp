@@ -105,7 +105,7 @@ namespace cc {
 		for (int16_t i = 1; i <= I; ++i) {
 			int16_t value_ = this->getInt(i);
 			if ( 0 == value_ ) {
-				this->setInt(i, value_);
+				this->setInt(i, nValue);
 			}
 		}
 		(*mIntArray)->runDirty();
@@ -117,6 +117,7 @@ namespace cc {
 			int16_t value_ = this->getInt(i);
 			if ( nValue == value_ ) {
 				this->runReset(i);
+				break;
 			}
 		}
 		(*mIntArray)->runDirty();
@@ -170,10 +171,8 @@ namespace cc {
 	IntCount::IntCount()
 		: mIntArray (nullptr)
 		, mValue (nullptr)
-		, N (0)
-		, M (0)
-		, C (0)
-		, I (0)
+		, N (0) , M (0)
+		, C (0) , I (0)
 	{
 	}
 	
