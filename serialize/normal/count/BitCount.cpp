@@ -56,7 +56,7 @@ namespace cc {
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);
 		mIntArray = (&nIntArray);
-		N = nEnd - nBegin;
+		N = nEnd - nBegin + 1;
 	}
 	
 	BitCount::BitCount()

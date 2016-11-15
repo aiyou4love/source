@@ -168,7 +168,7 @@ namespace cc {
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);
 		mIntArray = (&nIntArray);
-		N = nEnd - nBegin;
+		N = nEnd - nBegin + 1;
 	}
 	
 	Int16Count::Int16Count()

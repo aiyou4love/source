@@ -163,7 +163,7 @@ namespace cc {
 	{
 		mValue = nIntArray->rangeInts(nBegin, nEnd);
 		mIntArray = (&nIntArray);
-		N = nEnd - nBegin;
+		N = nEnd - nBegin + 1;
 		M = static_cast<int16_t>(::pow(2, nC)) - 1;
 		C = nC; I = (32 * N) / C;
 	}

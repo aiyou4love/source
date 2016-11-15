@@ -4,8 +4,8 @@ namespace cc {
 	
 	int32_t * IntArray::rangeInts(int16_t nBegin, int16_t nEnd)
 	{
-		if ( (nBegin <= 0) || (nBegin >= N) 
-			|| (nEnd > N) || (nBegin >= nEnd) ) {
+		if ( (nBegin <= 0) || (nBegin > N) 
+			|| (nEnd > N) || (nBegin > nEnd) ) {
 			LOGE("[%s]%d,%d", __METHOD__, nBegin, nEnd);
 			return nullptr;
 		}
