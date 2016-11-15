@@ -137,7 +137,7 @@ namespace cc {
 		int16_t pos1_ = end_ % 32;
 		int32_t value_ = 0;
 		if (index0_ == index1_) {
-			mValue[index0_] = (~(M << pos0_));
+			mValue[index0_] &= (~(M << pos0_));
 		} else {
 			if (pos1_ > 0) {
 				mValue[index1_] >>= pos1_;
