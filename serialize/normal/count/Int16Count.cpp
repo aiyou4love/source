@@ -89,20 +89,22 @@ namespace cc {
 	void Int16Count::pushInt(int16_t nValue)
 	{
 		for (int16_t i = 0; i < (N * 2); ++i) {
-			if ( 0 == (i % 2) ) {
-				int16_t value_ = int16_t(mValue[i / 2] & 0xFFFF);
+			int16_t id_ = i / 2;
+			int16_t bit_ = i % 2;
+			if ( 0 == bit_ ) {
+				int16_t value_ = int16_t(mValue[id_] & 0xFFFF);
 				if ( 0 != value_ ) {
 					continue;
 				}
-				mValue[i / 2] |= nValue;
+				mValue[id_] |= nValue;
 				break;
 			} else {
-				int16_t value_ = int16_t(mValue[i / 2] >> 16);
+				int16_t value_ = int16_t(mValue[id_] >> 16);
 				if ( 0 != value_ ) {
 					continue;
 				}
 				int32_t value0_ = (nValue << 16);
-				mValue[i / 2] |= value0_;
+				mValue[id_] |= value0_;
 				break;
 			}
 		}
@@ -112,19 +114,21 @@ namespace cc {
 	void Int16Count::popInt(int16_t nValue)
 	{
 		for (int16_t i = 0; i < (N * 2); ++i) {
-			if ( 0 == (i % 2) ) {
-				int16_t value_ = int16_t(mValue[i / 2] & 0xFFFF);
+			int16_t id_ = i / 2;
+			int16_t bit_ = i % 2;
+			if ( 0 == bit_ ) {
+				int16_t value_ = int16_t(mValue[id_] & 0xFFFF);
 				if ( nValue != value_ ) {
 					continue;
 				}
-				mValue[i / 2] &= 0xFFFF0000;
+				mValue[id_] &= 0xFFFF0000;
 				break;
 			} else {
-				int16_t value_ = int16_t(mValue[i / 2] >> 16);
+				int16_t value_ = int16_t(mValue[id_] >> 16);
 				if ( nValue != value_ ) {
 					continue;
 				}
-				mValue[i / 2] &= 0xFFFF;
+				mValue[id_] &= 0xFFFF;
 				break;
 			}
 		}
@@ -137,10 +141,12 @@ namespace cc {
 			LOGE("[%s]%d,%d", __METHOD__, N, nId);
 			return;
 		}
-		if ( 0 == (nId % 2) ) {
-			mValue[nId / 2] &= 0xFFFF0000;
+		int16_t id_ = (nId - 1) / 2;
+		int16_t bit_ = (nId - 1) % 2;
+		if (0 == bit_) {
+			mValue[bit_] &= 0xFFFF0000;
 		} else {
-			mValue[nId / 2] &= 0xFFFF;
+			mValue[bit_] &= 0xFFFF;
 		}
 		(*mIntArray)->runDirty();
 	}
