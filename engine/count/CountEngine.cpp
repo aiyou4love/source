@@ -40,16 +40,6 @@ namespace cc {
 		return it->second;
 	}
 	
-	IntIndexPtr& CountEngine::getIntIndex(int16_t nIndex)
-	{
-		auto it = mIntIndexs.find(nIndex);
-		if ( it == mIntIndexs.end() ) {
-			LOGE("[%s]%d", __METHOD__, nIndex);
-			return 0;
-		}
-		return it->second;
-	}
-	
 	void CountEngine::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();

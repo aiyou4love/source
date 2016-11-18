@@ -19,7 +19,8 @@ namespace cc {
 	
 	bool IntIndex::isDefault()
 	{
-		return ( (0 == mId) || (0 == mClassify) || (0 == mType) || (0 == mCount));
+		return ( (0 == mId) || (0 == mClassify)
+			|| (0 == mType) || (0 == mCount));
 	}
 	
 	int16_t IntIndex::getKey()

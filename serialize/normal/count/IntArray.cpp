@@ -28,6 +28,7 @@ namespace cc {
 	void IntArray::runClear()
 	{
 		memset(mValue, 0, 4 * mCount);
+		mIsDirty = true;
 	}
 	
 	void IntArray::runDirty()

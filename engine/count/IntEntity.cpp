@@ -12,13 +12,17 @@ namespace cc {
 		intArray_->runInit(type_, count_);
 		mIntArrays[id_] = intArray_;
 	}
-	
-	
+		
 	void IntEntity::clearIntArray(int16_t nType)
 	{
 		auto it = mIntArrays.begin();
 		for ( ; it != mIntArrays.end(); ++it ) {
 			IntArrayPtr& intArray_ = it->second;
+			int16_t type_ = intArray_->getType();
+			if (nType != type_) {
+				continue;
+			}
+			intArray_->runClear();
 		}
 	}
 	
