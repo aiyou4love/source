@@ -22,7 +22,7 @@ namespace cc {
 		return ( (0 == mId) || (0 == mBegin) || (0 == mEnd) );
 	}
 	
-	int16_t CountIndex::getKey()
+	int32_t CountIndex::getKey()
 	{
 		return mId;
 	}

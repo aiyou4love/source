@@ -11,6 +11,9 @@
 #include "normal/string/StringTable.hpp"
 #include "normal/count/IntArray.hpp"
 #include "normal/count/BitCount.hpp"
+#include "normal/count/Int4Count.hpp"
+#include "normal/count/Int8Count.hpp"
+#include "normal/count/Int16Count.hpp"
 #include "normal/count/Int32Count.hpp"
 #include "normal/count/IntCount.hpp"
 

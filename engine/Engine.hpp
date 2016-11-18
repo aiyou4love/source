@@ -24,6 +24,7 @@
 #include "aspect/trigger/EtriggerType.hpp"
 #include "aspect/trigger/Trigger.hpp"
 #include "aspect/entity/Property.hpp"
+#include "aspect/entity/EentityType.hpp"
 #include "aspect/entity/Entity.hpp"
 #include "aspect/condition/Condition.hpp"
 #include "aspect/condition/ConditionEngine.hpp"
@@ -68,5 +69,10 @@
 #include "net/accept/AcceptEngine.hpp"
 #include "net/accept/SessionMgr.hpp"
 #include "net/accept/AcceptRemove.hpp"
+
+#include "count/CountIndex.hpp"
+#include "count/IntIndex.hpp"
+#include "count/IntEntity.hpp"
+#include "count/CountEngine.hpp"
 
 extern void engineInit();

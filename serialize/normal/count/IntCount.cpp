@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	void IntCount::setInt(int16_t nId, int16_t nValue)
+	void IntCount::setInt(int16_t nId, int32_t nValue)
 	{
 		if ( (nId < 1) || (nId > I) || (nValue > M) ) {
 			LOGE("[%s]%d,%d,%d,%d", __METHOD__, I, nId, nValue, M);
@@ -30,7 +30,7 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	int16_t IntCount::getInt(int16_t nId)
+	int32_t IntCount::getInt(int16_t nId)
 	{
 		if ( (nId < 1) || (nId > I) ) {
 			LOGE("[%s]%d,%d", __METHOD__, I, nId);
@@ -47,10 +47,10 @@ namespace cc {
 			value_ |= (mValue[index1_] << (32 - pos0_));
 		}
 		value_ &= M;
-		return static_cast<int16_t>(value_);
+		return value_;
 	}
 	
-	void IntCount::addInt(int16_t nId, int16_t nValue, bool nCycle)
+	void IntCount::addInt(int16_t nId, int32_t nValue, bool nCycle)
 	{
 		if ( (nId < 1) || (nId > I) || (nValue > M) ) {
 			LOGE("[%s]%d,%d,%d,%d", __METHOD__, I, nId, nValue, M);
@@ -96,7 +96,7 @@ namespace cc {
 		this->addInt(nId, 1, nCycle);
 	}
 	
-	void IntCount::pushInt(int16_t nValue)
+	void IntCount::pushInt(int32_t nValue)
 	{
 		if (nValue > M) {
 			LOGE("[%s]%d,%d,%d", __METHOD__, I, nValue, M);
@@ -111,10 +111,10 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void IntCount::popInt(int16_t nValue)
+	void IntCount::popInt(int32_t nValue)
 	{
 		for (int16_t i = 1; i <= I; ++i) {
-			int16_t value_ = this->getInt(i);
+			int32_t value_ = this->getInt(i);
 			if ( nValue == value_ ) {
 				this->runReset(i);
 				break;
@@ -164,7 +164,7 @@ namespace cc {
 		mValue = nIntArray->rangeInts(nBegin, nEnd);
 		mIntArray = (&nIntArray);
 		N = nEnd - nBegin + 1;
-		M = static_cast<int16_t>(::pow(2, nC)) - 1;
+		M = static_cast<int32_t>(::pow(2, nC)) - 1;
 		C = nC; I = (32 * N) / C;
 	}
 	

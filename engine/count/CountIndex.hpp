@@ -6,7 +6,7 @@ namespace cc {
 	{
 	public:
 		template <class T>
-		void runInit(T * nCount, IntArray * nIntArray)
+		void runInit(T * nCount, IntArrayPtr& nIntArray)
 		{
 			nCount->runInit(nIntArray, mBegin, mEnd, mCount);
 		}
@@ -21,11 +21,11 @@ namespace cc {
 			nSerialize->runNumber(mBegin, "begin");
 			nSerialize->runNumber(mEnd, "end");
 			nSerialize->runNumber(mCount, "count");
-			nSerialize->runNumber(mId, "key");
+			nSerialize->runCrc32(mId, "key");
 		}
 		
 		bool isDefault();
-		int16_t getKey();
+		int32_t getKey();
 		
 		CountIndex();
 		~CountIndex();
@@ -34,7 +34,7 @@ namespace cc {
 		int16_t mBegin;
 		int16_t mEnd;
 		int16_t mCount;
-		int16_t mId;
+		int32_t mId;
 	};
 	typedef SPTR<CountIndex> CountIndexPtr;
 	

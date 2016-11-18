@@ -2,6 +2,34 @@
 
 namespace cc {
 	
+	void CountEngine::initEntity(int16_t nClassify, EntityPtr& nEntity)
+	{
+		IntEntity * intEntity_ = new IntEntity();
+		
+		auto it = mIntIndexs.begin();
+		for ( ; it != mIntIndexs.end(); ++it ) {
+			IntIndexPtr& intIndex_ = it->second;
+			int16_t classify_ = intIndex_->getClassify();
+			if ( nClassify != classify_ ) {
+				continue;
+			}
+			intEntity_->initIntIndex(intIndex_);
+		}
+		PropertyPtr property_(intEntity_);
+		nEntity->insertProperty(EentityType::mIntArray, property_);
+	}
+	
+	void CountEngine::clearEntity(int16_t nType, EntityPtr& nEntity)
+	{
+		PropertyPtr * property_ = nEntity->getProperty(EentityType::mIntArray);
+		if (nullptr == property_) {
+			LOGE("[%s]", __METHOD__);
+			return;
+		}
+		IntEntityPtr intEntity_ = PTR_DCST<IntEntity>(*property_);
+		intEntity_->clearIntArray(nType);
+	}
+	
 	CountIndexPtr& CountEngine::getCountIndex(int16_t nIndex)
 	{
 		auto it = mCountIndexs.find(nIndex);
@@ -12,15 +40,14 @@ namespace cc {
 		return it->second;
 	}
 	
-	int16_t CountEngine::getIntN(int16_t nIndex)
+	IntIndexPtr& CountEngine::getIntIndex(int16_t nIndex)
 	{
 		auto it = mIntIndexs.find(nIndex);
 		if ( it == mIntIndexs.end() ) {
 			LOGE("[%s]%d", __METHOD__, nIndex);
 			return 0;
 		}
-		IntIndexPtr& intIndex_ = it->second;
-		return intIndex_->getN();
+		return it->second;
 	}
 	
 	void CountEngine::runPreinit()

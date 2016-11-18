@@ -2,14 +2,24 @@
 
 namespace cc {
 	
-	int16_t IntIndex::getN()
+	int16_t IntIndex::getClassify()
 	{
-		return N;
+		return mClassify;
+	}
+	
+	int16_t IntIndex::getType()
+	{
+		return mType;
+	}
+	
+	int16_t IntIndex::getCount()
+	{
+		return mCount;
 	}
 	
 	bool IntIndex::isDefault()
 	{
-		return ( (0 == mId) || (0 == N) );
+		return ( (0 == mId) || (0 == mClassify) || (0 == mType) || (0 == mCount));
 	}
 	
 	int16_t IntIndex::getKey()
@@ -19,14 +29,18 @@ namespace cc {
 	
 	IntIndex::IntIndex()
 		: mId (0)
-		, N (0)
+		, mClassify (0)
+		, mType (0)
+		, mCount (0)
 	{
 	}
 	
 	IntIndex::~IntIndex()
 	{
 		mId = 0;
-		N = 0;
+		mClassify = 0;
+		mType = 0;
+		mCount = 0;
 	}
 	
 }

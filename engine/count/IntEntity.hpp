@@ -5,6 +5,9 @@ namespace cc {
 	class IntEntity : public Property
 	{
 	public:
+		void initIntIndex(IntIndexPtr& nIntIndex);
+		void clearIntArray(int16_t nType);
+		
 		IntEntity();
 		~IntEntity();
 		
@@ -14,4 +17,3 @@ namespace cc {
 	typedef SPTR<IntEntity> IntEntityPtr;
 	
 }
- 

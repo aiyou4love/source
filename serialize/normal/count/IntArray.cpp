@@ -4,24 +4,30 @@ namespace cc {
 	
 	int32_t * IntArray::rangeInts(int16_t nBegin, int16_t nEnd)
 	{
-		if ( (nBegin <= 0) || (nBegin > N) 
-			|| (nEnd > N) || (nBegin > nEnd) ) {
+		if ( (nBegin <= 0) || (nBegin > mCount) 
+			|| (nEnd > mCount) || (nBegin > nEnd) ) {
 			LOGE("[%s]%d,%d", __METHOD__, nBegin, nEnd);
 			return nullptr;
 		}
 		return (mValue + nBegin - 1);
 	}
 	
-	void IntArray::runInit(int16_t nN)
+	void IntArray::runInit(int16_t nType, int16_t nCount)
 	{
-		mValue = new int32_t[nN];
-		memset(mValue, 0, 4 * N);
-		N = nN;
+		mValue = new int32_t[nCount];
+		memset(mValue, 0, 4 * nCount);
+		mCount = nCount;
+		mType = nType;
+	}
+	
+	int16_t IntArray::getType()
+	{
+		return mType;
 	}
 	
 	void IntArray::runClear()
 	{
-		memset(mValue, 0, 4 * N);
+		memset(mValue, 0, 4 * mCount);
 	}
 	
 	void IntArray::runDirty()
@@ -42,7 +48,8 @@ namespace cc {
 	IntArray::IntArray()
 		: mIsDirty (false)
 		, mValue (nullptr)
-		, N (0)
+		, mCount (0)
+		, mType (0)
 	{
 	}
 	
@@ -53,7 +60,8 @@ namespace cc {
 			mValue = nullptr;
 		}
 		mIsDirty = false;
-		N = 0;
+		mCount = 0;
+		mType = 0;
 	}
 	
 }

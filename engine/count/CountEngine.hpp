@@ -5,8 +5,9 @@ namespace cc {
 	class CountEngine : noncopyable
 	{
 	public:
+		void initEntity(int16_t nClassify, EntityPtr& nEntity);
+		void clearEntity(int16_t nType, EntityPtr& nEntity);
 		CountIndexPtr& getCountIndex(int16_t nIndex);
-		int16_t getIntN(int16_t nIndex);
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
