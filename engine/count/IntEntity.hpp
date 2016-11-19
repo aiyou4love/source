@@ -8,6 +8,8 @@ namespace cc {
 		void initIntIndex(IntIndexPtr& nIntIndex);
 		void clearIntArray(int16_t nType);
 		
+		IntArrayPtr * findIntArray(int16_t nIntId);
+		
 		IntEntity();
 		~IntEntity();
 		

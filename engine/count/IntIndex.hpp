@@ -26,10 +26,11 @@ namespace cc {
 		~IntIndex();
 		
 	private:
-		int16_t mId;
 		int16_t mClassify;
 		int16_t mType;
 		int16_t mCount;
+		
+		int16_t mId;
 	};
 	typedef SPTR<IntIndex> IntIndexPtr;
 	

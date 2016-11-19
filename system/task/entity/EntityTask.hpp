@@ -14,7 +14,8 @@ namespace cc {
 		~EntityTask();
 		
 	private:
-		BitCount mBitCount;
+		TaskAccept mTaskAccept;
+		TaskFinish mTaskFinish;
 	};
 	typedef SPTR<EntityTask> EntityTaskPtr;
 	

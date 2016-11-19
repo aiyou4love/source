@@ -1,4 +1,4 @@
-#include "../../Serialize.hpp"
+#include "../Engine.hpp"
 
 namespace cc {
 	
@@ -83,43 +83,12 @@ namespace cc {
 		mValue[nId - 1] = 0;
 	}
 	
-	void Int32Count::runReset()
-	{
-		for (int16_t i = 0; i < N; ++i) {
-			mValue[i] = 0;
-		}
-		(*mIntArray)->runDirty();
-	}
-	
-	void Int32Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
-	{
-		this->runInit(nIntArray, nBegin, nEnd);
-	}
-	
-	void Int32Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
-	{
-		mValue = nIntArray->rangeInts(nBegin, nEnd);
-		mIntArray = (&nIntArray);
-		N = nEnd - nBegin + 1;
-	}
-	
 	Int32Count::Int32Count()
-		: mIntArray (nullptr)
-		, mValue (nullptr)
-		, N (0)
 	{
-	}
-	
-	Int32Count::Int32Count(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
-	{
-		runInit(nIntArray, nBegin, nEnd);
 	}
 	
 	Int32Count::~Int32Count()
 	{
-		mIntArray = nullptr;
-		mValue = nullptr;
-		N = 0;
 	}
 	
 }

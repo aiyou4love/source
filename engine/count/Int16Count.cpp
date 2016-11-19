@@ -1,4 +1,4 @@
-#include "../../Serialize.hpp"
+#include "../Engine.hpp"
 
 namespace cc {
 	
@@ -151,43 +151,12 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void Int16Count::runReset()
-	{
-		for (int16_t i = 0; i < N; ++i) {
-			mValue[i] = 0;
-		}
-		(*mIntArray)->runDirty();
-	}
-	
-	void Int16Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
-	{
-		this->runInit(nIntArray, nBegin, nEnd);
-	}
-	
-	void Int16Count::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
-	{
-		mValue = nIntArray->rangeInts(nBegin, nEnd);
-		mIntArray = (&nIntArray);
-		N = nEnd - nBegin + 1;
-	}
-	
 	Int16Count::Int16Count()
-		: mIntArray (nullptr)
-		, mValue (nullptr)
-		, N (0)
 	{
-	}
-	
-	Int16Count::Int16Count(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
-	{
-		runInit(nIntArray, nBegin, nEnd);
 	}
 	
 	Int16Count::~Int16Count()
 	{
-		mIntArray = nullptr;
-		mValue = nullptr;
-		N = 0;
 	}
 	
 }

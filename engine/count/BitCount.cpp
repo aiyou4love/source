@@ -1,4 +1,4 @@
-#include "../../Serialize.hpp"
+#include "../Engine.hpp"
 
 namespace cc {
 	
@@ -38,44 +38,12 @@ namespace cc {
 		return (((mValue[id_] >> bit_) & 0x1) > 0);
 	}
 	
-	void BitCount::runReset()
-	{
-		for (int16_t i = 0; i < N; ++i)
-		{
-			mValue[i] = 0;
-		}
-		(*mIntArray)->runDirty();
-	}
-	
-	void BitCount::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd, int16_t nC)
-	{
-		this->runInit(nIntArray, nBegin, nEnd);
-	}
-	
-	void BitCount::runInit(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
-	{
-		mValue = nIntArray->rangeInts(nBegin, nEnd);
-		mIntArray = (&nIntArray);
-		N = nEnd - nBegin + 1;
-	}
-	
 	BitCount::BitCount()
-		: mIntArray (nullptr)
-		, mValue (nullptr)
-		, N (0)
 	{
-	}
-	
-	BitCount::BitCount(IntArrayPtr& nIntArray, int16_t nBegin, int16_t nEnd)
-	{
-		runInit(nIntArray, nBegin, nEnd);
 	}
 	
 	BitCount::~BitCount()
 	{
-		mIntArray = nullptr;
-		mValue = nullptr;
-		N = 0;
 	}
 	
 }

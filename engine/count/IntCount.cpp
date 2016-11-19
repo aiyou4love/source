@@ -1,4 +1,4 @@
-#include "../../Serialize.hpp"
+#include "../Engine.hpp"
 
 namespace cc {
 	
@@ -149,23 +149,17 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
-	void IntCount::runReset()
+	void IntCount::runInit(IntArrayPtr& nIntArray, CountIndexPtr& nCountIndex)
 	{
-		for (int16_t i = 0; i < N; ++i)
-		{
-			mValue[i] = 0;
-		}
-		(*mIntArray)->runDirty();
-	}
-	
-	void IntCount::runInit(IntArrayPtr& nIntArray,
-		int16_t nBegin, int16_t nEnd, int16_t nC)
-	{
-		mValue = nIntArray->rangeInts(nBegin, nEnd);
+		int16_t begin_ = nCountIndex->getBegin();
+		int16_t end_ = nCountIndex->getEnd();
+		int16_t count_ = nCountIndex->getCount();
+		
+		mValue = nIntArray->rangeInts(begin_, end_);
 		mIntArray = (&nIntArray);
-		N = nEnd - nBegin + 1;
-		M = static_cast<int32_t>(::pow(2, nC)) - 1;
-		C = nC; I = (32 * N) / C;
+		N = end_ - begin_ + 1;
+		M = static_cast<int32_t>(::pow(2, count_)) - 1;
+		C = count_; I = (32 * N) / C;
 	}
 	
 	IntCount::IntCount()
@@ -174,12 +168,6 @@ namespace cc {
 		, N (0) , M (0)
 		, C (0) , I (0)
 	{
-	}
-	
-	IntCount::IntCount(IntArrayPtr& nIntArray, 
-		int16_t nBegin, int16_t nEnd, int16_t nC)
-	{
-		runInit(nIntArray, nBegin, nEnd, nC);
 	}
 	
 	IntCount::~IntCount()

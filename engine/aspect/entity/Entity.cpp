@@ -70,6 +70,16 @@ namespace cc {
 		return mState;
 	}
 	
+	void Entity::setEntityType(int16_t nEntityType)
+	{
+		mEntityType = nEntityType;
+	}
+	
+	int16_t Entity::getEntityType()
+	{
+		return mEntityType;
+	}
+	
 	Entity::Entity()
 	{
 		mPropertys.clear();
@@ -78,6 +88,8 @@ namespace cc {
 		mTriggers.clear();
 		
 		mState = 0;
+		
+		mEntityType = 0;
 	}
 	
 	Entity::~Entity()
@@ -88,6 +100,8 @@ namespace cc {
 		mTriggers.clear();
 		
 		mState = 0;
+		
+		mEntityType = 0;
 	}
 	
 }

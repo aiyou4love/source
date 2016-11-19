@@ -18,6 +18,9 @@ namespace cc {
 		void setState(int32_t nState);
 		int32_t getState();
 		
+		void setEntityType(int16_t nEntityType);
+		int16_t getEntityType();
+		
 		Entity();
 		virtual ~Entity();
 		
@@ -26,6 +29,8 @@ namespace cc {
 		
 		map<int32_t, TriggerPtr *> mTriggers;
 		int32_t mState;
+		
+		int16_t mEntityType;
 		
 		deque<ValuePtr> mValues;
 		mutex mMutex;
