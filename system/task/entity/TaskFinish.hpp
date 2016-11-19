@@ -8,7 +8,8 @@ namespace cc {
 		void pushTask(int16_t nTaskId);
 		void popTask(int16_t nTaskId);
 		
-		void runInit(IntArray * nIntArray);
+		void runInit(EntityPtr& nEntity);
+		const char * countName();
 		
 		TaskFinish();
 		~TaskFinish();

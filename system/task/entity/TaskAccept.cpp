@@ -2,27 +2,25 @@
 
 namespace cc {
 	
-	void TaskAccept::pushTask(int16_t nTaskId, int8_t nIndex)
-	{
-		int32_t value_ = linkInt16(nTaskId, int16_t(nIndex));
-		mInt32Count.pushInt(value_);
-	}
-	
 	void TaskAccept::pushTask(int16_t nTaskId)
 	{
-		this->pushTask(nTaskId, int8_t(0));
+		mInt16Count.pushInt(nTaskId);
 	}
 	
 	void TaskAccept::popTask(int16_t nTaskId)
 	{
-		mInt32Count.popInt(nTaskId);
+		mInt16Count.popInt(nTaskId);
 	}
 	
-	void TaskAccept::runInit(IntArray * nIntArray)
+	void TaskAccept::runInit(EntityPtr& nEntity)
 	{
-		int16_t begin_ = 0;
-		int16_t end_ = 0;
-		mInt32Count.runInit(nIntArray, begin_, end_);
+		CountEngine& countEngine_ = CountEngine::instance();
+		countEngine_.initCount(&mInt16Count, nEntity, countName());
+	}
+	
+	const char * TaskAccept::countName()
+	{
+		return "taskAccept";
 	}
 	
 	TaskAccept::TaskAccept()

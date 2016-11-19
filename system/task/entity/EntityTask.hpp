@@ -2,13 +2,10 @@
 
 namespace cc {
 	
-	class EntityTask : noncopyable
+	class EntityTask : public Property
 	{
 	public:
-		void pushTask(int16_t nTaskId);
-		void popTask(int16_t nTaskId);
-		
-		void runInit(IntArray * nIntArray);
+		void runInit(EntityPtr& nEntity);
 		
 		EntityTask();
 		~EntityTask();

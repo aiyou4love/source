@@ -27,10 +27,16 @@ namespace cc {
 		return mCrcId;
 	}
 	
+	int16_t CountIndex::getClassify()
+	{
+		return mClassify;
+	}
+	
 	bool CountIndex::isDefault()
 	{
 		return ( (0 == mId) || (0 == mBegin) || (0 == mEnd)
-			|| (0 == mCount) || (0 == mInt) || (0 == mCrcId) );
+			|| (0 == mCount) || (0 == mInt) || (0 == mCrcId)
+			|| (0 == mClassify) );
 	}
 	
 	int32_t CountIndex::getKey()
@@ -45,6 +51,7 @@ namespace cc {
 		, mCount (0)
 		, mInt (0)
 		, mCrcId (0)
+		, mClassify (0)
 	{
 	}
 	
@@ -56,6 +63,7 @@ namespace cc {
 		mId = 0;
 		mInt = 0;
 		mCrcId = 0;
+		mClassify = 0;
 	}
 	
 }

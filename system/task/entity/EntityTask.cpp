@@ -2,28 +2,17 @@
 
 namespace cc {
 	
-	void TodayFinish::pushTask(int16_t nTaskId)
+	void EntityTask::runInit(EntityPtr& nEntity)
 	{
-		mBitCount.runTrue(nTaskId);
+		mTaskAccept.runInit(nEntity);
+		mTaskFinish.runInit(nEntity);
 	}
 	
-	void TodayFinish::popTask(int16_t nTaskId)
-	{
-		mBitCount.runReset(nTaskId);
-	}
-	
-	void TodayFinish::runInit(IntArray * nIntArray)
-	{
-		int16_t begin_ = 0;
-		int16_t end_ = 0;
-		mBitCount.runInit(nIntArray, begin_, end_);
-	}
-	
-	TodayFinish::TodayFinish()
+	EntityTask::EntityTask()
 	{
 	}
 	
-	TodayFinish::~TodayFinish()
+	EntityTask::~EntityTask()
 	{
 	}
 	

@@ -8,11 +8,14 @@ namespace cc {
 		void pushTask(int16_t nTaskId);
 		void popTask(int16_t nTaskId);
 		
+		void runInit(EntityPtr& nEntity);
+		const char * countName();
+		
 		TaskAccept();
 		~TaskAccept();
 		
 	private:
-		Int16Count mIntCount;
+		Int16Count mInt16Count;
 	};
 	
 }

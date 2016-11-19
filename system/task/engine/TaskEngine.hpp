@@ -9,7 +9,7 @@ namespace cc {
 		void headSerialize(T& nSerialize, const char * nName)
 		{
 			if ( 0 == strcmp(streamName(), nName) ) {
-				
+				nSerialize.template runMapStreamPtrs<int16_t, TaskConfigPtr>(mTaskConfigs, "taskConfigs", "taskConfig");
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}
@@ -27,13 +27,9 @@ namespace cc {
 		~TaskEngine();
 		
 	private:
+		map<int16_t, TaskConfigPtr> mTaskConfigs;
+		
 		static TaskEngine mTaskEngine;
-		
-		int16_t mFinishCount;
-		int16_t mFinishIndex;
-		
-		int16_t mAcceptCount;
-		int16_t mAcceptIndex;
 	};
 	
 }

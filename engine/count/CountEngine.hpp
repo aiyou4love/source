@@ -5,6 +5,7 @@ namespace cc {
 	class CountEngine : noncopyable
 	{
 	public:
+		void initCount(ICount * nCount, EntityPtr& nEntity, CountIndexPtr& nCountIndex);
 		void initCount(ICount * nCount, EntityPtr& nEntity, const char * nIndex);
 		
 		void clearEntity(int16_t nType, EntityPtr& nEntity);

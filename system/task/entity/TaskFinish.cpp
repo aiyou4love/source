@@ -12,11 +12,15 @@ namespace cc {
 		mBitCount.runReset(nTaskId);
 	}
 	
-	void TaskFinish::runInit(IntArray * nIntArray)
+	void TaskFinish::runInit(EntityPtr& nEntity)
 	{
-		int16_t begin_ = 0;
-		int16_t end_ = 0;
-		mBitCount.runInit(nIntArray, begin_, end_);
+		CountEngine& countEngine_ = CountEngine::instance();
+		countEngine_.initCount(&mBitCount, nEntity, countName());
+	}
+	
+	const char * TaskFinish::countName()
+	{
+		return "taskFinish";
 	}
 	
 	TaskFinish::TaskFinish()

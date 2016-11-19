@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	void CountEngine::initCount(ICount * nCount, EntityPtr& nEntity, const char * nIndex)
+	void CountEngine::initCount(ICount * nCount, EntityPtr& nEntity, CountIndexPtr& nCountIndex)
 	{
 		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mIntArray);
 		if (nullptr == property_) {
@@ -11,23 +11,32 @@ namespace cc {
 		}
 		IntEntityPtr intEntity_ = PTR_DCST<IntEntity>(*property_);
 		
+		int16_t int_ = nCountIndex->getInt();
+		IntArrayPtr * intArray_ = intEntity_->findIntArray(int_);
+		if (nullptr == intArray_) {
+			LOGE("[%s]int:%d", __METHOD__, int_);
+			return;
+		}
+		nCount->runInit((*intArray_), nCountIndex);
+	}
+	
+	void CountEngine::initCount(ICount * nCount, EntityPtr& nEntity, const char * nIndex)
+	{
 		int16_t entityType_ = nEntity->getEntityType();
 		int32_t index_ = stringCrc(nIndex);
 		
 		auto it = mCountIndexs.begin();
 		for ( ; it == mCountIndexs.end(); ++it ) {
 			CountIndexPtr& countIndex_ = it->second;
-			int32_t getCrcId();
+			int32_t classify_ = countIndex_->getClassify();
+			int32_t crcId_ = countIndex_->getCrcId();
+			if ((classify_ != entityType_) 
+				|| (crcId_ != index_) ) {
+				continue;
+			}
+			this->initCount(nCount, nEntity, countIndex_);
+			break;
 		}
-		CountIndexPtr& countIndex_ = it->second;
-		int16_t int_ = countIndex_->getInt();
-		
-		IntArrayPtr * intArray_ = intEntity_->findIntArray(int_);
-		if (nullptr == intArray_) {
-			LOGE("[%s]int:%d", __METHOD__, int_);
-			return;
-		}
-		nCount->runInit((*intArray_), countIndex_);
 	}
 	
 	void CountEngine::initEntity(EntityPtr& nEntity)
