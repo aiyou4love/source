@@ -8,6 +8,8 @@ namespace cc {
 		void setInt(int16_t nId, int16_t nValue);
 		int16_t getInt(int16_t nId);
 		
+		bool checkValue(int16_t nValue);
+		
 		void addInt(int16_t nId, int16_t nValue);
 		void addInt(int16_t nId);
 		

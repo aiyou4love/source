@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class TaskAccept : noncopyable
+	class DailyTask : noncopyable
 	{
 	public:
 		void pushTask(int16_t nTaskId);
@@ -12,8 +12,8 @@ namespace cc {
 		void runInit(EntityPtr& nEntity);
 		const char * countName();
 		
-		TaskAccept();
-		~TaskAccept();
+		DailyTask();
+		~DailyTask();
 		
 	private:
 		Int16Count mInt16Count;

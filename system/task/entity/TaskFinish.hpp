@@ -7,6 +7,7 @@ namespace cc {
 	public:
 		void pushTask(int16_t nTaskId);
 		void popTask(int16_t nTaskId);
+		bool checkTask(int16_t nTaskId);
 		
 		void runInit(EntityPtr& nEntity);
 		const char * countName();
@@ -15,8 +16,7 @@ namespace cc {
 		~TaskFinish();
 		
 	private:
-		BitCount mBitCount;
+		Int16Count mInt16Count;
 	};
-	typedef SPTR<TaskFinish> TaskFinishPtr;
 	
 }

@@ -1,13 +1,13 @@
-#include "../Engine.hpp"
+#include "../../System.hpp"
 
 namespace cc {
 	
-	int32_t TaskConfig::getAcceptId()
+	int16_t TaskConfig::getTaskIndex()
 	{
-		return mAcceptId;
+		return mTaskIndex;
 	}
 	
-	int32_t TaskConfig::getFinishId()
+	int16_t TaskConfig::getTaskType()
 	{
 		return mFinishId;
 	}
@@ -19,7 +19,7 @@ namespace cc {
 	
 	bool TaskConfig::isDefault()
 	{
-		return ( (0 == mFinishId) || (0 == mTaskId) );
+		return ( (0 == mTaskType) || (0 == mTaskId) );
 	}
 	
 	int16_t TaskConfig::getKey()
@@ -28,17 +28,17 @@ namespace cc {
 	}
 	
 	TaskConfig::TaskConfig()
-		: mAcceptId (0)
-		, mFinishId (0)
+		: mTaskType (0)
 		, mTaskId (0)
+		, mTaskIndex (0)
 	{
 	}
 	
 	TaskConfig::~TaskConfig()
 	{
-		mAcceptId = 0;
-		mFinishId = 0;
+		mTaskType = 0;
 		mTaskId = 0;
+		mTaskIndex = 0;
 	}
 	
 }

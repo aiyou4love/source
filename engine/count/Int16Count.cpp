@@ -36,6 +36,31 @@ namespace cc {
 		}
 	}
 	
+	bool Int16Count::checkValue(int16_t nValue)
+	{
+		bool result_ = false;
+		for (int16_t i = 0; i < (N * 2); ++i) {
+			int16_t id_ = i / 2;
+			int16_t bit_ = i % 2;
+			if ( 0 == bit_ ) {
+				int16_t value_ = int16_t(mValue[id_] & 0xFFFF);
+				if ( nValue != value_ ) {
+					continue;
+				}
+				result_ = true;
+				break;
+			} else {
+				int16_t value_ = int16_t(mValue[id_] >> 16);
+				if ( nValue != value_ ) {
+					continue;
+				}
+				result_ = true;
+				break;
+			}
+		}
+		return result_;
+	}
+	
 	void Int16Count::addInt(int16_t nId, int16_t nValue)
 	{
 		if ( (nId < 1) || (nId > (N * 2)) ) {

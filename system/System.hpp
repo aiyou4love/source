@@ -34,4 +34,19 @@
 #include "time/server/cServerTime.hpp"
 #include "time/client/cServerTime.hpp"
 
+#include "task/engine/EtaskType.hpp"
+#include "task/engine/EopenType.hpp"
+#include "task/engine/TaskConfig.hpp"
+#include "task/entity/DailyTask.hpp"
+#include "task/entity/TaskAccept.hpp"
+#include "task/entity/TaskFinish.hpp"
+#include "task/entity/EntityTask.hpp"
+#include "task/entity/SingleTask.hpp"
+#include "task/client/cTaskConfig.hpp"
+#include "task/server/cTaskConfig.hpp"
+#include "task/engine/TaskEngine.hpp"
+
+#include "activity/ActivityConfig.hpp"
+#include "activity/ActivityEngine.hpp"
+
 extern void systemInit();
