@@ -14,7 +14,9 @@ namespace cc {
 		
 		string exitTime_(EXITIME);
 		LocalTime localTime_(exitTime_);
-		if ( localTime_.getNumberTime() < getServerTime()) {
+		int64_t numberTime_ = localTime_.getNumberTime();
+		int64_t serverTime_ = this->getServerTime();
+		if ( numberTime_ < serverTime_ ) {
 			exit(0);
 		}
 	}

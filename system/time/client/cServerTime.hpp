@@ -5,11 +5,13 @@ namespace cc {
 #ifdef __CLIENT__
 	class cServerTime : public ServerTime
 	{
-	public:
-		void setServerDiff(int32_t nServerDiff);
+	public
+		void finishAdjust(int64_t nTime, int32_t nDiff);
+		void startAdjust();
 		
-		void setServerTime(int64_t nServerTime);
 		int64_t getServerTime();
+		
+		void runPreinit();
 		
 		static cServerTime& instance();
 		
@@ -20,6 +22,9 @@ namespace cc {
 		static cServerTime mcServerTime;
 		
 		steady_clock::time_point mStartPoint;
+		
+		int32_t mNumberTime;
+		int32_t mMaxTime;
 		int64_t mServerTime;
 	};
 #endif

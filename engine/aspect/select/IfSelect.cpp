@@ -24,7 +24,8 @@ namespace cc {
 	
 	bool IfSelect::isDefault()
 	{
-		return ( (0 == mIfSelectId) || (0 == mAppType) || (mSelectors.size() <= 0) );
+		return ( (0 == mIfSelectId) || (0 == mAppType)
+			|| (mSelectors.size() <= 0) );
 	}
 	
 	int32_t IfSelect::getKey()
