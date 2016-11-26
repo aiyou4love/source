@@ -2,54 +2,36 @@
 
 namespace cc {
 	
-	int32_t Trigger::getTriggerId()
+	void Trigger::setEntity(EntityPtr& nEntity)
 	{
-		return mTriggerId;
+		mEntity = nEntity;
 	}
 	
-	int8_t Trigger::getTriggerType()
+	EntityPtr& Trigger::getEntity()
 	{
-		return mTriggerType;
+		return mEntity;
 	}
 	
-	int32_t Trigger::getObjectId()
+	void Trigger::setValue(ValuePtr& nValue)
 	{
-		return mObjectId;
+		mValue = nValue;
 	}
 	
-	int32_t Trigger::getSelectId()
+	ValuePtr& Trigger::getValue()
 	{
-		return mSelectId;
-	}
-	
-	int32_t Trigger::getActionId()
-	{
-		return mActionId;
-	}
-	
-	int32_t Trigger::getDeleteId()
-	{
-		return mDeleteId;
+		return mValue;
 	}
 	
 	Trigger::Trigger()
-		: mTriggerType (0)
-		, mObjectId (0)
-		, mTriggerId (0)
-		, mSelectId (0)
-		, mActionId (0)
-		, mDeleteId (0)
+		: mEntity (nullptr)
+		, mValue (nullptr)
 	{
 	}
 	
 	Trigger::~Trigger()
 	{
-		mTriggerType = 0;
-		mObjectId = 0;
-		mTriggerId = 0;
-		mSelectId = 0;
-		mActionId = 0;
-		mDeleteId = 0;
+		mEntity.reset();
+		mValue.reset();
 	}
 	
 }

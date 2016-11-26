@@ -14,6 +14,8 @@ namespace cc {
 		virtual ~Property();
 		
 	protected:
+		map<int32_t, SinkPtr *> mSinks;
+		
 		EntityPtr * mEntity;
 	};
 	typedef SPTR<Property> PropertyPtr;

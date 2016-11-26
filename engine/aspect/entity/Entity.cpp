@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	void Entity::insertProperty(int32_t nPropertyId, PropertyPtr& nProperty)
+	void Entity::insertProperty(int16_t nPropertyId, PropertyPtr& nProperty)
 	{
 		auto it = mPropertys.find(nPropertyId);
 		if (it != mPropertys.end()) {
@@ -12,7 +12,7 @@ namespace cc {
 		mPropertys[nPropertyId] = nProperty;
 	}
 	
-	PropertyPtr * Entity::getProperty(int32_t nPropertyId)
+	PropertyPtr * Entity::getProperty(int16_t nPropertyId)
 	{
 		auto it = mPropertys.find(nPropertyId);
 		if (it == mPropertys.end()) {
@@ -20,27 +20,6 @@ namespace cc {
 			return nullptr;
 		}
 		return (&(it->second));
-	}
-	
-	map<int32_t, TriggerPtr *>& Entity::getTriggers()
-	{
-		return mTriggers;
-	}
-	
-	void Entity::pushTrigger(TriggerPtr& nTrigger)
-	{
-		int32_t triggerId_ = nTrigger->getTriggerId();
-		mTriggers[triggerId_] = &nTrigger;
-	}
-	
-	void Entity::removeTrigger(int32_t nTriggerId)
-	{
-		auto it = mTriggers.find(nTriggerId);
-		if ( it == mTriggers.end() ) {
-			LOGE("[%s]%d", __METHOD__, nTriggerId);
-			return;
-		}
-		mTriggers.erase(it);
 	}
 	
 	void Entity::pushValue(ValuePtr& nValue)
@@ -85,8 +64,6 @@ namespace cc {
 		mPropertys.clear();
 		mValues.clear();
 		
-		mTriggers.clear();
-		
 		mState = 0;
 		
 		mEntityType = 0;
@@ -96,8 +73,6 @@ namespace cc {
 	{
 		mPropertys.clear();
 		mValues.clear();
-		
-		mTriggers.clear();
 		
 		mState = 0;
 		

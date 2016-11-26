@@ -7,7 +7,6 @@ namespace cc {
 	public:
 		void runReward(int32_t nRewardId, EntityPtr& nEntity, ValuePtr& nValue);
 		
-	public:
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
