@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class IAspect : noncopyable
+	class IAspect : public IEngine
 	{
 	public:
 		virtual bool runCondition(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue);

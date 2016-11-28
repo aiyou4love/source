@@ -4,7 +4,7 @@ namespace cc {
 	
 	class Entity;
 	typedef SPTR<Entity> EntityPtr;
-	class Property : noncopyable
+	class Property : public SinkMgr
 	{
 	public:
 		void setEntity(EntityPtr& nEntity);
@@ -14,8 +14,6 @@ namespace cc {
 		virtual ~Property();
 		
 	protected:
-		map<int32_t, SinkPtr *> mSinks;
-		
 		EntityPtr * mEntity;
 	};
 	typedef SPTR<Property> PropertyPtr;

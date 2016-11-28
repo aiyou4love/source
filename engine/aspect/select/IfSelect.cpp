@@ -2,24 +2,31 @@
 
 namespace cc {
 	
-	void IfSelect::runIfSelect(EntityPtr& nEntity, ValuePtr& nValue)
+	int32_t IfSelect::runIfSelect(EntityPtr& nEntity, ValuePtr& nValue)
 	{
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
 		if ( workDirectory_.getAppType() != mAppType ) {
-			LOGE("[%s]%d", __METHOD__, mIfSelectId);
-			return;
+			LOGE("[%s]1:%d", __METHOD__, mIfSelectId);
+			return 0;
 		}
 		if ( mIsIndex && (!nValue->checkValue(mIndexs)) ) {
-			LOGE("[%s]%d", __METHOD__, mIfSelectId);
-			return;
+			LOGE("[%s]2:%d", __METHOD__, mIfSelectId);
+			return 0;
 		}
 		auto it = mSelectors.begin();
 		for ( ; it != mSelectors.end(); ++it ) {
 			SelectorPtr& selector_ = it->second;
 			if (selector_->runSelect(nEntity, nValue)) {
-				break;
+				return selector_->getRewardId();
 			}
 		}
+		LOGE("[%s]3:%d", __METHOD__, mIfSelectId);
+		return 0;
+	}
+	
+	int32_t IfSelect::getIfSelectId()
+	{
+		return mIfSelectId;
 	}
 	
 	bool IfSelect::isDefault()

@@ -22,6 +22,12 @@ namespace cc {
 		return mValue;
 	}
 	
+	void Trigger::setActionId(int32_t nActionId)
+	{
+		mValue.reset(new Value());
+		mValue->pushInt32(nActionId);
+	}
+	
 	Trigger::Trigger()
 		: mEntity (nullptr)
 		, mValue (nullptr)

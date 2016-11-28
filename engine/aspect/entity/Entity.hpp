@@ -2,11 +2,19 @@
 
 namespace cc {
 	
-	class Entity : noncopyable
+	class Trigger;
+	typedef SPTR<Trigger> TriggerPtr;
+	class Entity : public SinkMgr
 	{
 	public:
 		void insertProperty(int16_t nPropertyId, PropertyPtr& nProperty);
 		PropertyPtr * getProperty(int16_t nPropertyId);
+		
+		void pushTrigger(EntityPtr& nEntity, int32_t nActionId);
+		void pushTrigger(EntityPtr& nEntity, ValuePtr& nValue);
+		void pushTrigger(EntityPtr& nEntity, SinkPtr& nSink);
+		
+		void runTrigger();
 		
 		void pushValue(ValuePtr& nValue);
 		ValuePtr popValue();
@@ -22,6 +30,9 @@ namespace cc {
 		
 	private:
 		map<int16_t, PropertyPtr> mPropertys;
+		
+		list<TriggerPtr> mTriggers;
+		int16_t mTriggerId;
 		
 		int16_t mEntityType;
 		

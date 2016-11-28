@@ -22,6 +22,54 @@ namespace cc {
 		return (&(it->second));
 	}
 	
+	void Entity::pushTrigger(EntityPtr& nEntity, int32_t nActionId)
+	{
+		if (nActionId <= 0) return;
+		TriggerPtr trigger_(new Trigger());
+		trigger_->setEntity(nEntity);
+		trigger_->setActionId(nActionId);
+		mTriggers.push_back(trigger_);
+	}
+	
+	void Entity::pushTrigger(EntityPtr& nEntity, ValuePtr& nValue)
+	{
+		TriggerPtr trigger_(new Trigger());
+		trigger_->setEntity(nEntity);
+		trigger_->setValue(nValue);
+		mTriggers.push_back(trigger_);
+	}
+	
+	void Entity::pushTrigger(EntityPtr& nEntity, SinkPtr& nSink)
+	{
+		int32_t actionId_ = nSink->getActionId();
+		int32_t deleteId_ = nSink->getDeleteId();
+		this->pushTrigger(nEntity, actionId_);
+		this->pushTrigger(nEntity, deleteId_);
+	}
+	
+	void Entity::runTrigger()
+	{
+		if (mTriggerId > 0) {
+			LOGE("[%s]%d", __METHOD__, mTriggerId);
+			mTriggerId++;
+			return;
+		}
+		mTriggerId++;
+		
+		SelectEngine& selectEngine_ = SelectEngine::instance();
+		
+		auto it = mTriggers.begin();
+		for ( ; it != mTriggers.end(); ++it ) {
+			TriggerPtr& trigger_ = (*it);
+			EntityPtr& entity_ = trigger_->getEntity();
+			ValuePtr& value_ = trigger_->getValue();
+			selectEngine_.runIfSelect(entity_, value_);
+		}
+		
+		mTriggers.clear();
+		mTriggerId = 0;
+	}
+	
 	void Entity::pushValue(ValuePtr& nValue)
 	{
 		LKGUD<mutex> lock_(mMutex);
@@ -64,6 +112,10 @@ namespace cc {
 		mPropertys.clear();
 		mValues.clear();
 		
+		mTriggers.clear();
+		
+		mTriggerId = 0;
+		
 		mState = 0;
 		
 		mEntityType = 0;
@@ -73,6 +125,10 @@ namespace cc {
 	{
 		mPropertys.clear();
 		mValues.clear();
+		
+		mTriggers.clear();
+		
+		mTriggerId = 0;
 		
 		mState = 0;
 		

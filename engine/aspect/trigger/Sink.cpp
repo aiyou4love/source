@@ -2,12 +2,12 @@
 
 namespace cc {
 	
-	int32_t Sink::getSinkId()
+	int16_t Sink::getSinkId()
 	{
 		return mSinkId;
 	}
 	
-	int8_t Sink::getSinkType()
+	int16_t Sink::getSinkType()
 	{
 		return mSinkType;
 	}
@@ -25,6 +25,17 @@ namespace cc {
 	int32_t Sink::getDeleteId()
 	{
 		return mDeleteId;
+	}
+	
+	int16_t Sink::getKey()
+	{
+		return mSinkId;
+	}
+	
+	bool Sink::isDefault()
+	{
+		return ( (0 == mSinkId) || (0 == mSinkType)
+			|| (0 == mSinkValue) || (0 == mActionId) );
 	}
 	
 	Sink::Sink()

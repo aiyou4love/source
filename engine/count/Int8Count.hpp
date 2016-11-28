@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class Int8Count : noncopyable
+	class Int8Count : public ICount
 	{
 	public:
 		void setInt(int16_t nId, int8_t nValue);

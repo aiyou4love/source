@@ -15,6 +15,11 @@ namespace cc {
 		return true;
 	}
 	
+	int32_t Selector::getRewardId()
+	{
+		return mRewardId;
+	}
+	
 	bool Selector::isDefault()
 	{
 		return ( (0 == mSelectId) || (0 == mRewardId) );

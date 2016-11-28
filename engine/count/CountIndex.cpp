@@ -22,7 +22,7 @@ namespace cc {
 		return mInt;
 	}
 	
-	int16_t CountIndex::getCrcId()
+	int32_t CountIndex::getCrcId()
 	{
 		return mCrcId;
 	}

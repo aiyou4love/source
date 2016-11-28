@@ -2,27 +2,50 @@
 
 namespace cc {
 	
-	void SelectEngine::runIfSelectId(EntityPtr& nEntity, int32_t nSelectId, ValuePtr& nValue)
+	void SelectEngine::runGlobTrigger(EntityPtr& nEntity, int16_t nSinkType, int32_t nValue)
 	{
-		auto it = mIfSelects.find(nSelectId);
-		if ( it == mIfSelects.end() ) {
-			LOGE("[%s]%d", __METHOD__, nSelectId);
-			return;
+		SinkPtr * sink_ = this->beginIterator(nSinkType);
+		while (nullptr != sink_) {
+			if ( nValue == (*sink_)->getSinkValue() ) {
+				nEntity->pushTrigger(nEntity, (*sink_));
+			}
+			sink_ = this->nextIterator(nSinkType);
 		}
-		IfSelectPtr& ifSelect_ = it->second;
-		ifSelect_->runIfSelect(nEntity, nValue);
+	}
+	
+	void SelectEngine::runSelfTrigger(EntityPtr& nEntity, int16_t nSinkType, int32_t nValue)
+	{
+		SinkPtr * sink_ = nEntity->beginIterator(nSinkType);
+		while (nullptr != sink_) {
+			if ( nValue == (*sink_)->getSinkValue() ) {
+				nEntity->pushTrigger(nEntity, (*sink_));
+			}
+			sink_ = nEntity->nextIterator(nSinkType);
+		}
+	}
+	
+	void SelectEngine::runTrigger(EntityPtr& nEntity, int16_t nSinkType, int32_t nValue)
+	{
+		this->runGlobTrigger(nEntity, nSinkType, nValue);
+		this->runSelfTrigger(nEntity, nSinkType, nValue);
 	}
 	
 	void SelectEngine::runIfSelect(EntityPtr& nEntity, ValuePtr& nValue)
 	{
-		int32_t ifSelectId_ = nValue->getInt32(1);
-		auto it = mIfSelects.find(ifSelectId_);
+		int32_t ifSelectId0_ = nValue->getInt32(1);
+		auto it = mIfSelects.find(ifSelectId0_);
 		if ( it == mIfSelects.end() ) {
-			LOGE("[%s]%d", __METHOD__, ifSelectId_);
+			LOGE("[%s]%d", __METHOD__, ifSelectId0_);
 			return;
 		}
 		IfSelectPtr& ifSelect_ = it->second;
-		ifSelect_->runIfSelect(nEntity, nValue);
+		int32_t selectId_ = ifSelect_->runIfSelect(nEntity, nValue);
+		int32_t ifSelectId1_ = ifSelect_->getIfSelectId();
+		if (selectId_ > 0) {
+			this->runTrigger(nEntity, EselectSink::mIfSelect, ifSelectId1_);
+			this->runTrigger(nEntity, EselectSink::mSelect, selectId_);
+		}
+		nEntity->runTrigger();
 	}
 	
 	void SelectEngine::runPreinit()
@@ -45,6 +68,7 @@ namespace cc {
 	{
 		TableEngine& tableEngine_ = TableEngine::instance();
 		tableEngine_.runReader<SelectEngine>(this, streamUrl(), streamName());
+		tableEngine_.runReader<SelectEngine>(this, sinkUrl(), sinkName());
 	}
 	
 	void SelectEngine::runClear()
@@ -60,6 +84,16 @@ namespace cc {
 	const char * SelectEngine::streamUrl()
 	{
 		return "selectEngine.json";
+	}
+	
+	const char * SelectEngine::sinkName()
+	{
+		return "selectSink";
+	}
+	
+	const char * SelectEngine::sinkUrl()
+	{
+		return "selectSink.json";
 	}
 	
 	SelectEngine& SelectEngine::instance()

@@ -9,6 +9,7 @@ namespace cc {
 		EntityPtr& getEntity();
 		void setValue(ValuePtr& nValue);
 		ValuePtr& getValue();
+		void setActionId(int32_t nActionId);
 		
 		Trigger();
 		~Trigger();
@@ -17,6 +18,5 @@ namespace cc {
 		EntityPtr mEntity;
 		ValuePtr mValue;
 	};
-	typedef SPTR<Trigger> TriggerPtr;
 	
 }

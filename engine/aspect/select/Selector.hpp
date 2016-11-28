@@ -7,6 +7,8 @@ namespace cc {
 	public:
 		bool runSelect(EntityPtr& nEntity, ValuePtr& nValue);
 		
+		int32_t getRewardId();
+		
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{

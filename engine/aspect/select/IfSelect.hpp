@@ -5,7 +5,9 @@ namespace cc {
 	class IfSelect : noncopyable
 	{
 	public:
-		void runIfSelect(EntityPtr& nEntity, ValuePtr& nValue);
+		int32_t runIfSelect(EntityPtr& nEntity, ValuePtr& nValue);
+		
+		int32_t getIfSelectId();
 		
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
