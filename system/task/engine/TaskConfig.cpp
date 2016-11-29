@@ -9,7 +9,7 @@ namespace cc {
 	
 	int16_t TaskConfig::getTaskType()
 	{
-		return mFinishId;
+		return mTaskType;
 	}
 	
 	int16_t TaskConfig::getTaskId()

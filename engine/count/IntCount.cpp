@@ -163,19 +163,17 @@ namespace cc {
 	}
 	
 	IntCount::IntCount()
-		: mIntArray (nullptr)
-		, mValue (nullptr)
-		, N (0) , M (0)
-		, C (0) , I (0)
+		: M (0)
+		, C (0)
+		, I (0)
 	{
 	}
 	
 	IntCount::~IntCount()
 	{
-		mIntArray = nullptr;
-		mValue = nullptr;
-		N = 0; M = 0;
-		C = 0; I = 0;
+		M = 0;
+		C = 0;
+		I = 0;
 	}
 	
 }

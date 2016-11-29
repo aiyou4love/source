@@ -42,7 +42,7 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, nTaskId);
 			return;
 		}
-		TaskConfigPtr& taskConfig_ = it->second;
+		cTaskConfigPtr& taskConfig_ = it->second;
 		int16_t taskType_ = taskConfig_->getTaskType();
 		int16_t taskIndex_ = taskConfig_->getTaskIndex();
 		
@@ -68,7 +68,7 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, nTaskId);
 			return false;
 		}
-		TaskConfigPtr& taskConfig_ = it->second;
+		cTaskConfigPtr& taskConfig_ = it->second;
 		int16_t taskType_ = taskConfig_->getTaskType();
 		int16_t taskIndex_ = taskConfig_->getTaskIndex();
 		
@@ -96,7 +96,7 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, nTaskId);
 			return;
 		}
-		TaskConfigPtr& taskConfig_ = it->second;
+		cTaskConfigPtr& taskConfig_ = it->second;
 		int16_t taskType_ = taskConfig_->getTaskType();
 		int16_t taskIndex_ = taskConfig_->getTaskIndex();
 		

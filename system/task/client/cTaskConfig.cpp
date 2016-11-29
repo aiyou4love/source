@@ -8,7 +8,7 @@ namespace cc {
 		return mOpenType;
 	}
 	
-	int16_t cTaskConfig::getOpenId()
+	int32_t cTaskConfig::getOpenId()
 	{
 		return mOpenId;
 	}
@@ -23,7 +23,7 @@ namespace cc {
 		return mText.c_str();
 	}
 	
-	TaskConfig::TaskConfig()
+	cTaskConfig::cTaskConfig()
 		: mOpenType (0)
 		, mOpenId (0)
 		, mName ("")
@@ -31,7 +31,7 @@ namespace cc {
 	{
 	}
 	
-	TaskConfig::~TaskConfig()
+	cTaskConfig::~cTaskConfig()
 	{
 		mName = "";
 		mText = "";

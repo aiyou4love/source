@@ -33,7 +33,7 @@ namespace cc {
 	
 	ActivityEngine& ActivityEngine::instance()
 	{
-		return mTaskEngine;
+		return mActivityEngine;
 	}
 	
 	ActivityEngine::ActivityEngine()

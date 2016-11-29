@@ -13,37 +13,37 @@ namespace cc {
 		if (0 == bit_) {
 			mValue[id_] &= 0xFFFFFFF0;
 			mValue[id_] |= nValue;
-		} else if (1 == bit_)) {
+		} else if (1 == bit_) {
 			mValue[id_] &= 0xFFFFFF0F;
 			
 			int32_t value_ = (nValue << 4);
 			mValue[id_] |= value_;
-		} else if (2 == bit_)) {
+		} else if (2 == bit_) {
 			mValue[id_] &= 0xFFFFF0FF;
 			
 			int32_t value_ = (nValue << 8);
 			mValue[id_] |= value_;
-		} else if (3 == bit_)) {
+		} else if (3 == bit_) {
 			mValue[id_] &= 0xFFFF0FFF;
 			
 			int32_t value_ = (nValue << 12);
 			mValue[id_] |= value_;
-		} else if (4 == bit_)) {
+		} else if (4 == bit_) {
 			mValue[id_] &= 0xFFF0FFFF;
 			
 			int32_t value_ = (nValue << 16);
 			mValue[id_] |= value_;
-		} else if (5 == bit_)) {
+		} else if (5 == bit_) {
 			mValue[id_] &= 0xFF0FFFFF;
 			
 			int32_t value_ = (nValue << 20);
 			mValue[id_] |= value_;;
-		} else if (6 == bit_)) {
+		} else if (6 == bit_) {
 			mValue[id_] &= 0xF0FFFFFF;
 			
 			int32_t value_ = (nValue << 24);
 			mValue[id_] |= value_;
-		} else if (7 == bit_)) {
+		} else if (7 == bit_) {
 			mValue[id_] &= 0xFFFFFFF;
 			
 			int32_t value_ = (nValue << 28);
@@ -63,25 +63,25 @@ namespace cc {
 		int16_t bit_ = (nId - 1) % 8;
 		if (0 == bit_) {
 			return int8_t(mValue[id_] & 0xF);
-		} else if (1 == bit_)) {
+		} else if (1 == bit_) {
 			int32_t value0_ = mValue[id_] >> 4;
 			return int8_t(value0_ & 0xF);
-		} else if (2 == bit_)) {
+		} else if (2 == bit_) {
 			int32_t value0_ = mValue[id_] >> 8;
 			return int8_t(value0_ & 0xF);
-		} else if (3 == bit_)) {
+		} else if (3 == bit_) {
 			int32_t value0_ = mValue[id_] >> 12;
 			return int8_t(value0_ & 0xF);
-		} else if (4 == bit_)) {
+		} else if (4 == bit_) {
 			int32_t value0_ = mValue[id_] >> 16;
 			return int8_t(value0_ & 0xF);
-		} else if (5 == bit_)) {
+		} else if (5 == bit_) {
 			int32_t value0_ = mValue[id_] >> 20;
 			return int8_t(value0_ & 0xF);
-		} else if (6 == bit_)) {
+		} else if (6 == bit_) {
 			int32_t value0_ = mValue[id_] >> 24;
 			return int8_t(value0_ & 0xF);
-		} else if (7 == bit_)) {
+		} else if (7 == bit_) {
 			int32_t value0_ = mValue[id_] >> 28;
 			return int8_t(value0_ & 0xF);
 		} else {
@@ -105,7 +105,7 @@ namespace cc {
 			}
 			mValue[id_] &= 0xFFFFFFF0;
 			mValue[id_] |= value_;
-		} else if (1 == bit_)) {
+		} else if (1 == bit_) {
 			int32_t value0_ = mValue[id_] >> 4;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -116,7 +116,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 4);
 			mValue[id_] |= value2_;
-		} else if (2 == bit_)) {
+		} else if (2 == bit_) {
 			int32_t value0_ = mValue[id_] >> 8;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -127,7 +127,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 8);
 			mValue[id_] |= value2_;
-		} else if (3 == bit_)) {
+		} else if (3 == bit_) {
 			int32_t value0_ = mValue[id_] >> 12;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -138,7 +138,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 12);
 			mValue[id_] |= value2_;
-		} else if (4 == bit_)) {
+		} else if (4 == bit_) {
 			int32_t value0_ = mValue[id_] >> 16;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -149,7 +149,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 16);
 			mValue[id_] |= value2_;
-		} else if (5 == bit_)) {
+		} else if (5 == bit_) {
 			int32_t value0_ = mValue[id_] >> 20;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -160,7 +160,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 20);
 			mValue[id_] |= value2_;
-		} else if (6 == bit_)) {
+		} else if (6 == bit_) {
 			int32_t value0_ = mValue[id_] >> 24;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -171,7 +171,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 24);
 			mValue[id_] |= value2_;
-		} else if (7 == bit_)) {
+		} else if (7 == bit_) {
 			int32_t value0_ = mValue[id_] >> 28;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += nValue;
@@ -203,7 +203,7 @@ namespace cc {
 			}
 			mValue[id_] &= 0xFFFFFFF0;
 			mValue[id_] |= value_;
-		} else if (1 == bit_)) {
+		} else if (1 == bit_) {
 			int32_t value0_ = mValue[id_] >> 4;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -214,7 +214,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 4);
 			mValue[id_] |= value2_;
-		} else if (2 == bit_)) {
+		} else if (2 == bit_) {
 			int32_t value0_ = mValue[id_] >> 8;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -225,7 +225,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 8);
 			mValue[id_] |= value2_;
-		} else if (3 == bit_)) {
+		} else if (3 == bit_) {
 			int32_t value0_ = mValue[id_] >> 12;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -236,7 +236,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 12);
 			mValue[id_] |= value2_;
-		} else if (4 == bit_)) {
+		} else if (4 == bit_) {
 			int32_t value0_ = mValue[id_] >> 16;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -247,7 +247,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 16);
 			mValue[id_] |= value2_;
-		} else if (5 == bit_)) {
+		} else if (5 == bit_) {
 			int32_t value0_ = mValue[id_] >> 20;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -258,7 +258,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 20);
 			mValue[id_] |= value2_;
-		} else if (6 == bit_)) {
+		} else if (6 == bit_) {
 			int32_t value0_ = mValue[id_] >> 24;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -269,7 +269,7 @@ namespace cc {
 			
 			int32_t value2_ = (value1_ << 24);
 			mValue[id_] |= value2_;
-		} else if (7 == bit_)) {
+		} else if (7 == bit_) {
 			int32_t value0_ = mValue[id_] >> 28;
 			int8_t value1_ = int8_t(value0_ & 0xF);
 			value1_ += 1;
@@ -288,8 +288,8 @@ namespace cc {
 	void Int4Count::pushInt(int8_t nValue)
 	{
 		for (int16_t i = 0; i < (N * 8); ++i) {
-			int16_t id_ = (nId - 1) / 8;
-			int16_t bit_ = (nId - 1) % 8;
+			int16_t id_ = i / 8;
+			int16_t bit_ = i % 8;
 			if (0 == bit_) {
 				int8_t value_ = int8_t(mValue[id_] & 0xF);
 				if ( 0 != value_ ) {
@@ -297,7 +297,7 @@ namespace cc {
 				}
 				mValue[id_] |= nValue;
 				break;
-			} else if (1 == bit_)) {
+			} else if (1 == bit_) {
 				int32_t value0_ = mValue[id_] >> 4;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -306,7 +306,7 @@ namespace cc {
 				int32_t value2_ = (nValue << 4);
 				mValue[id_] |= value2_;
 				break;
-			} else if (2 == bit_)) {
+			} else if (2 == bit_) {
 				int32_t value0_ = mValue[id_] >> 8;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -315,7 +315,7 @@ namespace cc {
 				int32_t value2_ = (nValue << 8);
 				mValue[id_] |= value2_;
 				break;
-			} else if (3 == bit_)) {
+			} else if (3 == bit_) {
 				int32_t value0_ = mValue[id_] >> 12;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -324,7 +324,7 @@ namespace cc {
 				int32_t value2_ = (nValue << 12);
 				mValue[id_] |= value2_;
 				break;
-			} else if (4 == bit_)) {
+			} else if (4 == bit_) {
 				int32_t value0_ = mValue[id_] >> 16;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -333,7 +333,7 @@ namespace cc {
 				int32_t value2_ = (nValue << 16);
 				mValue[id_] |= value2_;
 				break;
-			} else if (5 == bit_)) {
+			} else if (5 == bit_) {
 				int32_t value0_ = mValue[id_] >> 20;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -342,7 +342,7 @@ namespace cc {
 				int32_t value2_ = (nValue << 20);
 				mValue[id_] |= value2_;
 				break;
-			} else if (6 == bit_)) {
+			} else if (6 == bit_) {
 				int32_t value0_ = mValue[id_] >> 24;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -351,7 +351,7 @@ namespace cc {
 				int32_t value2_ = (nValue << 24);
 				mValue[id_] |= value2_;
 				break;;
-			} else if (7 == bit_)) {
+			} else if (7 == bit_) {
 				int32_t value0_ = mValue[id_] >> 28;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( 0 != value1_ ) {
@@ -378,7 +378,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xFFFFFFF0;
 				break;
-			} else if (1 == bit_)) {
+			} else if (1 == bit_) {
 				int32_t value0_ = mValue[id_] >> 4;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -386,7 +386,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xFFFFFF0F;
 				break;
-			} else if (2 == bit_)) {
+			} else if (2 == bit_) {
 				int32_t value0_ = mValue[id_] >> 8;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -394,7 +394,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xFFFFF0FF;
 				break;
-			} else if (3 == bit_)) {
+			} else if (3 == bit_) {
 				int32_t value0_ = mValue[id_] >> 12;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -402,7 +402,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xFFFF0FFF;
 				break;
-			} else if (4 == bit_)) {
+			} else if (4 == bit_) {
 				int32_t value0_ = mValue[id_] >> 16;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -410,7 +410,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xFFF0FFFF;
 				break;
-			} else if (5 == bit_)) {
+			} else if (5 == bit_) {
 				int32_t value0_ = mValue[id_] >> 20;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -418,7 +418,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xFF0FFFFF;
 				break;
-			} else if (6 == bit_)) {
+			} else if (6 == bit_) {
 				int32_t value0_ = mValue[id_] >> 24;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -426,7 +426,7 @@ namespace cc {
 				}
 				mValue[id_] &= 0xF0FFFFFF;
 				break;
-			} else if (7 == bit_)) {
+			} else if (7 == bit_) {
 				int32_t value0_ = mValue[id_] >> 28;
 				int8_t value1_ = int8_t(value0_ & 0xF);
 				if ( nValue != value1_ ) {
@@ -450,19 +450,19 @@ namespace cc {
 		int16_t bit_ = (nId - 1) % 8;
 		if (0 == bit_) {
 			mValue[id_] &= 0xFFFFFFF0;
-		} else if (1 == bit_)) {
+		} else if (1 == bit_) {
 			mValue[id_] &= 0xFFFFFF0F;
-		} else if (2 == bit_)) {
+		} else if (2 == bit_) {
 			mValue[id_] &= 0xFFFFF0FF;
-		} else if (3 == bit_)) {
+		} else if (3 == bit_) {
 			mValue[id_] &= 0xFFFF0FFF;
-		} else if (4 == bit_)) {
+		} else if (4 == bit_) {
 			mValue[id_] &= 0xFFF0FFFF;
-		} else if (5 == bit_)) {
+		} else if (5 == bit_) {
 			mValue[id_] &= 0xFF0FFFFF;
-		} else if (6 == bit_)) {
+		} else if (6 == bit_) {
 			mValue[id_] &= 0xF0FFFFFF;
-		} else if (7 == bit_)) {
+		} else if (7 == bit_) {
 			mValue[id_] &= 0xFFF0FFF;
 		} else {
 		}

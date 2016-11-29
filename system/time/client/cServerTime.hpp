@@ -5,7 +5,7 @@ namespace cc {
 #ifdef __CLIENT__
 	class cServerTime : public ServerTime
 	{
-	public
+	public:
 		void finishAdjust(int64_t nTime, int32_t nDiff);
 		void startAdjust();
 		

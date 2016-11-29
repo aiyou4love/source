@@ -8,7 +8,7 @@ namespace cc {
 		return mOpenType;
 	}
 	
-	int16_t ActivityConfig::getOpenId()
+	int32_t ActivityConfig::getOpenId()
 	{
 		return mOpenId;
 	}
