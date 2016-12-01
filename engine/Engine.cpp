@@ -43,6 +43,7 @@ void engineInit()
 	IoService& ioService_ = IoService::instance();
 	ioService_.runPreinit();
 	
+#ifndef __CLIENT__
 	AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
 	acceptorMgr_.runPreinit();
 	
@@ -53,6 +54,7 @@ void engineInit()
 	acceptEngine_.runPreinit();
 	
 	AcceptRemove::instance();
+#endif
 	
 	ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
 	connectorMgr_.runPreinit();

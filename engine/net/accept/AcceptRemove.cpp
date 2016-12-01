@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	void AcceptRemove::removeSession(int32_t nSessionId)
 	{
 		AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
@@ -28,5 +29,6 @@ namespace cc {
 	}
 	
 	AcceptRemove AcceptRemove::mAcceptRemove;
+#endif
 	
 }

@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	class AcceptRemove : public ISessionRemove
 	{
 	public:
@@ -16,5 +17,6 @@ namespace cc {
 	private:
 		static AcceptRemove mAcceptRemove;
 	};
+#endif
 	
 }

@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	class AcceptorMgr : noncopyable
 	{
 	public:
@@ -39,5 +40,6 @@ namespace cc {
 		
 		static AcceptorMgr mAcceptorMgr;
 	};
+#endif
 	
 }

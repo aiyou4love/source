@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	class ServerSend : public ISend
 	{
 	public:
@@ -19,5 +20,6 @@ namespace cc {
 		
 		int64_t mAppId;
 	};
+#endif
 	
 }

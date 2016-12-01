@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	void SessionMgr::sendValue(int16_t nAppType, int32_t nAppNo, ValuePtr& nValue)
 	{
 		int64_t appId_ = linkInt32(nAppType, nAppNo);
@@ -66,5 +67,6 @@ namespace cc {
 	}
 	
 	SessionMgr SessionMgr::mSessionMgr;
+#endif
 	
 }

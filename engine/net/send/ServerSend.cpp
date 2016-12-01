@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	void ServerSend::sendValue(ValuePtr& nValue)
 	{
 		SessionMgr& sessionMgr_ = SessionMgr::instance();
@@ -29,5 +30,6 @@ namespace cc {
 		mAppType = 0;
 		mAppNo = 0;
 	}
+#endif
 	
 }

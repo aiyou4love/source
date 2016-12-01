@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	void AcceptEngine::handleAccept(const boost::system::error_code& nError)
 	{
 		if (nError) {
@@ -89,5 +90,6 @@ namespace cc {
 	}
 	
 	AcceptEngine AcceptEngine::mAcceptEngine;
+#endif
 	
 }

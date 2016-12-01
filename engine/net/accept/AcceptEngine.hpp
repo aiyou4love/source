@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	class AcceptEngine : noncopyable
 	{
 	public:
@@ -26,5 +27,6 @@ namespace cc {
 		
 		static AcceptEngine mAcceptEngine;
 	};
+#endif
 	
 }

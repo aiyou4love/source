@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	void AcceptorMgr::removeSession(int32_t nSessionId)
 	{
 		LKGUD<mutex> lock_(mMutex);
@@ -82,5 +83,6 @@ namespace cc {
 	}
 	
 	AcceptorMgr AcceptorMgr::mAcceptorMgr;
+#endif
 	
 }

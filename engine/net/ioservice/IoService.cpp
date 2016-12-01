@@ -15,8 +15,8 @@ namespace cc {
 	
 	void IoService::runLoad()
 	{
-		TableEngine& tableEngine_ = TableEngine::instance();
-		tableEngine_.runReader<IoService>(this, streamUrl(), streamName());
+		ConfigEngine& configEngine_ = ConfigEngine::instance();
+		configEngine_.runReader<IoService>(this, streamUrl(), streamName());
 	}
 	
 	void IoService::runInit()

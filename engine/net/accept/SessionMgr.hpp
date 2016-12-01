@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifndef __CLIENT__
 	class SessionMgr : noncopyable
 	{
 	public:
@@ -24,5 +25,6 @@ namespace cc {
 		
 		static SessionMgr mSessionMgr;
 	};
+#endif
 	
 }
