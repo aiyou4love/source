@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-#ifdef __CLIENT__
+#ifndef __CLIENT__
 	void ServerSend::sendValue(ValuePtr& nValue)
 	{
 		SessionMgr& sessionMgr_ = SessionMgr::instance();

@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-#ifdef __CLIENT__
+#ifndef __CLIENT__
 	class ServerSend : public ISend
 	{
 	public:
