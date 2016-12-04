@@ -10,6 +10,11 @@ namespace cc {
 		(*mIntArray)->runDirty();
 	}
 	
+	int16_t ICount::getN()
+	{
+		return N;
+	}
+	
 	void ICount::runInit(IntArrayPtr& nIntArray, CountIndexPtr& nCountIndex)
 	{
 		int16_t begin_ = nCountIndex->getBegin();

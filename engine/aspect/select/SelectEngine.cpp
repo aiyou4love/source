@@ -48,6 +48,16 @@ namespace cc {
 		nEntity->runTrigger();
 	}
 	
+	void SelectEngine::initSink(int16_t nSinkId, EntityPtr& nEntity)
+	{
+		SinkPtr * sink_ = this->findSink(nSinkId);
+		if (nullptr == sink_) {
+			LOGE("[%s]", __METHOD__);
+			return;
+		}
+		nEntity->pushTrigger(nEntity, (*sink_));
+	}
+	
 	void SelectEngine::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
@@ -68,7 +78,8 @@ namespace cc {
 	{
 		TableEngine& tableEngine_ = TableEngine::instance();
 		tableEngine_.runReader<SelectEngine>(this, streamUrl(), streamName());
-		tableEngine_.runReader<SelectEngine>(this, sinkUrl(), sinkName());
+		tableEngine_.runReader<SelectEngine>(this, globUrl(), globName());
+		tableEngine_.runReader<SelectEngine>(this, selfUrl(), selfName());
 	}
 	
 	void SelectEngine::runClear()
@@ -86,14 +97,24 @@ namespace cc {
 		return "selectEngine.json";
 	}
 	
-	const char * SelectEngine::sinkName()
+	const char * SelectEngine::globName()
 	{
-		return "selectSink";
+		return "selectGlob";
 	}
 	
-	const char * SelectEngine::sinkUrl()
+	const char * SelectEngine::globUrl()
 	{
-		return "selectSink.json";
+		return "selectGlob.json";
+	}
+	
+	const char * SelectEngine::selfName()
+	{
+		return "selectSelf";
+	}
+	
+	const char * SelectEngine::selfUrl()
+	{
+		return "selectSelf.json";
 	}
 	
 	SelectEngine& SelectEngine::instance()
