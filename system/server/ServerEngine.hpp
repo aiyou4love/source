@@ -27,12 +27,17 @@ namespace cc {
 				UpintEngine& upintEngine_ = UpintEngine::instance();
 				upintEngine_.headSerialize(nSerialize, upintEngine_.streamName());
 				upintEngine_.runSave();
+			} else if ( 0 == strcmp(saveName(), nName) ) {
+				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerItems", "mServerItem");
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}
 		}
 		const char * streamName();
 		const char * streamUrl();
+		
+		const char * saveName();
+		const char * saveUrl();
 		
 		static ServerEngine& instance();
 		

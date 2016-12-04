@@ -6,7 +6,7 @@ namespace cc {
 	{
 		mIter = mSinks.begin();
 		
-		for ( ; mIter == mSinks.end(); ++mIter ) {
+		for ( ; mIter != mSinks.end(); ++mIter ) {
 			SinkPtr& sink_ = mIter->second;
 			if ( sink_->getSinkType() == nSinkType ) {
 				return (&sink_);
@@ -19,7 +19,7 @@ namespace cc {
 	{
 		mIter++;
 		
-		for ( ; mIter == mSinks.end(); ++mIter ) {
+		for ( ; mIter != mSinks.end(); ++mIter ) {
 			SinkPtr& sink_ = mIter->second;
 			if ( sink_->getSinkType() == nSinkType ) {
 				return (&sink_);

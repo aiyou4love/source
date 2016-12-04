@@ -19,8 +19,8 @@ namespace cc {
 			if ( 0 == strcmp(streamName(), nName) ) {
 				nSerialize.template runMapStreamPtrs<int32_t, UpintPtr>(mUrls, "mUpInts", "mUpInt");
 			} else if ( 0 == strcmp(saveName(), nName) ) {
-				nSerialize.template runMapStreamPtrs<int32_t, UpintPtr>(mNows, "nows", "now");
-				nSerialize.template runMapStreamPtrs<int32_t, UpintPtr>(mUrls, "urls", "url");
+				nSerialize.template runMapStreamPtrs<int32_t, UpintPtr>(mNows, "nows", "upintSave");
+				nSerialize.template runMapStreamPtrs<int32_t, UpintPtr>(mUrls, "urls", "upintSave");
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}

@@ -8,8 +8,15 @@ namespace cc {
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{
+			if ( 0 == strcmp("upintSave", nName) ) {
+			nSerialize->runNumber(mUpdateName, "mUpdateName");
+			nSerialize->runNumber(mUpdateNo, "mUpdateNo");
+			} else if ( 0 == strcmp("mUpInt", nName) ) {
 			nSerialize->runCrc32(mUpdateName, "mUpdateName");
 			nSerialize->runNumber(mUpdateNo, "mUpdateNo");
+			} else {
+				LOGE("[%s]%s", __METHOD__, nName);
+			}
 		}
 		
 		int32_t getUpdateNo();

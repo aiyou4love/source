@@ -87,7 +87,7 @@ namespace cc {
 	void ServerEngine::runSave()
 	{
 		UserDefault& userDefault_ = UserDefault::instance();
-		userDefault_.runSave<ServerEngine>(this, streamUrl(), streamName());
+		userDefault_.runSave<ServerEngine>(this, saveUrl(), saveName());
 	}
 	
 	void ServerEngine::runClear()
@@ -103,6 +103,16 @@ namespace cc {
 	const char * ServerEngine::streamUrl()
 	{
 		return "serverEngine.json";
+	}
+		
+	const char * ServerEngine::saveName()
+	{
+		return "serverSave";
+	}
+	
+	const char * ServerEngine::saveUrl()
+	{
+		return "serverSave.json";
 	}
 	
 	ServerEngine& ServerEngine::instance()
