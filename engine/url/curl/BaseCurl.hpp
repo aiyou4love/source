@@ -13,12 +13,16 @@ namespace cc {
 		void setValue(ValuePtr& nValue);
 		void runValue();
 		
+		void setUrlValue(const char * nValue);
+		string& getUrlValue();
+		
 		const char * getValue();
 		
 		CURL * getHandle();
 		
 		void runDebugInfo();
 		void runInit(const char * nUrl);
+		void runInit();
 		bool runPerform();
 		
 		BaseCurl();
@@ -26,6 +30,8 @@ namespace cc {
 		
 	protected:
 		CurlValuePtr mCurlValue;
+		
+		string mUrlValue;
 		
 		UrlInfoPtr * mUrlInfo;
 		ValuePtr mValue;

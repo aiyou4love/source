@@ -25,7 +25,7 @@ namespace cc {
 				nSerialize.template runMapStreamPtrs<int64_t, NetIpPtr>(mNetIps, "mNetIps", "mNetIp");
 				
 				UpintEngine& upintEngine_ = UpintEngine::instance();
-				upintEngine_.headSerialize(nSerialize, nName);
+				upintEngine_.headSerialize(nSerialize, upintEngine_.streamName());
 				upintEngine_.runSave();
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);

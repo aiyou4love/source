@@ -15,9 +15,12 @@ namespace cc {
 				return;
 			}
 			rapidjson::Value& value_ = (*mValue)[nName];
-			const char * tempValue_ = value_.GetString();
-			nValue = convertValue<const char *, T>(tempValue_);
+			nValue = value_.Get<T>();
 		}
+		
+		void runNumber(int8_t& nValue, const char * nName);
+		void runNumber(int16_t& nValue, const char * nName);
+		void runNumber(int32_t& nValue, const char * nName);
 		
 		template <typename T>
 		void runNumbers(T& nValue, const char * nName)

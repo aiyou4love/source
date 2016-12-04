@@ -63,22 +63,22 @@ namespace cc {
 	
 	const char * UpintEngine::streamName()
 	{
-		return "netUrl";
+		return "upintEngine";
 	}
 	
 	const char * UpintEngine::streamUrl()
 	{
-		return "netUrl.json";
+		return "upintEngine.json";
 	}
 	
 	const char * UpintEngine::saveName()
 	{
-		return "upintEngine";
+		return "upintSave";
 	}
 	
 	const char * UpintEngine::saveUrl()
 	{
-		return "upintEngine.json";
+		return "upintSave.json";
 	}
 	
 	UpintEngine& UpintEngine::instance()

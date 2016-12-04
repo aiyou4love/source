@@ -28,6 +28,16 @@ namespace cc {
 		mValue = nValue;
 	}
 	
+	void BaseCurl::setUrlValue(const char * nValue)
+	{
+		mUrlValue = nValue;
+	}
+	
+	string& BaseCurl::getUrlValue()
+	{
+		return mUrlValue;
+	}
+	
 	void BaseCurl::runValue()
 	{
 	#ifdef __WINDOW__
@@ -54,6 +64,11 @@ namespace cc {
 		curl_easy_setopt(mHandle, CURLOPT_URL, nUrl);
 	}
 	
+	void BaseCurl::runInit()
+	{
+		this->runInit(mUrlValue.c_str());
+	}
+	
 	bool BaseCurl::runPerform()
 	{
 		CURLcode curlCode_ = curl_easy_perform(mHandle);
@@ -78,6 +93,7 @@ namespace cc {
 	BaseCurl::BaseCurl()
 		: mHandle (nullptr)
 		, mUrlInfo (nullptr)
+		, mUrlValue ("")
 	{
 		mCurlValue.reset();
 	}
@@ -86,6 +102,7 @@ namespace cc {
 	{
 		mCurlValue.reset();
 		mUrlInfo = nullptr;
+		mUrlValue = "";
 		
 		curl_easy_cleanup(mHandle);
 		mHandle = nullptr;

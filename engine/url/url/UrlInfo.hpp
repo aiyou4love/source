@@ -20,22 +20,23 @@ namespace cc {
 			if ( "" == mBody ) {
 				boost::format format_(mValue.c_str());
 				this->runFormat(format_, nArgs ...);
-				string value_ = format_.str().c_str();
-				nHttpCurl.runInit(value_.c_str());
+				nHttpCurl.setUrlValue(format_.str().c_str());
+				nHttpCurl.runInit();
 			} else {
 				nHttpCurl.runInit(mValue.c_str());
 				
 				boost::format format_(mBody.c_str());
 				this->runFormat(format_, nArgs ...);
-				string body_ = format_.str().c_str();
-				string value_ = stringDelete(body_, '\\');
+				string value_ = format_.str().c_str();
+				value_ = stringDelete(value_, '\\');
 			#ifdef __WINDOW__
 				value_ = GBKToUTF8(value_.c_str());
 			#endif
-				nHttpCurl.runHttpPost(value_.c_str());
+				nHttpCurl.setUrlValue(value_.c_str());
+				nHttpCurl.runHttpPost();
 			}
-			nHttpCurl.runTimeout(mTimeout);
 			nHttpCurl.runHttpHeader(mType);
+			nHttpCurl.runTimeout(mTimeout);
 			if (mSSL) {
 				nHttpCurl.runSSL();
 			}
@@ -47,22 +48,23 @@ namespace cc {
 			if ( "" == mBody ) {
 				boost::format format_(mValue.c_str());
 				this->runFormat(format_, nArgs ...);
-				string value_ = format_.str().c_str();
-				nHttpCurl->runInit(value_.c_str());
+				nHttpCurl->setUrlValue(format_.str().c_str());
+				nHttpCurl->runInit();
 			} else {
 				nHttpCurl->runInit(mValue.c_str());
 				
 				boost::format format_(mBody.c_str());
 				this->runFormat(format_, nArgs ...);
-				string body_ = format_.str().c_str();
-				string value_ = stringDelete(body_, '\\');
+				string value_ = format_.str().c_str();
+				value_ = stringDelete(value_, '\\');
 			#ifdef __WINDOW__
 				value_ = GBKToUTF8(value_.c_str());
 			#endif
-				nHttpCurl->runHttpPost(value_.c_str());
+				nHttpCurl->setUrlValue(value_.c_str());
+				nHttpCurl->runHttpPost();
 			}
-			nHttpCurl->runTimeout(mTimeout);
 			nHttpCurl->runHttpHeader(mType);
+			nHttpCurl->runTimeout(mTimeout);
 			if (mSSL) {
 				nHttpCurl->runSSL();
 			}

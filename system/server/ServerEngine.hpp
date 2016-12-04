@@ -22,10 +22,10 @@ namespace cc {
 		void headSerialize(T& nSerialize, const char * nName)
 		{
 			if ( 0 == strcmp(streamName(), nName) ) {
-				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "serverItems", "serverItem");
+				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerList", "mServerItem");
 				
 				UpintEngine& upintEngine_ = UpintEngine::instance();
-				upintEngine_.headSerialize(nSerialize, nName);
+				upintEngine_.headSerialize(nSerialize, upintEngine_.streamName());
 				upintEngine_.runSave();
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);

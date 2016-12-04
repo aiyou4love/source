@@ -1,6 +1,42 @@
 #include "../../Serialize.hpp"
 
 namespace cc {
+		
+	void JsonReader::runNumber(int8_t& nValue, const char * nName)
+	{
+		if (mValue->IsNull()) {
+			return;
+		}
+		if ( !mValue->HasMember(nName) ) {
+			return;
+		}
+		rapidjson::Value& value_ = (*mValue)[nName];
+		nValue = static_cast<int8_t>(value_.Get<int>());
+	}
+	
+	void JsonReader::runNumber(int16_t& nValue, const char * nName)
+	{
+		if (mValue->IsNull()) {
+			return;
+		}
+		if ( !mValue->HasMember(nName) ) {
+			return;
+		}
+		rapidjson::Value& value_ = (*mValue)[nName];
+		nValue = static_cast<int16_t>(value_.Get<int>());
+	}
+	
+	void JsonReader::runNumber(int32_t& nValue, const char * nName)
+	{
+		if (mValue->IsNull()) {
+			return;
+		}
+		if ( !mValue->HasMember(nName) ) {
+			return;
+		}
+		rapidjson::Value& value_ = (*mValue)[nName];
+		nValue = static_cast<int32_t>(value_.Get<int>());
+	}
 	
 	void JsonReader::runNumber(string& nValue, const char * nName)
 	{

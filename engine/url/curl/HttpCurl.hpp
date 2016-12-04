@@ -6,6 +6,7 @@ namespace cc {
 	{
 	public:
 		void runHttpPost(const char * nValue);
+		void runHttpPost();
 		void runHttpHeader(int8_t nType);
 		void freeHttpHeader();
 		void runTimeout(int16_t nTimeout);

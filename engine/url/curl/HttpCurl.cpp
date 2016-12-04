@@ -11,6 +11,11 @@ namespace cc {
 		curl_easy_setopt(mHandle, CURLOPT_POST, 1);
 	}
 	
+	void HttpCurl::runHttpPost()
+	{
+		this->runHttpPost(mUrlValue.c_str());
+	}
+	
 	void HttpCurl::runHttpHeader(int8_t nType)
 	{
 		if (1 == nType) {

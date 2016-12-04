@@ -21,8 +21,8 @@ namespace cc {
 			nValue->setSelectId(selectId_);
 			
 			HttpCurl * httpCurl_ = new HttpCurl();
-			httpCurl_->runCurlValue(EcurlValue::mString);
 			urlInfo_->runHttpCurl(httpCurl_, nArgs ...);
+			httpCurl_->runCurlValue(EcurlValue::mString);
 			BaseCurlPtr baseCurl_(httpCurl_);
 			baseCurl_->setValue(nValue);
 			baseCurl_->setUrlInfo(urlInfo_);
@@ -44,8 +44,8 @@ namespace cc {
 			nType = urlInfo_->getType();
 			
 			HttpCurl httpCurl_;
-			httpCurl_.runCurlValue(EcurlValue::mString);
 			urlInfo_->runHttpCurl(httpCurl_, nArgs ...);
+			httpCurl_.runCurlValue(EcurlValue::mString);
 			if ( !httpCurl_.runPerform() ) {
 				LOGE("[%s]%s perform", __METHOD__, nUrl);
 				return false;
