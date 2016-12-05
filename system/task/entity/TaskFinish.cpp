@@ -25,7 +25,7 @@ namespace cc {
 	
 	const char * TaskFinish::countName()
 	{
-		return "taskAccept";
+		return "taskFinish";
 	}
 	
 	TaskFinish::TaskFinish()

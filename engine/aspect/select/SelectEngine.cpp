@@ -63,6 +63,7 @@ namespace cc {
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tRunLuaApi.connect(bind(&SelectEngine::runLuaApi, this));
 		lifeCycle_.m_tLoadBegin.connect(bind(&SelectEngine::runLoad, this));
+		lifeCycle_.m_tInitBegin.connect(bind(&SelectEngine::runInit, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&SelectEngine::runClear, this));
 	}
 	
@@ -80,6 +81,12 @@ namespace cc {
 		tableEngine_.runReader<SelectEngine>(this, streamUrl(), streamName());
 		tableEngine_.runReader<SelectEngine>(this, globUrl(), globName());
 		tableEngine_.runReader<SelectEngine>(this, selfUrl(), selfName());
+	}
+	
+	void SelectEngine::runInit()
+	{
+		EngineMgr& engineMgr_ = EngineMgr::instance();
+		engineMgr_.registerEngine(Eengine::mSelect, this);
 	}
 	
 	void SelectEngine::runClear()

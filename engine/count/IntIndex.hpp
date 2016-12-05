@@ -13,7 +13,7 @@ namespace cc {
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{
 			nSerialize->runNumber(mClassify, "classify");
-			nSerialize->runNumber(mType, "type");
+			nSerialize->runNumber(mType, "intType");
 			nSerialize->runNumber(mCount, "count");
 			
 			nSerialize->runNumber(mId, "key");

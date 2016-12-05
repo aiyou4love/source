@@ -38,6 +38,7 @@ namespace cc {
 		void runPreinit();
 		void runLuaApi();
 		void runLoad();
+		void runInit();
 		void runClear();
 		
 		static SelectEngine& instance();

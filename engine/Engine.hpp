@@ -12,6 +12,7 @@
 #include "upint/Upint.hpp"
 #include "upint/UpintEngine.hpp"
 
+#include "count/EintType.hpp"
 #include "count/IntArray.hpp"
 #include "count/CountIndex.hpp"
 #include "count/IntIndex.hpp"
