@@ -6,13 +6,8 @@ namespace cc {
 	class cAccount : public Account
 	{
 	public:
-		void setPassword(const char * nPassword);
-		const char * getPassword();
-		
-		void setName(const char * nName);
-		const char * getName();
-		
-		void runClear();
+		void setServerId(int32_t nServerId);
+		int32_t getServerId();
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
@@ -22,7 +17,7 @@ namespace cc {
 			nSerialize.runNumber(mPassword, "mPassword");
 			nSerialize.runNumber(mName, "mName");
 			
-			nSerialize.runNumber(mAuthority, "mAuthority");
+			nSerialize.runNumber(mServerId, "mServerId");
 			
 			nSerialize.runNumber(mType, "mType");
 			nSerialize.runNumber(mId, "mId");
@@ -37,8 +32,7 @@ namespace cc {
 		~cAccount();
 		
 	private:
-		string mPassword;
-		string mName;
+		int32_t mServerId;
 	};
 	typedef SPTR<cAccount> cAccountPtr;
 #endif

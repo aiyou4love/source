@@ -13,10 +13,9 @@ namespace cc {
 			nSerialize->runNumber(mRoleType, "mRoleType");
 			nSerialize->runNumber(mRoleName, "mRoleName");
 			nSerialize->runNumber(mRoleRace, "mRoleRace");
-			nSerialize->runNumber(mRoleStep, "mRoleStep");
 			nSerialize->runNumber(mRoleLevel, "mRoleLevel");
+			nSerialize->runNumber(mRoleStep, "mRoleStep");
 		}
-		
 		int32_t getServerId();
         int32_t getRoleId();
         int16_t getRoleType();

@@ -11,7 +11,7 @@ namespace cc {
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
-			nSerialize.runStreamPtrs<list<RoleItemPtr>, RoleItemPtr>(mRoleItems, "mRoleItems", "mRoleItem");
+			nSerialize.template runStreamPtrs<list<RoleItemPtr>, RoleItemPtr>(mRoleItems, "mRoleItems", "mRoleItem");
 		}
 		
 		const char * streamName();

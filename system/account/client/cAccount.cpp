@@ -3,32 +3,14 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	void cAccount::setPassword(const char * nPassword)
+	void cAccount::setServerId(int32_t nServerId)
 	{
-		mPassword = nPassword;
+		mServerId = nServerId;
 	}
 	
-	const char * cAccount::getPassword()
+	int32_t cAccount::getServerId()
 	{
-		return mPassword.c_str();
-	}
-	
-	void cAccount::setName(const char * nName)
-	{
-		mName = nName;
-	}
-	
-	const char * cAccount::getName()
-	{
-		return mName.c_str();
-	}
-	
-	void cAccount::runClear()
-	{
-		Account::runClear();
-		
-		mPassword = "";
-		mName = "";
+		return mServerId;
 	}
 	
 	void cAccount::runLoad()
@@ -54,15 +36,13 @@ namespace cc {
 	}
 	
 	cAccount::cAccount()
-		: mPassword ("")
-		, mName ("")
+		: mServerId (0)
 	{
 	}
 	
 	cAccount::~cAccount()
 	{
-		mPassword = "";
-		mName = "";
+		mServerId = 0;
 	}
 #endif
 	

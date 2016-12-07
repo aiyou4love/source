@@ -4,7 +4,6 @@ namespace cc {
 	
 #ifdef __CLIENT__
 	const char * mRoleListUrl = "roleList";
-	
 	int8_t RoleEngine::runRoleList(int64_t nAccountId)
 	{
 		cServerTime& serverTime_ = cServerTime::instance();

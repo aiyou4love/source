@@ -17,6 +17,10 @@ namespace cc {
 				nSerialize.runNumber(mUpdateTime, "updateTime");
 			} else if ( 0 == strcmp(streamName(), nName) ) {
 				nSerialize.runMapStreamPtrs<int64_t, RoleItemPtr>(mRoleItems, "roleItems", "roleItem");
+				
+				ServerEngine& serverEngine_ = ServerEngine::instance();
+				serverEngine_.headSerialize(nSerialize, serverEngine_.streamName());
+				serverEngine_.runSave();
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}
@@ -39,7 +43,6 @@ namespace cc {
 		
 	private:
 		map<int64_t, RoleItemPtr> mRoleItems;
-		
 		int64_t mUpdateTime;
 		
 		static RoleEngine mRoleEngine;

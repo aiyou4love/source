@@ -21,15 +21,16 @@ namespace cc {
 			nName, nPassword, operatorName_, versionNo_, nType) ) {
 			return 0;
 		}
+		ServerItemPtr& serverItem_ = loginResult_.getServerItem();
+		int32_t serverId_ = serverItem_->getServerId();
 		RoleItemPtr& roleItem_ = loginResult_.getRoleItem();
 		int64_t accountId_ = loginResult_.getAccountId();
-		int16_t authority_ = loginResult_.getAuthority();
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
 		account_->setRoleItem(roleItem_);
+		account_->setServerId(serverId_);
 		account_->setName(nName);
 		account_->setPassword(nPassword);
 		account_->setType(nType);
-		account_->setAuthority(authority_);
 		account_->setId(accountId_);
 		account_->runSave();
 		return 1;
@@ -78,7 +79,6 @@ namespace cc {
 	void cAccountEngine::runCancel()
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
-		
 		account_->runClear();
 		account_->runSave();
 	}
@@ -96,11 +96,7 @@ namespace cc {
 	int32_t cAccountEngine::getServerId()
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
-		RoleItemPtr& roleItem_ = account_->getRoleItem();
-		if (!roleItem_) {
-			return roleItem_->getServerId();
-		}
-		return 0;
+		return account_->getServerId();
 	}
 	
 	int8_t cAccountEngine::roleCreate(const char * nRoleName, int16_t nRoleRace)
@@ -117,8 +113,8 @@ namespace cc {
 		const char * password_ = account_->getPassword();
 		int16_t accountType_ = account_->getType();
 		int64_t accountId_ = account_->getId();
+		int32_t serverId_ = account_->getServerId();
 		RoleItemPtr& roleItem0_ = account_->getRoleItem();
-		int32_t serverId_ = roleItem0_->getServerId();
 		int32_t roleId_ = roleItem0_->getRoleId();
 		
 		cRoleResult roleResult_;
@@ -152,7 +148,6 @@ namespace cc {
 	void cAccountEngine::runLoad()
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
-		
 		account_->runLoad();
 	}
 	

@@ -72,8 +72,6 @@
 #include "url/url/UrlParser.hpp"
 #include "url/url/UrlMgr.hpp"
 
-#include "net/netIp/NetInfo.hpp"
-#include "net/netIp/NetNo.hpp"
 #include "net/netIp/NetIp.hpp"
 #include "net/netIp/NetIpMgr.hpp"
 #include "net/ioservice/IoService.hpp"

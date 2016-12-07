@@ -11,8 +11,8 @@ void systemInit()
 	ConsoleEngine& consoleEngine_ = ConsoleEngine::instance();
 	consoleEngine_.runPreinit();
 	
-	ServerEngine& serverEngine_ = ServerEngine::instance();
-	serverEngine_.runPreinit();
+	//ServerEngine& serverEngine_ = ServerEngine::instance();
+	//serverEngine_.runPreinit();
 	
 	TimeEngine& timeEngine_ = TimeEngine::instance();
 	timeEngine_.runPreinit();

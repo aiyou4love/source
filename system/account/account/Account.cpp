@@ -12,14 +12,24 @@ namespace cc {
 		return mRoleItem;
 	}
 	
-	void Account::setAuthority(int16_t nAuthority)
+	void Account::setPassword(const char * nPassword)
 	{
-		mAuthority = nAuthority;
+		mPassword = nPassword;
 	}
 	
-	int16_t Account::getAuthority()
+	const char * Account::getPassword()
 	{
-		return mAuthority;
+		return mPassword.c_str();
+	}
+	
+	void Account::setName(const char * nName)
+	{
+		mName = nName;
+	}
+	
+	const char * Account::getName()
+	{
+		return mName.c_str();
 	}
 	
 	void Account::setType(int16_t nType)
@@ -44,25 +54,27 @@ namespace cc {
 	
 	void Account::runClear()
 	{
-		mAuthority = 0;
+		mRoleItem.reset();
+		
+		mPassword = "";
+		mName = "";
 		
 		mType = 0;
 		mId = 0;
 	}
 	
 	Account::Account()
-		: mAuthority (0)
+		: mRoleItem (nullptr)
 		, mType (0)
 		, mId (0)
+		, mPassword ("")
+		, mName ("")
 	{
 	}
 	
 	Account::~Account()
 	{
-		mAuthority = 0;
-		
-		mType = 0;
-		mId = 0;
+		this->runClear();
 	}
 	
 }

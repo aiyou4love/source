@@ -8,8 +8,11 @@ namespace cc {
 		void setRoleItem(RoleItemPtr& nRoleItem);
 		RoleItemPtr& getRoleItem();
 		
-		void setAuthority(int16_t nAuthority);
-		int16_t getAuthority();
+		void setPassword(const char * nPassword);
+		const char * getPassword();
+		
+		void setName(const char * nName);
+		const char * getName();
 		
 		void setType(int16_t nType);
 		int16_t getType();
@@ -17,7 +20,7 @@ namespace cc {
 		void setId(int64_t nId);
 		int64_t getId();
 		
-		virtual void runClear();
+		void runClear();
 		
 		Account();
 		virtual ~Account();
@@ -25,7 +28,8 @@ namespace cc {
 	protected:
 		RoleItemPtr mRoleItem;
 		
-		int16_t mAuthority;
+		string mPassword;
+		string mName;
 		
 		int16_t mType;
 		int64_t mId;

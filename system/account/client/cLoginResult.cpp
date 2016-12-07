@@ -3,14 +3,9 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	const char * cLoginResult::streamName()
+	ServerItemPtr& cLoginResult::getServerItem()
 	{
-		return "loginResult";
-	}
-	
-	const char * cLoginResult::streamUrl()
-	{
-		return "loginResult.json";
+		return mServerItem;
 	}
 	
 	RoleItemPtr& cLoginResult::getRoleItem()
@@ -23,25 +18,29 @@ namespace cc {
 		return mAccountId;
 	}
 	
-	int16_t cLoginResult::getAuthority()
+	const char * cLoginResult::streamName()
 	{
-		return mAuthority;
+		return "loginResult";
+	}
+	
+	const char * cLoginResult::streamUrl()
+	{
+		return "loginResult.json";
 	}
 	
 	cLoginResult::cLoginResult()
+		: mServerItem (new ServerItem())
 		: mRoleItem (new RoleItem())
 		, mAccountId (0)
-		, mAuthority (0)
 	{
-		mServerItems.clear();
 	}
 	
 	cLoginResult::~cLoginResult()
 	{
-		mServerItems.clear();
+		mServerItem.reset();
+		mRoleItem.reset();
 		
 		mAccountId = 0;
-		mAuthority = 0;
 	}
 #endif
 	

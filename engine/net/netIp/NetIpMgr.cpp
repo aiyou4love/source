@@ -2,29 +2,6 @@
 
 namespace cc {
 	
-	NetInfoPtr * NetIpMgr::findNetInfo(int32_t nServerId)
-	{
-		int32_t appNo_ = this->findAppNo(nServerId);
-		auto it = mNetInfos.find(appNo_);
-		if ( it == mNetInfos.end() ) {
-			LOGE("[%s]%d", __METHOD__, nServerId);
-			return nullptr;
-		}
-		NetInfoPtr& netInfo_ = it->second;
-		return (&netInfo_);
-	}
-	
-	int32_t NetIpMgr::findAppNo(int32_t nServerId)
-	{
-		auto it = mNetNos.find(nServerId);
-		if ( it == mNetNos.end() ) {
-			LOGE("[%s]%d", __METHOD__, nServerId);
-			return 0;
-		}
-		NetNoPtr& netNo_ = it->second;
-		return netNo_->getAppNo();
-	}
-	
 	NetIpPtr * NetIpMgr::findNetIp(int16_t nAppType, int32_t nAppNo)
 	{
 		auto it = mNetIps.begin();
@@ -124,8 +101,6 @@ namespace cc {
 	
 	void NetIpMgr::runClear()
 	{
-		mNetInfos.clear();
-		mNetNos.clear();
 		mNetIps.clear();
 	}
 	
