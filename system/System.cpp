@@ -11,8 +11,8 @@ void systemInit()
 	ConsoleEngine& consoleEngine_ = ConsoleEngine::instance();
 	consoleEngine_.runPreinit();
 	
-	//ServerEngine& serverEngine_ = ServerEngine::instance();
-	//serverEngine_.runPreinit();
+	ServerEngine& serverEngine_ = ServerEngine::instance();
+	serverEngine_.runPreinit();
 	
 	TimeEngine& timeEngine_ = TimeEngine::instance();
 	timeEngine_.runPreinit();
@@ -26,5 +26,11 @@ void systemInit()
 #ifdef __CLIENT__
 	ActivityEngine& activityEngine_ = ActivityEngine::instance();
 	activityEngine_.runPreinit();
+	
+	RoleEngine& roleEngine_ = RoleEngine::instance();
+	roleEngine_.runPreinit();
 #endif
+	
+	cAccountEngine& accountEngine_ = cAccountEngine::instance();
+	accountEngine_.runPreinit();
 }

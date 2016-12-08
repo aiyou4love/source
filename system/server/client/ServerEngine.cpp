@@ -52,6 +52,16 @@ namespace cc {
 		return "serverEngine.json";
 	}
 	
+	const char * ServerEngine::saveName()
+	{
+		return "serverSave";
+	}
+	
+	const char * ServerEngine::saveUrl()
+	{
+		return "serverSave.json";
+	}
+	
 	ServerEngine& ServerEngine::instance()
 	{
 		return mServerEngine;
