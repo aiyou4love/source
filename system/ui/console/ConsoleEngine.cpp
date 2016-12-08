@@ -98,8 +98,6 @@ namespace cc {
 			consoleUi_->runClose();
 		}
 		mCloseUis.clear();
-		
-		this->runRefresh();
 	}
 	
 	void ConsoleEngine::runInit()
@@ -143,6 +141,8 @@ namespace cc {
 		}
 		ConsoleUiPtr consoleUi_ = mConsoleUis.back();
 		consoleUi_->runCommand(commandArgs_);
+		
+		this->runRefresh();
 	}
 	
 	void ConsoleEngine::runUpdate()
