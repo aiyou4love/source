@@ -6,12 +6,14 @@ namespace cc {
 	class cRoleListResult : noncopyable
 	{
 	public:
+		list<ServerItemPtr>& getServerItems();
 		list<RoleItemPtr>& getRoleItems();
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
-			nSerialize.template runStreamPtrs<list<RoleItemPtr>, RoleItemPtr>(mRoleItems, "mRoleItems", "mRoleItem");
+			nSerialize.template runStreamPtrs<list<ServerItemPtr>, ServerItemPtr>(mServerItems, "mServerList", "mServerItem");
+			nSerialize.template runStreamPtrs<list<RoleItemPtr>, RoleItemPtr>(mRoleItems, "mRoleList", "mRoleItem");
 		}
 		
 		const char * streamName();
@@ -21,6 +23,7 @@ namespace cc {
 		~cRoleListResult();
 		
 	private:
+		list<ServerItemPtr> mServerItems;
 		list<RoleItemPtr> mRoleItems;
 	};
 	typedef SPTR<cRoleListResult> cRoleListResultPtr;

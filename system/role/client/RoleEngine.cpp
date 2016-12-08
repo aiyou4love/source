@@ -24,10 +24,23 @@ namespace cc {
 			operatorName_, versionNo_, nAccountId) ) {
 			return 0;
 		}
+		
+		ServerEngine& serverEngine_ = ServerEngine::instance();
+		list<ServerItemPtr>& serverItems_ = roleListResult_.getServerItems();
+		auto it1 = serverItems_.begin();
+		for ( ; it1 != serverItems_.end(); ++it1 ) {
+			ServerItemPtr& serverItem_ = (*it1);
+			if ( serverItem_->isDefault() ) {
+				return 2;
+			}
+			serverEngine_.pushServerItem(serverItem_);
+		}
+		serverEngine_.runSave();
+		
 		list<RoleItemPtr>& roleItems_ = roleListResult_.getRoleItems();
-		auto it = roleItems_.begin();
-		for ( ; it != roleItems_.end(); ++it ) {
-			RoleItemPtr& roleItem_ = (*it);
+		auto it0 = roleItems_.begin();
+		for ( ; it0 != roleItems_.end(); ++it0 ) {
+			RoleItemPtr& roleItem_ = (*it0);
 			if ( roleItem_->isDefault() ) {
 				return 2;
 			}
@@ -70,6 +83,7 @@ namespace cc {
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tLoadBegin.connect(bind(&RoleEngine::runLoad, this));
+		lifeCycle_.m_tSaveBegin.connect(bind(&RoleEngine::runSave, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&RoleEngine::runClear, this));
 	}
 	

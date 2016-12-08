@@ -30,7 +30,7 @@ namespace cc {
 	
 	cLoginResult::cLoginResult()
 		: mServerItem (new ServerItem())
-		: mRoleItem (new RoleItem())
+		, mRoleItem (new RoleItem())
 		, mAccountId (0)
 	{
 	}

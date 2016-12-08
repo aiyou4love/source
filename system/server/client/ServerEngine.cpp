@@ -1,39 +1,12 @@
-#include "../System.hpp"
+#include "../../System.hpp"
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	void ServerEngine::pushServerItem(ServerItemPtr& nServerItem)
 	{
 		int32_t serverId_ = nServerItem->getServerId();
 		mServerItems[serverId_] = nServerItem;
-	}
-	
-	void ServerEngine::pushServerInfo(ServerInfoPtr& nServerInfo)
-	{
-		int32_t serverNo_ = nServerInfo->getServerNo();
-		mServerInfos[serverNo_] = nServerInfo;
-	}
-	
-	const char * ServerEngine::getServerName(int32_t nServerId)
-	{
-		auto it = mServerItems.find(nServerId);
-		if ( it == mServerItems.end() ) {
-			LOGE("[%s]%d", __METHOD__, nServerId);
-			return "";
-		}
-		ServerItemPtr& serverItem_ = it->second;
-		return serverItem_->getServerName();
-	}
-	
-	ServerInfoPtr& ServerEngine::getServerInfo(int32_t nServerId)
-	{
-		auto it = mServerInfos.find(nServerId);
-		if ( it == mServerInfos.end() ) {
-			LOGE("[%s]%d", __METHOD__, nServerId);
-			return "";
-		}
-		ServerItemPtr& serverItem_ = it->second;
-		return serverItem_->getServerName();
 	}
 	
 	string ServerEngine::getServerInfos()
@@ -47,6 +20,7 @@ namespace cc {
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tLoadBegin.connect(bind(&ServerEngine::runLoad, this));
+		lifeCycle_.m_tSaveBegin.connect(bind(&ServerEngine::runSave, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&ServerEngine::runClear, this));
 	}
 	
@@ -78,16 +52,6 @@ namespace cc {
 		return "serverEngine.json";
 	}
 	
-	const char * ServerEngine::saveName()
-	{
-		return "serverSave";
-	}
-	
-	const char * ServerEngine::saveUrl()
-	{
-		return "serverSave.json";
-	}
-	
 	ServerEngine& ServerEngine::instance()
 	{
 		return mServerEngine;
@@ -106,5 +70,6 @@ namespace cc {
 	}
 	
 	ServerEngine ServerEngine::mServerEngine;
+#endif
 	
 }
