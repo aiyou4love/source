@@ -5,17 +5,15 @@ namespace cc {
 	void ConsoleUpdate::runContext(int64_t nTick)
 	{
 		ConsoleEngine& consoleEngine_ = ConsoleEngine::instance();
-		consoleEngine_.runCommandArgs();
+		consoleEngine_.runUpdate();
 	}
 	
 	ConsoleUpdate::ConsoleUpdate()
 	{
-		
 	}
 	
 	ConsoleUpdate::~ConsoleUpdate()
 	{
-		
 	}
 	
 }

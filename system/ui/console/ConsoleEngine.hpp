@@ -19,8 +19,9 @@ namespace cc {
 		
 		void pushCommandArgs(CommandArgsPtr& nCommandArgs);
 		CommandArgsPtr popCommandArgs();
-		
 		void runCommandArgs();
+		
+		void runUpdate();
 		
 	private:
 		void runRefresh();

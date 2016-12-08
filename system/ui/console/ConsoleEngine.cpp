@@ -27,7 +27,7 @@ namespace cc {
 	
 	void ConsoleEngine::runRefresh()
 	{
-		std::system("cls");
+		//std::system("cls");
 		if (mConsoleUis.empty()) {
 			return;
 		}
@@ -89,12 +89,17 @@ namespace cc {
 	
 	void ConsoleEngine::clearClose()
 	{
+		if ( mCloseUis.size() <= 0 ) {
+			return;
+		}
 		auto it = mCloseUis.begin();
 		for ( ; it != mCloseUis.end(); ++it ) {
 			ConsoleUiPtr& consoleUi_ = (*it);
 			consoleUi_->runClose();
 		}
 		mCloseUis.clear();
+		
+		this->runRefresh();
 	}
 	
 	void ConsoleEngine::runInit()
@@ -138,9 +143,12 @@ namespace cc {
 		}
 		ConsoleUiPtr consoleUi_ = mConsoleUis.back();
 		consoleUi_->runCommand(commandArgs_);
-		
+	}
+	
+	void ConsoleEngine::runUpdate()
+	{
+		this->runCommandArgs();
 		this->clearClose();
-		this->runRefresh();
 	}
 	
 	void ConsoleEngine::runPreinit()
