@@ -19,6 +19,9 @@ namespace cc {
 	
 	void Handle::runHandle()
 	{
+		chrono::milliseconds dura_(2000);
+		this_thread::sleep_for(dura_);
+		
 		mStop = false;
 		while (runInternal());
 		mStop = true;
