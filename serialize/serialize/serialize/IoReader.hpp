@@ -297,6 +297,9 @@ namespace cc {
 		template<typename T>
 		void runStreamPtr(T& nValue, const char * nName)
 		{
+			if (nullptr == nValue) {
+				Instance::instance(nValue);
+			}
 			if ( mArchive.isText() ) {
 				mArchive.pushClass(nName);
 				nValue->serialize(this, nName, 0);
@@ -431,6 +434,9 @@ namespace cc {
 		template<typename T>
 		void runStreamPtrCount(T& nValue, const char * nName, int8_t nCount)
 		{
+			if (nullptr == nValue) {
+				Instance::instance(nValue);
+			}
 			if ( mArchive.isText() ) {
 				string name_ = nName; name_ += "_";
 				name_.append(convertValue<int32_t, string>(nCount));

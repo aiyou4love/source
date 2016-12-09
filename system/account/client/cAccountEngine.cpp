@@ -36,10 +36,16 @@ namespace cc {
 		return 1;
 	}
 	
-	bool cAccountEngine::isLogin()
+	const char * cAccountEngine::getAccountName()
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
-		return (account_->getId() > 0);
+		return account_->getName();
+	}
+	
+	int64_t cAccountEngine::getAccountId()
+	{
+		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
+		return account_->getId();
 	}
 	
 	int8_t cAccountEngine::runRegister(const char * nName, const char * nPassword)
@@ -83,14 +89,14 @@ namespace cc {
 		account_->runSave();
 	}
 	
-	bool cAccountEngine::haveRole()
+	int32_t cAccountEngine::getRoleId()
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
 		RoleItemPtr& roleItem_ = account_->getRoleItem();
 		if (!roleItem_) {
-			return ( roleItem_->getRoleId() > 0 );
+			return roleItem_->getRoleId();
 		}
-		return false;
+		return 0;
 	}
 	
 	int32_t cAccountEngine::getServerId()

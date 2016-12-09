@@ -17,4 +17,7 @@ void aspectInit()
 	
 	cRoleAspect& roleAspect_ = cRoleAspect::instance();
 	roleAspect_.runPreinit();
+	
+	cServerAspect& serverAspect_ = cServerAspect::instance();
+	serverAspect_.runPreinit();
 }

@@ -9,6 +9,17 @@ namespace cc {
 		mServerItems[serverId_] = nServerItem;
 	}
 	
+	const char * ServerEngine::getServerName(int32_t nServerId)
+	{
+		auto it = mServerItems.find(nServerId);
+		if ( it == mServerItems.end() ) {
+			LOGE("[%s]serverId:%d", __METHOD__, nServerId);
+			return "";
+		}
+		ServerItemPtr& serverItem_ = it->second;
+		return serverItem_->getServerName();
+	}
+	
 	string ServerEngine::getServerInfos()
 	{
 		LuaWriter luaWriter_;

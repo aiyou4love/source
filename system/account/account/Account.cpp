@@ -64,7 +64,7 @@ namespace cc {
 	}
 	
 	Account::Account()
-		: mRoleItem (nullptr)
+		: mRoleItem (new RoleItem())
 		, mType (0)
 		, mId (0)
 		, mPassword ("")

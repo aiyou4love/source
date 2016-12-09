@@ -26,4 +26,10 @@
 #include "role/agent/cRoleAspect.hpp"
 #include "role/client/cRoleAspect.hpp"
 
+#include "server/server/ServerCondition.hpp"
+#include "server/server/ServerReward.hpp"
+#include "server/server/ServerAspect.hpp"
+#include "server/agent/cServerAspect.hpp"
+#include "server/client/cServerAspect.hpp"
+
 extern void aspectInit();

@@ -47,7 +47,7 @@ namespace cc {
 		static const int16_t mBegin = 40;
 		
 		static const int16_t mRunCancel = 40;
-		static const int16_t mGetServerId = 41;
+		static const int16_t mEnterInfo = 41;
 		
 		static const int16_t mEnd = 59;
 	};
@@ -68,7 +68,7 @@ namespace cc {
 		
 		if ( type_ == EloginUiCondition::mIsLogin ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
-			return accountEngine_.isLogin();
+			return ( accountEngine_.getAccountId() > 0 );
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}
@@ -82,7 +82,7 @@ namespace cc {
 		
 		if ( type_ == EenterUiCondition::mHaveRole ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
-			return accountEngine_.haveRole();
+			return ( accountEngine_.getRoleId() > 0 );
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}
@@ -143,10 +143,13 @@ namespace cc {
 		if ( type_ == EenterUiReward::mRunCancel ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
 			accountEngine_.runCancel();
-		} else if ( type_ == EenterUiReward::mGetServerId ) {
-			string accountName_ = nValue->getString(params_[0]);
+		} else if ( type_ == EenterUiReward::mEnterInfo ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
+			const char * accountName_ = accountEngine_.getAccountName();
+			int32_t roleId_ = accountEngine_.getRoleId();
 			int32_t serverId_ = accountEngine_.getServerId();
+			nValue->pushString(accountName_);
+			nValue->pushInt32(roleId_);
 			nValue->pushInt32(serverId_);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
