@@ -12,7 +12,7 @@ namespace cc {
 		return mName.c_str();
 	}
 	
-	int16_t UiReward::getUiType()
+	int8_t UiReward::getUiType()
 	{
 		return mUiType;
 	}

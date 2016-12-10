@@ -65,7 +65,7 @@ namespace cc {
 	void UiManager::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
-		lifeCycle_.m_tCloseBegin.connect(bind(&UiManager::runClose, this));
+		//lifeCycle_.m_tCloseBegin.connect(bind(&UiManager::runClose, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&UiManager::runClear, this));
 	}
 	

@@ -31,11 +31,11 @@ namespace cc {
 		mName = nName;
 		
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
-		string uiEventPath_ = workDirectory_.uiEventPath(nName);
-		string uiCorePath_ = workDirectory_.uiCorePath(nName);
-		string uiLuaPath_ = workDirectory_.uiLuaPath(nName);
-		string uiJsonPath_ = workDirectory_.uiJsonPath(nName);
-		string uiStringPath_ = workDirectory_.uiStringPath(nName);
+		string uiEventPath_ = workDirectory_.uiEventPath(nName, EuiType::mConsole);
+		string uiCorePath_ = workDirectory_.uiCorePath(nName, EuiType::mConsole);
+		string uiLuaPath_ = workDirectory_.uiLuaPath(nName, EuiType::mConsole);
+		string uiJsonPath_ = workDirectory_.uiJsonPath(nName, EuiType::mConsole);
+		string uiStringPath_ = workDirectory_.uiStringPath(nName, EuiType::mConsole);
 		
 		this->initEvent(uiEventPath_.c_str());
 		this->initUi(uiJsonPath_.c_str());

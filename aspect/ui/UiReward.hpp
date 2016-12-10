@@ -32,7 +32,7 @@ namespace cc {
 		IndexValue mIndexValue;
 		
 		int32_t mIndex;
-		int16_t mUiType;
+		int8_t mUiType;
 		int16_t mType;
 		string mName;
 	};

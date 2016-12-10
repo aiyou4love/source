@@ -56,28 +56,28 @@ namespace cc {
 	{
 		if (EuiType::mConsole == nType) {
 			if (mIsJson) {
-				return "ui.con.json";
+				return "/ui.con.json";
 			} else {
-				return "ui.con.xml";
+				return "/ui.con.xml";
 			}
 		} else if (EuiType::mCocos2dx == nType) {
 			if (mIsJson) {
-				return "ui.2dx.json";
+				return "/ui.2dx.json";
 			} else {
-				return "ui.2dx.xml";
+				return "/ui.2dx.xml";
 			}
 		} else if (EuiType::mUE4 == nType) {
 			if (mIsJson) {
-				return "ui.ue4.json";
+				return "/ui.ue4.json";
 			} else {
-				return "ui.ue4.xml";
+				return "/ui.ue4.xml";
 			}
 		} else {
 			LOGE("[%s]%d", __METHOD__, nType);
 			if (mIsJson) {
-				return "ui.json";
+				return "/ui.json";
 			} else {
-				return "ui.xml";
+				return "/ui.xml";
 			}
 		}
 	}
@@ -116,7 +116,7 @@ namespace cc {
 	
 	string WorkDirectory::uiStringPath(const char * nPath, int8_t nType)
 	{
-		const char * stringName_ = this->getUiStringName(nType);
+		string stringName_ = this->getUiStringName(nType);
 		string value_ = mUpdateUi + nPath;
 		value_ += stringName_;
 		filesystem::path path_(value_);
@@ -322,10 +322,11 @@ namespace cc {
 		string value_(workingDirectory.begin(), workingDirectory.end());
 		mRootPath = stringBackslant(value_);
 #endif
-		locale locale_("");
+		locale locale_;
 		cout.imbue(locale_);
 		
 		mLanguage = locale_.name();
+		cout << mLanguage << endl;
 		
 		mLogPath = mRootPath + "/log/";
 		mStoragePath = mRootPath + "/storage/";
