@@ -38,6 +38,11 @@ namespace cc {
 		
 		STD_SIGNAL<void()> m_tRunJoin;
 		void runJoin();
+		STD_SIGNAL<void()> m_tStopJoin;
+		void stopJoin();
+		
+		STD_SIGNAL<void()> m_tNoticeStop;
+		void noticeStop();
 		
 		STD_SIGNAL<void()> m_tStopBegin;
 		void stopBegin();
@@ -93,5 +98,5 @@ namespace cc {
 		
 		bool mPause;
 	};
-
+	
 }

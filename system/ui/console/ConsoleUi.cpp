@@ -99,6 +99,11 @@ namespace cc {
 		cout << stringTable_->getValue();
 	}
 	
+	void ConsoleUi::coutText(const char * nText)
+	{
+		cout << nText;
+	}
+	
 	void ConsoleUi::runClose()
 	{
 		mLuaThread->runCall<void>("runClose");
@@ -207,6 +212,7 @@ namespace cc {
 		luaEngine_.runClass<ConsoleUi>("ConsoleUi");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::pushClose, "pushClose");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::printText, "printText");
+		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutText, "coutText");
 	}
 	
 	ConsoleUi::ConsoleUi()

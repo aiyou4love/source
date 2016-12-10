@@ -44,6 +44,17 @@ namespace cc {
 		return (result_ | mRoleId);
 	}
 	
+	void RoleItem::runClear()
+	{
+		mServerId = 0;
+		mRoleId = 0;
+		mRoleType = 0;
+		mRoleName = "";
+		mRoleRace = 0;
+		mRoleStep = 0;
+		mRoleLevel = 0;
+	}
+	
 	int64_t RoleItem::getKey()
 	{
 		return getId();

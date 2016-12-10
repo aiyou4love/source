@@ -7,6 +7,10 @@ namespace cc {
 		string command_;
 		getline(cin, command_);
 		
+		std::system("cls");
+		
+		cout << "command: " << command_ << endl;
+		
 		CommandArgsPtr commandArgs_(new CommandArgs());
 		commandArgs_->runParse(command_.c_str());
 		

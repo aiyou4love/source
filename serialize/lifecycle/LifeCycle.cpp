@@ -72,6 +72,16 @@ namespace cc {
 		this->m_tRunJoin();
 	}
 	
+	void LifeCycle::stopJoin()
+	{
+		this->m_tStopJoin();
+	}
+	
+	void LifeCycle::noticeStop()
+	{
+		this->m_tNoticeStop();
+	}
+	
 	void LifeCycle::stopBegin()
 	{
 		this->m_tStopBegin();
@@ -150,6 +160,9 @@ namespace cc {
 		m_tRunEnd.disconnect_all_slots();
 		
 		m_tRunJoin.disconnect_all_slots();
+		m_tStopJoin.disconnect_all_slots();
+		
+		m_tNoticeStop.disconnect_all_slots();
 		
 		m_tStopBegin.disconnect_all_slots();
 		m_tStoping.disconnect_all_slots();

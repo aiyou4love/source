@@ -12,6 +12,7 @@ namespace cc {
 			
 			nSerialize->runNumber(mName, "rewardName");
 			nSerialize->runNumber(mType, "rewardType");
+			nSerialize->runNumber(mUiType, "uiType");
 			nSerialize->runNumber(mIndex, "rewardId");
 		}
 		
@@ -20,6 +21,7 @@ namespace cc {
 		const char * getName();
 		
 		bool isDefault();
+		int8_t getUiType();
 		int16_t getType();
 		int32_t getKey();
 		
@@ -30,6 +32,7 @@ namespace cc {
 		IndexValue mIndexValue;
 		
 		int32_t mIndex;
+		int16_t mUiType;
 		int16_t mType;
 		string mName;
 	};

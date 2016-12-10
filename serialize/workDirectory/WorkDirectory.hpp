@@ -5,18 +5,26 @@ namespace cc {
 	class WorkDirectory : noncopyable
 	{
 	public:
-		string uiEventPath(const char * nPath);
-		string uiJsonPath(const char * nPath);
-		string uiLuaPath(const char * nPath);
-		string uiCorePath(const char * nPath);
-		string uiStringPath(const char * nPath);
+		string uiEventPath(const char * nPath, int8_t nType);
+		const char * getUiEventName(int8_t nType);
+		string uiJsonPath(const char * nPath, int8_t nType);
+		const char * getUiJsonName(int8_t nType);
+		string uiLuaPath(const char * nPath, int8_t nType);
+		const char * getUiLuaName(int8_t nType);
+		string uiStringPath(const char * nPath, int8_t nType);
+		string getUiStringName(int8_t nType);
+		string uiCorePath(const char * nPath, int8_t nType);
+		const char * getUiCoreName(int8_t nType);
 		
 		string storagePath(const char * nPath);
 		string resourcePath(const char * nPath);
 		string configPath(const char * nPath);
 		string tablePath(const char * nPath);
 		string luaPath(const char * nPath);
+		
 		const char * logPath();
+		
+		const char * getLanguage();
 		
 		const char * getOperatorName();
 		int16_t getVersionNo();
@@ -67,6 +75,8 @@ namespace cc {
 		
 	private:
 		static WorkDirectory mWorkDirectory;
+		
+		string mLanguage;
 		
 		string mRootPath;
 		string mLogPath;

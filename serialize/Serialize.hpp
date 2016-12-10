@@ -16,6 +16,7 @@
 #include "lua/LuaThread.hpp"
 #include "lua/LuaEngine.hpp"
 
+#include "workDirectory/EuiType.hpp"
 #include "workDirectory/EappType.hpp"
 #include "workDirectory/WorkDirectory.hpp"
 

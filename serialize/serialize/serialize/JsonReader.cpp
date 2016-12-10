@@ -144,14 +144,14 @@ namespace cc {
 			return false;
 		}
 		stream_.unsetf(ios::skipws);
-        stream_.seekg(0, ios::end);
-        size_t size_ = size_t(stream_.tellg());
-        stream_.seekg(0);
+		stream_.seekg(0, ios::end);
+		size_t size_ = size_t(stream_.tellg());
+		stream_.seekg(0);
 		vector<char> data_;
-        data_.resize(size_ + 1);
-        stream_.read(&data_.front(), size_);
+		data_.resize(size_ + 1);
+		stream_.read(&data_.front(), size_);
 		stream_.close();
-        data_[size_] = 0;
+		data_[size_] = 0;
 		mDocument.Parse<0>(&data_.front());
 		return true;
 	}

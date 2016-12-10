@@ -12,6 +12,11 @@ namespace cc {
 		return mName.c_str();
 	}
 	
+	int16_t UiReward::getUiType()
+	{
+		return mUiType;
+	}
+	
 	int16_t UiReward::getType()
 	{
 		return mType;
@@ -19,7 +24,8 @@ namespace cc {
 	
 	bool UiReward::isDefault()
 	{
-		return ((0 == mIndex) || (0 == mType) || ("" == mName));
+		return ((0 == mIndex) || (0 == mUiType)
+			|| (0 == mType) || ("" == mName));
 	}
 	
 	int32_t UiReward::getKey()
@@ -30,6 +36,7 @@ namespace cc {
 	UiReward::UiReward()
 		: mIndex(0)
 		, mType (0)
+		, mUiType (0)
 		, mName ("")
 	{
 	}
@@ -39,6 +46,7 @@ namespace cc {
 		mName = "";
 		mIndex = 0;
 		mType = 0;
+		mUiType = 0;
 	}
 	
 }

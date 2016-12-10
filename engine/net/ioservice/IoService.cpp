@@ -8,8 +8,8 @@ namespace cc {
 		lifeCycle_.m_tLoadBegin.connect(bind(&IoService::runLoad, this));
 		lifeCycle_.m_tInitBegin.connect(bind(&IoService::runInit, this));
 		lifeCycle_.m_tStartBegin.connect(bind(&IoService::runStart, this));
-		lifeCycle_.m_tRunJoin.connect(bind(&IoService::runRun, this));
-		lifeCycle_.m_tStopBegin.connect(bind(&IoService::runStop, this));
+		lifeCycle_.m_tRunJoin.connect(bind(&IoService::runJoin, this));
+		lifeCycle_.m_tStopJoin.connect(bind(&IoService::runStop, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&IoService::runClear, this));
 	}
 	
@@ -33,15 +33,14 @@ namespace cc {
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		mSignals.reset(new asio::signal_set(this->getIoHandle()));
-		mSignals->add(SIGINT);
-		mSignals->add(SIGTERM);
-		#ifdef __WINDOW__
-			mSignals->add(SIGBREAK);
-		#endif
-		mSignals->async_wait(boost::bind(&LifeCycle::stopBegin, &lifeCycle_));
+		mSignals->add(SIGINT); mSignals->add(SIGTERM);
+	#ifdef __WINDOW__
+		mSignals->add(SIGBREAK);
+	#endif
+		mSignals->async_wait(boost::bind(&LifeCycle::noticeStop, &lifeCycle_));
 	}
 	
-	void IoService::runRun()
+	void IoService::runJoin()
 	{
 		for (size_t i = 0; i < mIoServices.size(); ++i) {
 			ThreadPtr thread_(new std::thread(boost::bind(&asio::io_service::run, mIoServices[i])));

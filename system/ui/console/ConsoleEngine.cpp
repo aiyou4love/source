@@ -156,8 +156,6 @@ namespace cc {
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
 		if (!workDirectory_.isConsole()) return;
 		
-		cout.imbue(locale(""));
-		
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tRunLuaApi.connect(bind(&ConsoleEngine::runLuaApi, this));
 		lifeCycle_.m_tIniting.connect(bind(&ConsoleEngine::runInit, this));

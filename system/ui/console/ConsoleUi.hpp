@@ -30,6 +30,7 @@ namespace cc {
 		
 		const char * getText(const char * nKey);
 		void printText(const char * nKey);
+		void coutText(const char * nText);
 		
 	public:
 		template<class T>

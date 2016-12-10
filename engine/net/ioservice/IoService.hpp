@@ -20,7 +20,7 @@ namespace cc {
 		void runInit();
 		void runStart();
 		void runStop();
-		void runRun();
+		void runJoin();
 		
 		static IoService& instance();
 		

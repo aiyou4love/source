@@ -54,7 +54,7 @@ namespace cc {
 	
 	void Account::runClear()
 	{
-		mRoleItem.reset();
+		mRoleItem->runClear();
 		
 		mPassword = "";
 		mName = "";

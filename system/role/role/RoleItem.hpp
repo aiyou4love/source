@@ -24,6 +24,8 @@ namespace cc {
         int16_t getRoleStep();
         int32_t getRoleLevel();
 		
+		void runClear();
+		
 		int64_t getId();
 		
 		int64_t getKey();
