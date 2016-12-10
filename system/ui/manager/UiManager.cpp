@@ -2,54 +2,64 @@
 
 namespace cc {
 	
-	void UiManager::showUi(const char * nName)
+	void UiManager::showUi(const char * nName, int8_t nType)
 	{
-		auto it = mUiEngines.begin();
-		for ( ; it != mUiEngines.end(); ++it ) {
-			IUiEngine * uiEngine_ = (*it);
-			uiEngine_->showUi(nName);
+		auto it = mUiEngines.find(nType);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]nType:%d", __METHOD__, nType);
+			return;
 		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->showUi(nName);
 	}
 	
-	void UiManager::loadUi(const char * nName)
+	void UiManager::loadUi(const char * nName, int8_t nType)
 	{
-		auto it = mUiEngines.begin();
-		for ( ; it != mUiEngines.end(); ++it ) {
-			IUiEngine * uiEngine_ = (*it);
-			uiEngine_->loadUi(nName);
+		auto it = mUiEngines.find(nType);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]nType:%d", __METHOD__, nType);
+			return;
 		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->loadUi(nName);
 	}
 	
-	void UiManager::refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue)
+	void UiManager::refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue, int8_t nType)
 	{
-		auto it = mUiEngines.begin();
-		for ( ; it != mUiEngines.end(); ++it ) {
-			IUiEngine * uiEngine_ = (*it);
-			uiEngine_->refreshUi(nName, nIndexValue, nValue);
+		auto it = mUiEngines.find(nType);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]nType:%d", __METHOD__, nType);
+			return;
 		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->refreshUi(nName, nIndexValue, nValue);
 	}
 	
-	void UiManager::closeUi(const char * nName)
+	void UiManager::closeUi(const char * nName, int8_t nType)
 	{
-		auto it = mUiEngines.begin();
-		for ( ; it != mUiEngines.end(); ++it ) {
-			IUiEngine * uiEngine_ = (*it);
-			uiEngine_->closeUi(nName);
+		auto it = mUiEngines.find(nType);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]nType:%d", __METHOD__, nType);
+			return;
 		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->closeUi(nName);
 	}
 	
-	void UiManager::runClose()
+	void UiManager::runClose(int8_t nType)
 	{
-		auto it = mUiEngines.begin();
-		for ( ; it != mUiEngines.end(); ++it ) {
-			IUiEngine * uiEngine_ = (*it);
-			uiEngine_->runClose();
+		auto it = mUiEngines.find(nType);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]nType:%d", __METHOD__, nType);
+			return;
 		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->runClose();
 	}
 	
-	void UiManager::registerEngine(IUiEngine * nUiEngine)
+	void UiManager::registerEngine(int8_t nType, IUiEngine * nUiEngine)
 	{
-		mUiEngines.push_back(nUiEngine);
+		mUiEngines[nType] = nUiEngine;
 	}
 	
 	void UiManager::runPreinit()

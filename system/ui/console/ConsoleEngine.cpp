@@ -103,7 +103,7 @@ namespace cc {
 	void ConsoleEngine::runInit()
 	{
 		UiManager& uiManager_ = UiManager::instance();
-		uiManager_.registerEngine(this);
+		uiManager_.registerEngine(EuiType::mConsole, this);
 		
 		ConsoleUpdateClone consoleUpdateClone_;
 		ConsoleInputClone consoleInputClone_;

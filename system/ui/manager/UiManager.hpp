@@ -5,15 +5,15 @@ namespace cc {
 	class UiManager : noncopyable
 	{
 	public:
-		void showUi(const char * nName);
-		void loadUi(const char * nName);
+		void showUi(const char * nName, int8_t nType);
+		void loadUi(const char * nName, int8_t nType);
 		
-		void refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue);
+		void refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue, int8_t nType);
 		
-		void closeUi(const char * nName);
-		void runClose();
+		void closeUi(const char * nName, int8_t nType);
+		void runClose(int8_t nType);
 		
-		void registerEngine(IUiEngine * nUiEngine);
+		void registerEngine(int8_t nType, IUiEngine * nUiEngine);
 		
 		void runPreinit();
 		void runClear();
@@ -24,7 +24,7 @@ namespace cc {
 		~UiManager();
 		
 	private:
-		list<IUiEngine *> mUiEngines;
+		map<int8_t, IUiEngine *> mUiEngines;
 		
 		static UiManager mUiManager;
 	};
