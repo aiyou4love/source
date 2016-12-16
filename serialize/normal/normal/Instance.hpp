@@ -16,6 +16,18 @@ namespace cc {
 		{
 			nValue = new T();
 		}
+		
+		template <class T>
+		static void deletePtr(SPTR<T>& nValue)
+		{
+		}
+		
+		template <class T>
+		static void deletePtr(T *& nValue)
+		{
+			delete nValue;
+			nValue = nullptr;
+		}
 	};
 	
 }

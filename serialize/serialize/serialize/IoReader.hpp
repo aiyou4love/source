@@ -21,7 +21,9 @@ namespace cc {
 				bool result_ = mArchive.runChild(nName);
 				while ( result_ ) {
 					mArchive.runNumbers(value_, nName);
-					nValue.insert(value_);
+					if ( value_ != defaultValue<T>() ) {
+						nValue.insert(value_);
+					}
 					value_ = defaultValue<T>();
 					result_ = mArchive.runNext(nName);
 				}
@@ -32,7 +34,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					T value_ = defaultValue<T>();
 					mArchive.runNumber(value_, nName);
-					nValue.insert(value_);
+					if ( value_ != defaultValue<T>() ) {
+						nValue.insert(value_);
+					}
 				}
 			}
 		}
@@ -46,7 +50,9 @@ namespace cc {
 				bool result_ = mArchive.runChild(nName);
 				while ( result_ ) {
 					mArchive.runNumbers(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != defaultValue<T1>() ) {
+						nValue.push_back(value_);
+					}
 					value_ = defaultValue<T1>();
 					result_ = mArchive.runNext(nName);
 				}
@@ -57,11 +63,13 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					T1 value_ = defaultValue<T1>();
 					mArchive.runNumber(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != defaultValue<T1>() ) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
-				
+		
 		template <typename T>
 		void runNumberCount(T& nValue, const char * nName, int8_t nCount)
 		{
@@ -81,7 +89,9 @@ namespace cc {
 				T1 value_ = defaultValue<T1>();
 				for (int8_t i = 0; i < nCount; ++i) {
 					this->runNumberCount(value_, nName, i);
-					nValue.push_back(value_);
+					if ( value_ != defaultValue<T1>() ) {
+						nValue.push_back(value_);
+					}
 					value_ = defaultValue<T1>();
 				}
 			} else {
@@ -90,7 +100,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					T1 value_ = defaultValue<T1>();
 					mArchive.runNumber(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != defaultValue<T1>() ) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -138,7 +150,9 @@ namespace cc {
 				bool result_ = mArchive.runChild(nName);
 				while ( result_ ) {
 					mArchive.runNumbers(value_, nName);
-					nValue.push_back(stringCrc(value_.c_str()));
+					if ( value_ != "" ) {
+						nValue.push_back(stringCrc(value_.c_str()));
+					}
 					value_ = "";
 					result_ = mArchive.runNext(nName);
 				}
@@ -149,7 +163,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					int32_t value_ = 0;
 					mArchive.runNumber(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -172,7 +188,9 @@ namespace cc {
 				int32_t value_ = 0;
 				for (int8_t i = 0; i < nCount; ++i) {
 					this->runCrc32Count(value_, nName, i);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 					value_ = 0;
 				}
 			} else {
@@ -181,7 +199,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					int32_t value_ = 0;
 					mArchive.runNumber(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -218,7 +238,9 @@ namespace cc {
 				bool result_ = mArchive.runChild(nName);
 				while ( result_ ) {
 					mArchive.runTimes(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 					value_ = 0;
 					result_ = mArchive.runNext(nName);
 				}
@@ -229,7 +251,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					int64_t value_ = 0;
 					mArchive.runTime(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -252,7 +276,9 @@ namespace cc {
 				int64_t value_ = 0;
 				for (int8_t i = 0; i < nCount; ++i) {
 					this->runTimeCount(value_, nName, i);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 					value_ = 0;
 				}
 			} else {
@@ -261,7 +287,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					int64_t value_ = 0;
 					mArchive.runTime(value_, nName);
-					nValue.push_back(value_);
+					if ( value_ != 0 ) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -318,7 +346,9 @@ namespace cc {
 				while ( result_ ) {
 					T1 value_;
 					value_.serialize(this, nName, 0);
-					nValue.push_back(value_);
+					if (!value_.isDefault()) {
+						nValue.push_back(value_);
+					}
 					result_ = mArchive.runNext(nName);
 				}
 				mArchive.runPop(nNames);
@@ -328,7 +358,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					T1 value_;
 					value_.serialize(this, nName, 0);
-					nValue.push_back(value_);
+					if (!value_.isDefault()) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -343,7 +375,11 @@ namespace cc {
 					T1 value_ = nullptr;
 					Instance::instance(value_);
 					value_->serialize(this, nName, 0);
-					nValue.push_back(value_);
+					if (!value_->isDefault()) {
+						nValue.push_back(value_);
+					} else {
+						Instance::deletePtr(value_);
+					}
 					result_ = mArchive.runNext(nName);
 				}
 				mArchive.runPop(nNames);
@@ -354,7 +390,11 @@ namespace cc {
 					T1 value_ = nullptr;
 					Instance::instance(value_);
 					value_->serialize(this, nName, 0);
-					nValue.push_back(value_);
+					if (!value_->isDefault()) {
+						nValue.push_back(value_);
+					} else {
+						Instance::deletePtr(value_);
+					}
 				}
 			}
 		}
@@ -399,6 +439,8 @@ namespace cc {
 					value_->serialize(this, nName, 0);
 					if (!value_->isDefault()) {
 						nValue[value_->getKey()] = value_;
+					} else {
+						Instance::deletePtr(value_);
 					}
 					result_ = mArchive.runNext(nName);
 				}
@@ -412,6 +454,8 @@ namespace cc {
 					value_->serialize(this, nName, 0);
 					if (!value_->isDefault()) {
 						nValue[value_->getKey()] = value_;
+					} else {
+						Instance::deletePtr(value_);
 					}
 				}
 			}
@@ -468,7 +512,9 @@ namespace cc {
 				for ( int16_t i = 0; i < count_; ++i ) {
 					T1 value_;
 					value_.serialize(this, nName, 0);
-					nValue.push_back(value_);
+					if (!value_.isDefault()) {
+						nValue.push_back(value_);
+					}
 				}
 			}
 		}
@@ -483,6 +529,7 @@ namespace cc {
 					Instance::instance(value_);
 					this->runStreamPtrCount(value_, nName, i);
 					if (value_->isDefault()) {
+						Instance::deletePtr(value_);
 						continue;
 					}
 					nValue.push_back(value_);
@@ -495,7 +542,11 @@ namespace cc {
 					T1 value_ = nullptr;
 					Instance::instance(value_);
 					value_->serialize(this, nName, 0);
-					nValue.push_back(value_);
+					if (!value_->isDefault()) {
+						nValue.push_back(value_);
+					} else {
+						Instance::deletePtr(value_);
+					}
 				}
 			}
 		}
@@ -537,6 +588,7 @@ namespace cc {
 					Instance::instance(value_);
 					this->runStreamPtrCount(value_, nName, i);
 					if (value_->isDefault()) {
+						Instance::deletePtr(value_);
 						continue;
 					}
 					nValue[value_->getKey()] = value_;
@@ -551,6 +603,8 @@ namespace cc {
 					value_->serialize(this, nName, 0);
 					if (!value_->isDefault()) {
 						nValue[value_->getKey()] = value_;
+					} else {
+						Instance::deletePtr(value_);
 					}
 				}
 			}

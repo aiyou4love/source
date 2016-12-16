@@ -15,6 +15,8 @@ namespace cc {
 		int16_t getLength();
 		char * getValue();
 		
+		bool isDefault();
+		
 		Buffer();
 		Buffer(char * nValue, int16_t nLength, bool nIsNew);
 		~Buffer();

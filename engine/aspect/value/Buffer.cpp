@@ -12,6 +12,15 @@ namespace cc {
 		return mValue;
 	}
 	
+	bool Buffer::isDefault()
+	{
+		if ( (nullptr == mValue) 
+			|| (0 == mLength) ) {
+			return true;
+		}
+		return false;
+	}
+	
 	Buffer::Buffer()
 		: mValue (nullptr)
 		, mLength (0)

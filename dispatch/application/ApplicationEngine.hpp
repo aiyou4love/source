@@ -11,6 +11,7 @@ namespace cc {
 		void headSerialize(T& nSerialize, const char * nName)
 		{
 			nSerialize.template runNumbers<vector<int32_t>, int32_t>(mStartIds, "startIds", "startId");
+			nSerialize.template runNumbers<vector<int32_t>, int32_t>(mStopIds, "stopIds", "stopId");
 		}
 		const char * streamName();
 		const char * streamUrl();
@@ -20,6 +21,7 @@ namespace cc {
 		void runInit();
 		void runStart();
 		void runUpdate();
+		void runStop();
 		void runClear();
 		
 		static ApplicationEngine& instance();
@@ -31,6 +33,7 @@ namespace cc {
 		static ApplicationEngine mApplicationEngine;
 		
 		vector<int32_t> mStartIds;
+		vector<int32_t> mStopIds;
 		EntityPtr mEntity;
 	};
 	
