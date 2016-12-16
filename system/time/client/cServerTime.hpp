@@ -10,6 +10,7 @@ namespace cc {
 		void startAdjust();
 		
 		int64_t getServerTime();
+		int32_t getBootTime();
 		
 		void runPreinit();
 		

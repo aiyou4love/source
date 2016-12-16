@@ -33,6 +33,13 @@ namespace cc {
 		return (mServerTime + timeSpan_.count());
 	}
 	
+	int32_t cServerTime::getBootTime()
+	{
+		steady_clock::time_point nowPoint_ = steady_clock::now();
+		duration<int32_t> timeSpan_ = duration_cast<duration<int32_t> >(nowPoint_ - mStartPoint);
+		return timeSpan_.count();
+	}
+	
 	void cServerTime::runPreinit()
 	{
 		mStartPoint = steady_clock::now();

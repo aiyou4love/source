@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	const char * ConsoleItem::getMethod()
 	{
 		return mMethod.c_str();
@@ -42,5 +43,6 @@ namespace cc {
 		mIndex = 0;
 		mName = "";
 	}
+#endif
 	
 }

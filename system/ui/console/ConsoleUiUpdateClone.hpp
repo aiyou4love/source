@@ -3,12 +3,15 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	class ConsoleInputClone : public IContextClone
+	class ConsoleUiUpdateClone : public IContextClone
 	{
 	public:
 		ContextPtr createContext();
 		
 		const char * contextName();
+		
+		ConsoleUiUpdateClone();
+		~ConsoleUiUpdateClone();
 	};
 #endif
 	

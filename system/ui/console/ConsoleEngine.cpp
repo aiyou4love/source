@@ -2,153 +2,176 @@
 
 namespace cc {
 	
-	void ConsoleEngine::showUi(const char * nName)
+#ifdef __CLIENT__
+	void ConsoleEngine::showUi(UiName& nName)
 	{
-		this->loadUi(nName);
-		this->runRefresh();
-	}
-	
-	void ConsoleEngine::loadUi(const char * nName)
-	{
-		ConsoleUiPtr consoleUi_(new ConsoleUi());
-		consoleUi_->runInit(nName);
-		mConsoleUis.push_back(consoleUi_);
-	}
-	
-	void ConsoleEngine::refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue)
-	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runRefresh(nName, nIndexValue, nValue);
+		const char * name_ = nName.getName();
+		int8_t type_ = nName.getType();
+		bool show_ = false;
+		if (mSceneType == type_) {
+			show_ = true;
 		}
-		this->runRefresh();
-	}
-	
-	void ConsoleEngine::runRefresh()
-	{
-		//std::system("cls");
-		if (mConsoleUis.empty()) {
-			return;
-		}
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runText();
-		}
-		ConsoleUiPtr& consoleUi_ = mConsoleUis.back();
-		consoleUi_->runShow();
-	}
-	
-	void ConsoleEngine::closeUi(const char * nName)
-	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			const char * name_ = consoleUi_->getName();
-			if (0 == strcmp(nName, name_)) {
-				consoleUi_->runClose();
-				mConsoleUis.erase(it);
-				break;
+		if ( EuiType::mGame != type_ ) {
+			auto it = mConsoleScenes.find(type_);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, type_);
+				return;
 			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->showUi(name_, show_);
+		} else {
+			mConsoleScene->showUi(name_, show_);
 		}
-		this->runRefresh();
 	}
 	
-	void ConsoleEngine::runClose()
+	void ConsoleEngine::loadUi(UiName& nName)
 	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runClose();
-		}
-		mConsoleUis.clear();
-		this->runRefresh();
-	}
-	
-	void ConsoleEngine::runClear()
-	{
-		this->runClose();
-		
-		mCommandArgs.clear();
-	}
-	
-	void ConsoleEngine::pushClose(const char * nName)
-	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			const char * name_ = consoleUi_->getName();
-			if (0 == strcmp(nName, name_)) {
-				mCloseUis.push_back(consoleUi_);
-				mConsoleUis.erase(it);
-				break;
+		const char * name_ = nName.getName();
+		int8_t type_ = nName.getType();
+		if ( EuiType::mGame != type_ ) {
+			auto it = mConsoleScenes.find(type_);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, type_);
+				return;
 			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->loadUi(name_);
+		} else {
+			mConsoleScene->loadUi(name_);
 		}
 	}
 	
-	void ConsoleEngine::clearClose()
+	void ConsoleEngine::refreshUi(UiName& nName, OrderValue& nOrderValue)
 	{
-		if ( mCloseUis.size() <= 0 ) {
-			return;
+		const char * name_ = nName.getName();
+		int8_t type_ = nName.getType();
+		bool show_ = false;
+		if (mSceneType == type_) {
+			show_ = true;
 		}
-		auto it = mCloseUis.begin();
-		for ( ; it != mCloseUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runClose();
+		if ( EuiType::mGame != type_ ) {
+			auto it = mConsoleScenes.find(type_);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, type_);
+				return;
+			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->refreshUi(name_, nOrderValue, show_);
+		} else {
+			mConsoleScene->refreshUi(name_, nOrderValue, show_);
 		}
-		mCloseUis.clear();
 	}
 	
-	void ConsoleEngine::runInit()
+	void ConsoleEngine::closeUi(UiName& nName)
 	{
-		UiManager& uiManager_ = UiManager::instance();
-		uiManager_.registerEngine(EuiType::mConsole, this);
-		
-		ConsoleUpdateClone consoleUpdateClone_;
-		ConsoleInputClone consoleInputClone_;
-		
-		HandleEngine& handleEngine_ = HandleEngine::instance();
-		handleEngine_.addContext(&consoleUpdateClone_);
-		handleEngine_.addContext(&consoleInputClone_);
+		const char * name_ = nName.getName();
+		int8_t type_ = nName.getType();
+		bool show_ = false;
+		if (mSceneType == type_) {
+			show_ = true;
+		}
+		if ( EuiType::mGame != type_ ) {
+			auto it = mConsoleScenes.find(type_);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, type_);
+				return;
+			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->closeUi(name_, show_);
+		} else {
+			mConsoleScene->closeUi(name_, show_);
+		}
+	}
+	
+	void ConsoleEngine::clearUi(int8_t nType)
+	{
+		bool show_ = false;
+		if (mSceneType == nType) {
+			show_ = true;
+		}
+		if ( EuiType::mGame != nType ) {
+			auto it = mConsoleScenes.find(nType);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, nType);
+				return;
+			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->clearUi(show_);
+		} else {
+			mConsoleScene->clearUi(show_);
+		}
 	}
 	
 	void ConsoleEngine::pushCommandArgs(CommandArgsPtr& nCommandArgs)
 	{
-		LKGUD<mutex> lock_(mMutex);
-		mCommandArgs.push_back(nCommandArgs);
+		if ( EuiType::mGame != mSceneType ) {
+			auto it = mConsoleScenes.find(mSceneType);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, mSceneType);
+				return;
+			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->pushCommandArgs(nCommandArgs);
+		} else {
+			mConsoleScene->pushCommandArgs(nCommandArgs);
+		}
 	}
 	
-	CommandArgsPtr ConsoleEngine::popCommandArgs()
+	void ConsoleEngine::runUpdateGame()
 	{
-		LKGUD<mutex> lock_(mMutex);
-		CommandArgsPtr commandArgs_;
-		if (mCommandArgs.size() > 0) {
-			commandArgs_ = mCommandArgs.front();
-			mCommandArgs.pop_front();
+		if ( EuiType::mGame != mSceneType ) {
+			mConsoleScene->runUpdate(false);
+		} else {
+			mConsoleScene->runUpdate(true);
 		}
-		return commandArgs_;
 	}
 	
-	void ConsoleEngine::runCommandArgs()
+	void ConsoleEngine::runUpdateUi()
 	{
-		if (mConsoleUis.empty()) {
-			return;
+		auto it = mConsoleScenes.begin();
+		for ( ; it != mConsoleScenes.end(); ++it ) {
+			ConsoleScenePtr& consoleScene_ = it->second;
+			int8_t sceneType_ = it->first;
+			if (sceneType_ == mSceneType) {
+				consoleScene_->runUpdate(true);
+			} else {
+				consoleScene_->runUpdate(false);
+			}
 		}
-		CommandArgsPtr commandArgs_ = this->popCommandArgs();
-		if (!commandArgs_) {
-			return;
+	}
+	
+	void ConsoleEngine::runClose()
+	{
+		auto it = mConsoleScenes.begin();
+		for ( ; it != mConsoleScenes.end(); ++it ) {
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->runClose();
 		}
-		ConsoleUiPtr consoleUi_ = mConsoleUis.back();
-		consoleUi_->runCommand(commandArgs_);
+		if (nullptr != mConsoleScene) {
+			mConsoleScene->runClose();
+		}
+	}
+	
+	void ConsoleEngine::runClear()
+	{
+		auto it = mConsoleScenes.begin();
+		for ( ; it != mConsoleScenes.end(); ++it ) {
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->runClear();
+		}
+		mConsoleScenes.clear();
 		
-		this->runRefresh();
+		if (nullptr != mConsoleScene) {
+			mConsoleScene->runClear();
+		}
+		mConsoleScene.reset();
+		
+		mSceneType = EuiType::mMain;
 	}
 	
-	void ConsoleEngine::runUpdate()
+	void ConsoleEngine::setSceneType(int8_t nSceneType)
 	{
-		this->runCommandArgs();
-		this->clearClose();
+		mSceneType = nSceneType;
 	}
 	
 	void ConsoleEngine::runPreinit()
@@ -163,6 +186,30 @@ namespace cc {
 		lifeCycle_.m_tClearBegin.connect(bind(&ConsoleEngine::runClear, this));
 	}
 	
+	void ConsoleEngine::runInit()
+	{
+		cout.imbue(locale(""));
+		
+		UiManager& uiManager_ = UiManager::instance();
+		uiManager_.registerEngine(EuiEngine::mConsole, this);
+		
+		ConsoleScenePtr gameScene_(new ConsoleScene());
+		mConsoleScenes[EuiType::mGame] = gameScene_;
+		ConsoleScenePtr mainScene_(new ConsoleScene());
+		mConsoleScenes[EuiType::mMain] = mainScene_;
+		ConsoleScenePtr endScene_(new ConsoleScene());
+		mConsoleScenes[EuiType::mEnd] = endScene_;
+		
+		ConsoleUiUpdateClone consoleUiUpdateClone_;
+		ConsoleGameUpdateClone consoleGameUpdateClone_;
+		ConsoleInputClone consoleInputClone_;
+		
+		HandleEngine& handleEngine_ = HandleEngine::instance();
+		handleEngine_.addContext(&consoleUiUpdateClone_);
+		handleEngine_.addContext(&consoleGameUpdateClone_);
+		handleEngine_.addContext(&consoleInputClone_);
+	}
+	
 	void ConsoleEngine::runLuaApi()
 	{
 		ConsoleUi::runLuaApi();
@@ -175,18 +222,15 @@ namespace cc {
 	
 	ConsoleEngine::ConsoleEngine()
 	{
-		mConsoleUis.clear();
-		mCommandArgs.clear();
-		mCloseUis.clear();
+		this->runClear();
 	}
 	
 	ConsoleEngine::~ConsoleEngine()
 	{
-		mConsoleUis.clear();
-		mCommandArgs.clear();
-		mCloseUis.clear();
+		this->runClear();
 	}
 	
 	ConsoleEngine ConsoleEngine::mConsoleEngine;
+#endif
 	
 }

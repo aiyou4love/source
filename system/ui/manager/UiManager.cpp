@@ -2,59 +2,203 @@
 
 namespace cc {
 	
-	void UiManager::showUi(const char * nName, int8_t nType)
+	void UiManager::showUi(UiName& nName)
 	{
-		auto it = mUiEngines.find(nType);
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
 		if ( it == mUiEngines.end() ) {
-			LOGE("[%s]nType:%d", __METHOD__, nType);
+			LOGE("[%s]%d", __METHOD__, engine_);
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
 		uiEngine_->showUi(nName);
 	}
 	
-	void UiManager::loadUi(const char * nName, int8_t nType)
+	void UiManager::loadUi(UiName& nName)
 	{
-		auto it = mUiEngines.find(nType);
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
 		if ( it == mUiEngines.end() ) {
-			LOGE("[%s]nType:%d", __METHOD__, nType);
+			LOGE("[%s]%d", __METHOD__, engine_);
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
 		uiEngine_->loadUi(nName);
 	}
 	
-	void UiManager::refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue, int8_t nType)
+	void UiManager::refreshUi(UiName& nName, OrderValue& nOrderValue)
 	{
-		auto it = mUiEngines.find(nType);
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
 		if ( it == mUiEngines.end() ) {
-			LOGE("[%s]nType:%d", __METHOD__, nType);
+			LOGE("[%s]%d", __METHOD__, engine_);
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
-		uiEngine_->refreshUi(nName, nIndexValue, nValue);
+		uiEngine_->refreshUi(nName, nOrderValue);
 	}
 	
-	void UiManager::closeUi(const char * nName, int8_t nType)
+	void UiManager::closeUi(UiName& nName)
 	{
-		auto it = mUiEngines.find(nType);
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
 		if ( it == mUiEngines.end() ) {
-			LOGE("[%s]nType:%d", __METHOD__, nType);
+			LOGE("[%s]%d", __METHOD__, engine_);
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
 		uiEngine_->closeUi(nName);
 	}
 	
-	void UiManager::runClose(int8_t nType)
+	void UiManager::clearUi(UiName& nName)
 	{
-		auto it = mUiEngines.find(nType);
+		int8_t engine_ = nName.getEngine();
+		int8_t type_ = nName.getType();
+		
+		auto it = mUiEngines.find(engine_);
 		if ( it == mUiEngines.end() ) {
-			LOGE("[%s]nType:%d", __METHOD__, nType);
+			LOGE("[%s]%d", __METHOD__, engine_);
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
-		uiEngine_->runClose();
+		uiEngine_->clearUi(type_);
+	}
+	
+	string UiManager::uiEventPath(const char * nPath, int8_t nType)
+	{
+		const char * eventName_ = this->getUiEventName(nType);
+		
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		return workDirectory_.getUiPath(nPath, eventName_);
+	}
+	
+	const char * UiManager::getUiEventName(int8_t nType)
+	{
+		if (EuiEngine::mConsole == nType) {
+			return "/event.con.json";
+		} else if (EuiEngine::mCocos2dx == nType) {
+			return "/event.2dx.json";
+		} else if (EuiEngine::mUE4 == nType) {
+			return "/event.ue4.json";
+		} else {
+			LOGE("[%s]%d", __METHOD__, nType);
+			return "/event.json";
+		}
+	}
+	
+	string UiManager::uiJsonPath(const char * nPath, int8_t nType)
+	{
+		const char * jsonName_ = this->getUiJsonName(nType);
+		
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		return workDirectory_.getUiPath(nPath, jsonName_);
+	}
+	
+	const char * UiManager::getUiJsonName(int8_t nType)
+	{
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		
+		if (EuiEngine::mConsole == nType) {
+			if (workDirectory_.isJson()) {
+				return "/ui.con.json";
+			} else {
+				return "/ui.con.xml";
+			}
+		} else if (EuiEngine::mCocos2dx == nType) {
+			if (workDirectory_.isJson()) {
+				return "/ui.2dx.json";
+			} else {
+				return "/ui.2dx.xml";
+			}
+		} else if (EuiEngine::mUE4 == nType) {
+			if (workDirectory_.isJson()) {
+				return "/ui.ue4.json";
+			} else {
+				return "/ui.ue4.xml";
+			}
+		} else {
+			LOGE("[%s]%d", __METHOD__, nType);
+			if (workDirectory_.isJson()) {
+				return "/ui.json";
+			} else {
+				return "/ui.xml";
+			}
+		}
+	}
+	
+	string UiManager::uiLuaPath(const char * nPath, int8_t nType)
+	{
+		const char * luaName_ = this->getUiLuaName(nType);
+		
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		return workDirectory_.getUiPath(nPath, luaName_);
+	}
+	
+	const char * UiManager::getUiLuaName(int8_t nType)
+	{
+		if (EuiEngine::mConsole == nType) {
+			return "/ui.con.lua";
+		} else if (EuiEngine::mCocos2dx == nType) {
+			return "/ui.2dx.lua";
+		} else if (EuiEngine::mUE4 == nType) {
+			return "/ui.ue4.lua";
+		} else {
+			LOGE("[%s]%d", __METHOD__, nType);
+			return "/ui.lua";
+		}
+	}
+	
+	string UiManager::uiStringPath(const char * nPath, int8_t nType)
+	{
+		string stringName_ = this->getUiStringName(nType);
+		
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		return workDirectory_.getUiPath(nPath, stringName_.c_str());
+	}
+	
+	string UiManager::getUiStringName(int8_t nType)
+	{
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		
+		string result_ = "/string.";
+		result_ += workDirectory_.getLanguage();
+		if (EuiEngine::mConsole == nType) {
+			result_ += ".con.json";
+		} else if (EuiEngine::mCocos2dx == nType) {
+			result_ += ".2dx.json";
+		} else if (EuiEngine::mUE4 == nType) {
+			result_ += ".ue4.json";
+		} else {
+			LOGE("[%s]%d", __METHOD__, nType);
+			result_ += ".json";
+		}
+		return result_;
+	}
+	
+	string UiManager::uiCorePath(const char * nPath, int8_t nType)
+	{
+		const char * coreName_ = this->getUiCoreName(nType);
+		
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		return workDirectory_.getUiPath(nPath, coreName_);
+	}
+	
+	const char * UiManager::getUiCoreName(int8_t nType)
+	{
+		if (EuiEngine::mConsole == nType) {
+			return "/core.con.lua";
+		} else if (EuiEngine::mCocos2dx == nType) {
+			return "/core.2dx.lua";
+		} else if (EuiEngine::mUE4 == nType) {
+			return "/core.ue4.lua";
+		} else {
+			LOGE("[%s]%d", __METHOD__, nType);
+			return "/core.lua";
+		}
 	}
 	
 	void UiManager::registerEngine(int8_t nType, IUiEngine * nUiEngine)
@@ -65,7 +209,6 @@ namespace cc {
 	void UiManager::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
-		//lifeCycle_.m_tCloseBegin.connect(bind(&UiManager::runClose, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&UiManager::runClear, this));
 	}
 	

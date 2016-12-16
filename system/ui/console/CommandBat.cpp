@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	list<string>& CommandBat::getCommands()
 	{
 		return mCommands;
@@ -21,5 +22,6 @@ namespace cc {
 	{
 		mCommands.clear();
 	}
+#endif
 	
 }

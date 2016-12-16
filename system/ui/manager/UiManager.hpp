@@ -5,13 +5,24 @@ namespace cc {
 	class UiManager : noncopyable
 	{
 	public:
-		void showUi(const char * nName, int8_t nType);
-		void loadUi(const char * nName, int8_t nType);
+		void showUi(UiName& nName);
+		void loadUi(UiName& nName);
 		
-		void refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue, int8_t nType);
+		void refreshUi(UiName& nName, OrderValue& nOrderValue);
 		
-		void closeUi(const char * nName, int8_t nType);
-		void runClose(int8_t nType);
+		void closeUi(UiName& nName);
+		void clearUi(UiName& nName);
+		
+		string uiEventPath(const char * nPath, int8_t nType);
+		const char * getUiEventName(int8_t nType);
+		string uiJsonPath(const char * nPath, int8_t nType);
+		const char * getUiJsonName(int8_t nType);
+		string uiLuaPath(const char * nPath, int8_t nType);
+		const char * getUiLuaName(int8_t nType);
+		string uiStringPath(const char * nPath, int8_t nType);
+		string getUiStringName(int8_t nType);
+		string uiCorePath(const char * nPath, int8_t nType);
+		const char * getUiCoreName(int8_t nType);
 		
 		void registerEngine(int8_t nType, IUiEngine * nUiEngine);
 		

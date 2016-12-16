@@ -7,14 +7,9 @@ namespace cc {
 		return mIndexValue;
 	}
 	
-	const char * UiReward::getName()
+	UiName& UiReward::getUiName()
 	{
-		return mName.c_str();
-	}
-	
-	int8_t UiReward::getUiType()
-	{
-		return mUiType;
+		return mUiName;
 	}
 	
 	int16_t UiReward::getType()
@@ -24,8 +19,7 @@ namespace cc {
 	
 	bool UiReward::isDefault()
 	{
-		return ((0 == mIndex) || (0 == mUiType)
-			|| (0 == mType) || ("" == mName));
+		return ( (0 == mIndex) || (0 == mType) );
 	}
 	
 	int32_t UiReward::getKey()
@@ -36,17 +30,13 @@ namespace cc {
 	UiReward::UiReward()
 		: mIndex(0)
 		, mType (0)
-		, mUiType (0)
-		, mName ("")
 	{
 	}
 	
 	UiReward::~UiReward()
 	{
-		mName = "";
 		mIndex = 0;
 		mType = 0;
-		mUiType = 0;
 	}
 	
 }

@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	class CommandArgs : noncopyable
 	{
 	public:
@@ -22,5 +23,6 @@ namespace cc {
 		int8_t mFlag;
 	};
 	typedef SPTR<CommandArgs> CommandArgsPtr;
+#endif
 	
 }

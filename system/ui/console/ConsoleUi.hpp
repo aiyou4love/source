@@ -2,6 +2,8 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
+	class ConsoleScene;
 	class ConsoleUi : noncopyable
 	{
 	public:
@@ -9,7 +11,7 @@ namespace cc {
 		
 		void runInit(const char * nName);
 		
-		void runRefresh(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue);
+		void runRefresh(const char * nName, OrderValue& nOrderValue);
 		
 		void runText();
 		void runShow();
@@ -55,6 +57,8 @@ namespace cc {
 		const char * stringName();
 		const char * stringUrl();
 		
+		void setScene(ConsoleScene * nConsoleScene);
+		
 		ConsoleUi();
 		~ConsoleUi();
 		
@@ -62,10 +66,13 @@ namespace cc {
 		map<int16_t, ConsoleItemPtr> mConsoleItems;
 		map<int32_t, StringTablePtr> mStringTables;
 		
+		ConsoleScene * mConsoleScene;
+		
 		LuaThreadPtr mLuaThread;
 		set<string> mOnEvents;
 		string mName;
 	};
 	typedef SPTR<ConsoleUi> ConsoleUiPtr;
+#endif
 	
 }

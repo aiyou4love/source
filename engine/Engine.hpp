@@ -27,6 +27,7 @@
 #include "aspect/value/Buffer.hpp"
 #include "aspect/value/Value.hpp"
 #include "aspect/value/IndexValue.hpp"
+#include "aspect/value/OrderValue.hpp"
 #include "aspect/value/PacketMgr.hpp"
 #include "aspect/value/ValueMgr.hpp"
 #include "aspect/dispatch/IDispatch.hpp"

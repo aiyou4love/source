@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	void ConsoleUi::runCommand(CommandArgsPtr& nCommandArgs)
 	{
 		int16_t itemIndex_ = (int16_t)(nCommandArgs->getSelectId());
@@ -30,12 +31,12 @@ namespace cc {
 	{
 		mName = nName;
 		
-		WorkDirectory& workDirectory_ = WorkDirectory::instance();
-		string uiEventPath_ = workDirectory_.uiEventPath(nName, EuiType::mConsole);
-		string uiCorePath_ = workDirectory_.uiCorePath(nName, EuiType::mConsole);
-		string uiLuaPath_ = workDirectory_.uiLuaPath(nName, EuiType::mConsole);
-		string uiJsonPath_ = workDirectory_.uiJsonPath(nName, EuiType::mConsole);
-		string uiStringPath_ = workDirectory_.uiStringPath(nName, EuiType::mConsole);
+		UiManager& uiManager_ = UiManager::instance();
+		string uiEventPath_ = uiManager_.uiEventPath(nName, EuiEngine::mConsole);
+		string uiCorePath_ = uiManager_.uiCorePath(nName, EuiEngine::mConsole);
+		string uiLuaPath_ = uiManager_.uiLuaPath(nName, EuiEngine::mConsole);
+		string uiJsonPath_ = uiManager_.uiJsonPath(nName, EuiEngine::mConsole);
+		string uiStringPath_ = uiManager_.uiStringPath(nName, EuiEngine::mConsole);
 		
 		this->initEvent(uiEventPath_.c_str());
 		this->initUi(uiJsonPath_.c_str());
@@ -44,14 +45,17 @@ namespace cc {
 		this->initLua(uiLuaPath_.c_str());
 	}
 	
-	void ConsoleUi::runRefresh(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue)
+	void ConsoleUi::runRefresh(const char * nName, OrderValue& nOrderValue)
 	{
+		IndexValue& indexValue_ = nOrderValue.getIndexValue();
+		ValuePtr& value_ = nOrderValue.getValue();
+		
 		auto it = mOnEvents.find(nName);
 		if ( it == mOnEvents.end() ) {
 			LOGE("[%s]%s", __METHOD__, nName);
 			return;
 		}
-		mLuaThread->runCall<void, IndexValue *, ValuePtr&>(nName, &nIndexValue, nValue);
+		mLuaThread->runCall<void, IndexValue *, ValuePtr&>(nName, &indexValue_, value_);
 	}
 	
 	void ConsoleUi::runText()
@@ -62,7 +66,6 @@ namespace cc {
 	void ConsoleUi::runShow()
 	{
 		mLuaThread->runCall<void>("runShow");
-		cout << endl;
 		
 		auto it = mConsoleItems.begin();
 		for ( ; it != mConsoleItems.end(); ++it ) {
@@ -121,8 +124,7 @@ namespace cc {
 	
 	void ConsoleUi::pushClose()
 	{
-		ConsoleEngine& consoleEngine_ = ConsoleEngine::instance();
-		consoleEngine_.pushClose(mName.c_str());
+		mConsoleScene->pushClose(mName.c_str());
 	}
 	
 	void ConsoleUi::initEvent(const char * nPath)
@@ -215,8 +217,14 @@ namespace cc {
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutText, "coutText");
 	}
 	
+	void ConsoleUi::setScene(ConsoleScene * nConsoleScene)
+	{
+		mConsoleScene = nConsoleScene;
+	}
+	
 	ConsoleUi::ConsoleUi()
 		: mName ("")
+		, mConsoleScene (nullptr)
 	{
 		mConsoleItems.clear();
 		mOnEvents.clear();
@@ -227,7 +235,9 @@ namespace cc {
 		mConsoleItems.clear();
 		mOnEvents.clear();
 		
+		mConsoleScene = nullptr;
 		mName = "";
 	}
+#endif
 	
 }

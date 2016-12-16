@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	class ConsoleItem : noncopyable
 	{
 	public:
@@ -31,5 +32,6 @@ namespace cc {
 		int16_t mIndex;
 	};
 	typedef SPTR<ConsoleItem> ConsoleItemPtr;
+#endif
 	
 }

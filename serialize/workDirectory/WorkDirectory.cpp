@@ -2,183 +2,21 @@
 
 namespace cc {
 	
-	string WorkDirectory::uiEventPath(const char * nPath, int8_t nType)
+	string WorkDirectory::getUiPath(const char * nPath, const char * nType)
 	{
-		const char * eventName_ = this->getUiEventName(nType);
 		string value_ = mUpdateUi + nPath;
-		value_ += eventName_;
+		value_ += nType;
 		filesystem::path path_(value_);
 		if (filesystem::exists(value_)) {
 			return value_;
 		}
 		value_ = mUiPath + nPath;
-		value_ += eventName_;
+		value_ += nType;
 		if (filesystem::exists(value_)) {
 			return value_;
 		}
 		value_ = "";
 		return value_;
-	}
-	
-	const char * WorkDirectory::getUiEventName(int8_t nType)
-	{
-		if (EuiType::mConsole == nType) {
-			return "/event.con.json";
-		} else if (EuiType::mCocos2dx == nType) {
-			return "/event.2dx.json";
-		} else if (EuiType::mUE4 == nType) {
-			return "/event.ue4.json";
-		} else {
-			LOGE("[%s]%d", __METHOD__, nType);
-			return "/event.json";
-		}
-	}
-	
-	string WorkDirectory::uiJsonPath(const char * nPath, int8_t nType)
-	{
-		const char * jsonName_ = this->getUiJsonName(nType);
-		string value_ = mUpdateUi + nPath;
-		value_ += jsonName_;
-		filesystem::path path_(value_);
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = mUiPath + nPath;
-		value_ += jsonName_;
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = "";
-		return value_;
-	}
-	
-	const char * WorkDirectory::getUiJsonName(int8_t nType)
-	{
-		if (EuiType::mConsole == nType) {
-			if (mIsJson) {
-				return "/ui.con.json";
-			} else {
-				return "/ui.con.xml";
-			}
-		} else if (EuiType::mCocos2dx == nType) {
-			if (mIsJson) {
-				return "/ui.2dx.json";
-			} else {
-				return "/ui.2dx.xml";
-			}
-		} else if (EuiType::mUE4 == nType) {
-			if (mIsJson) {
-				return "/ui.ue4.json";
-			} else {
-				return "/ui.ue4.xml";
-			}
-		} else {
-			LOGE("[%s]%d", __METHOD__, nType);
-			if (mIsJson) {
-				return "/ui.json";
-			} else {
-				return "/ui.xml";
-			}
-		}
-	}
-	
-	string WorkDirectory::uiLuaPath(const char * nPath, int8_t nType)
-	{
-		const char * luaName_ = this->getUiLuaName(nType);
-		string value_ = mUpdateUi + nPath;
-		value_ += luaName_;
-		filesystem::path path_(value_);
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = mUiPath + nPath;
-		value_ += luaName_;
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = "";
-		return value_;
-	}
-	
-	const char * WorkDirectory::getUiLuaName(int8_t nType)
-	{
-		if (EuiType::mConsole == nType) {
-			return "/ui.con.lua";
-		} else if (EuiType::mCocos2dx == nType) {
-			return "/ui.2dx.lua";
-		} else if (EuiType::mUE4 == nType) {
-			return "/ui.ue4.lua";
-		} else {
-			LOGE("[%s]%d", __METHOD__, nType);
-			return "/ui.lua";
-		}
-	}
-	
-	string WorkDirectory::uiStringPath(const char * nPath, int8_t nType)
-	{
-		string stringName_ = this->getUiStringName(nType);
-		string value_ = mUpdateUi + nPath;
-		value_ += stringName_;
-		filesystem::path path_(value_);
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = mUiPath + nPath;
-		value_ += stringName_;
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = "";
-		return value_;
-	}
-	
-	string WorkDirectory::getUiStringName(int8_t nType)
-	{
-		string result_ = "/string.";
-		result_ += mLanguage;
-		if (EuiType::mConsole == nType) {
-			result_ += ".con.json";
-		} else if (EuiType::mCocos2dx == nType) {
-			result_ += ".2dx.json";
-		} else if (EuiType::mUE4 == nType) {
-			result_ += ".ue4.json";
-		} else {
-			LOGE("[%s]%d", __METHOD__, nType);
-			result_ += ".json";
-		}
-		return result_;
-	}
-	
-	string WorkDirectory::uiCorePath(const char * nPath, int8_t nType)
-	{
-		const char * coreName_ = this->getUiCoreName(nType);
-		string value_ = mUpdateUi + nPath;
-		value_ += coreName_;
-		filesystem::path path_(value_);
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = mUiPath + nPath;
-		value_ += coreName_;
-		if (filesystem::exists(value_)) {
-			return value_;
-		}
-		value_ = "";
-		return value_;
-	}
-	
-	const char * WorkDirectory::getUiCoreName(int8_t nType)
-	{
-		if (EuiType::mConsole == nType) {
-			return "/core.con.lua";
-		} else if (EuiType::mCocos2dx == nType) {
-			return "/core.2dx.lua";
-		} else if (EuiType::mUE4 == nType) {
-			return "/core.ue4.lua";
-		} else {
-			LOGE("[%s]%d", __METHOD__, nType);
-			return "/core.lua";
-		}
 	}
 	
 	string WorkDirectory::storagePath(const char * nPath)
@@ -248,6 +86,11 @@ namespace cc {
 		return mLogPath.c_str();
 	}
 	
+	void WorkDirectory::setLanguage(const char * nValue)
+	{
+		mLanguage = nValue;
+	}
+	
 	const char * WorkDirectory::getLanguage()
 	{
 		return mLanguage.c_str();
@@ -302,6 +145,11 @@ namespace cc {
 	{
 		return mIsLog;
 	}
+		
+	bool WorkDirectory::isJson()
+	{
+		return mIsJson;
+	}
 	
 	bool WorkDirectory::isConsole()
 	{
@@ -322,12 +170,6 @@ namespace cc {
 		string value_(workingDirectory.begin(), workingDirectory.end());
 		mRootPath = stringBackslant(value_);
 #endif
-		locale locale_;
-		cout.imbue(locale_);
-		
-		mLanguage = locale_.name();
-		cout << mLanguage << endl;
-		
 		mLogPath = mRootPath + "/log/";
 		mStoragePath = mRootPath + "/storage/";
 		mAssetPath = mRootPath + "/asset/";
@@ -375,7 +217,7 @@ namespace cc {
 		mUiPath = "";
 		mUpdateUi = "";
 		
-		mLanguage = "";
+		mLanguage = "zh_CN";
 		
 		mIsJson = false;
 		mRunning = false;

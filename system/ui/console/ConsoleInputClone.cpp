@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	ContextPtr ConsoleInputClone::createContext()
 	{
 		return ContextPtr(new ConsoleInput());
@@ -11,5 +12,6 @@ namespace cc {
 	{
 		return "consoleInput";
 	}
+#endif
 	
 }

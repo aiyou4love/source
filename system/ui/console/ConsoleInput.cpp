@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	void ConsoleInput::runContext(int64_t nTick)
 	{
 		string command_;
@@ -22,11 +23,10 @@ namespace cc {
 			
 		} else if (3 == flag_) {
 			
-		} else if (4 == flag_) {
-			
 		} else {
 			
 		}
 	}
+#endif
 	
 }

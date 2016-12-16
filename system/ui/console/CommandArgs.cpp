@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	const char * CommandArgs::getCommandArgs(int8_t nIndex)
 	{
 		int8_t count_ = (int8_t)(mCommandArgs.size());
@@ -77,5 +78,6 @@ namespace cc {
 	{
 		this->runClear();
 	}
+#endif
 	
 }

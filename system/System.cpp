@@ -8,8 +8,10 @@ void systemInit()
 	
 	UiManager::instance();
 	
+#ifdef __CLIENT__
 	ConsoleEngine& consoleEngine_ = ConsoleEngine::instance();
 	consoleEngine_.runPreinit();
+#endif
 	
 	ServerEngine& serverEngine_ = ServerEngine::instance();
 	serverEngine_.runPreinit();

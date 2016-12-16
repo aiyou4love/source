@@ -2,6 +2,7 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	class CommandBat : noncopyable
 	{
 	public:
@@ -21,5 +22,6 @@ namespace cc {
 	private:
 		list<string> mCommands;
 	};
+#endif
 	
 }

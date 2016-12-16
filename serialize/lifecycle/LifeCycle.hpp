@@ -96,7 +96,7 @@ namespace cc {
 	private:
 		static LifeCycle mLifeCycle;
 		
-		bool mPause;
+		atomic<bool> mPause;
 	};
 	
 }

@@ -5,16 +5,7 @@ namespace cc {
 	class WorkDirectory : noncopyable
 	{
 	public:
-		string uiEventPath(const char * nPath, int8_t nType);
-		const char * getUiEventName(int8_t nType);
-		string uiJsonPath(const char * nPath, int8_t nType);
-		const char * getUiJsonName(int8_t nType);
-		string uiLuaPath(const char * nPath, int8_t nType);
-		const char * getUiLuaName(int8_t nType);
-		string uiStringPath(const char * nPath, int8_t nType);
-		string getUiStringName(int8_t nType);
-		string uiCorePath(const char * nPath, int8_t nType);
-		const char * getUiCoreName(int8_t nType);
+		string getUiPath(const char * nPath, const char * nType);
 		
 		string storagePath(const char * nPath);
 		string resourcePath(const char * nPath);
@@ -24,6 +15,7 @@ namespace cc {
 		
 		const char * logPath();
 		
+		void setLanguage(const char * nValue);
 		const char * getLanguage();
 		
 		const char * getOperatorName();
@@ -38,6 +30,7 @@ namespace cc {
 		bool isConsole();
 		bool isRunning();
 		bool isLog();
+		bool isJson();
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)

@@ -9,20 +9,18 @@ namespace cc {
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{
 			nSerialize->runStream(mIndexValue, "indexValue");
+			nSerialize->runStream(mUiName, "uiName");
 			
-			nSerialize->runNumber(mName, "rewardName");
 			nSerialize->runNumber(mType, "rewardType");
-			nSerialize->runNumber(mUiType, "uiType");
 			nSerialize->runNumber(mIndex, "rewardId");
 		}
 		
 		IndexValue& getIndexValue();
+		UiName& getUiName();
 		
-		const char * getName();
+		int16_t getType();
 		
 		bool isDefault();
-		int8_t getUiType();
-		int16_t getType();
 		int32_t getKey();
 		
 		UiReward();
@@ -30,11 +28,10 @@ namespace cc {
 		
 	private:
 		IndexValue mIndexValue;
+		UiName mUiName;
 		
 		int32_t mIndex;
-		int8_t mUiType;
 		int16_t mType;
-		string mName;
 	};
 	typedef SPTR<UiReward> UiRewardPtr;
 	

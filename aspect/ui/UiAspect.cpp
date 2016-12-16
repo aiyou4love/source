@@ -23,20 +23,20 @@ namespace cc {
 		UiManager& uiManager_ = UiManager::instance();
 		
 		IndexValue& indexValue_ = uiReward_->getIndexValue();
-		const char * name_ = uiReward_->getName();
-		int8_t uiType_ = uiReward_->getUiType();
+		UiName& uiName_ = uiReward_->getUiName();
 		int16_t type_ = uiReward_->getType();
 		
 		if (EuiReward::mLoadUi == type_) {
-			uiManager_.loadUi(name_, uiType_);
+			uiManager_.loadUi(uiName_);
 		} else if (EuiReward::mShowUi == type_) {
-			uiManager_.showUi(name_, uiType_);
+			uiManager_.showUi(uiName_);
 		} else if (EuiReward::mRefreshUi == type_) {
-			uiManager_.refreshUi(name_, indexValue_, nValue, uiType_);
+			OrderValue orderValue_(indexValue_, nValue);
+			uiManager_.refreshUi(uiName_, orderValue_);
 		} else if (EuiReward::mCloseUi == type_) {
-			uiManager_.closeUi(name_, uiType_);
+			uiManager_.closeUi(uiName_);
 		} else if (EuiReward::mClearUi == type_) {
-			uiManager_.runClose(uiType_);
+			uiManager_.clearUi(uiName_);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}

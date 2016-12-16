@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	struct EuiType
+	struct EuiEngine
 	{
 		static const int8_t mConsole = 1;
 		static const int8_t mCocos2dx = 2;

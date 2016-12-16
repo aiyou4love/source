@@ -2,34 +2,31 @@
 
 namespace cc {
 	
+#ifdef __CLIENT__
 	class ConsoleEngine : public IUiEngine
 	{
 	public:
-		void showUi(const char * nName);
-		void loadUi(const char * nName);
+		void showUi(UiName& nName);
+		void loadUi(UiName& nName);
 		
-		void refreshUi(const char * nName, IndexValue& nIndexValue, ValuePtr& nValue);
+		void refreshUi(UiName& nName, OrderValue& nOrderValue);
 		
-		void closeUi(const char * nName);
-		void runClose();
-		void runClear();
-		
-		void pushClose(const char * nName);
-		void clearClose();
+		void closeUi(UiName& nName);
+		void clearUi(int8_t nType);
 		
 		void pushCommandArgs(CommandArgsPtr& nCommandArgs);
-		CommandArgsPtr popCommandArgs();
-		void runCommandArgs();
 		
-		void runUpdate();
+		void runUpdateGame();
+		void runUpdateUi();
 		
-	private:
-		void runRefresh();
+		void setSceneType(int8_t nSceneType);
 		
-	public:
 		void runPreinit();
 		void runLuaApi();
 		void runInit();
+		
+		void runClose();
+		void runClear();
 		
 		static ConsoleEngine& instance();
 		
@@ -37,13 +34,12 @@ namespace cc {
 		~ConsoleEngine();
 		
 	private:
-		deque<ConsoleUiPtr> mConsoleUis;
-		list<ConsoleUiPtr> mCloseUis;
-		
-		deque<CommandArgsPtr> mCommandArgs;
-		mutex mMutex;
+		map<int8_t, ConsoleScenePtr> mConsoleScenes;
+		ConsoleScenePtr mConsoleScene;
+		atomic<int8_t> mSceneType;
 		
 		static ConsoleEngine mConsoleEngine;
 	};
+#endif
 	
 }
