@@ -3,21 +3,21 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	class ConsoleScene;
 	class ConsoleUi : noncopyable
 	{
 	public:
-		void runCommand(CommandArgsPtr& nCommandArgs);
+		void runInit(const char * nName, bool nTick);
 		
-		void runInit(const char * nName);
+		void runNotice(const char * nName, OrderValue& nOrderValue);
 		
-		void runRefresh(const char * nName, OrderValue& nOrderValue);
+		void runClose();
 		
 		void runText();
 		void runShow();
 		
-		void runClose();
-		void pushClose();
+		void runCommand(CommandArgsPtr& nCommandArgs);
+		
+		void runTick();
 		
 		const char * getName();
 		
@@ -57,8 +57,6 @@ namespace cc {
 		const char * stringName();
 		const char * stringUrl();
 		
-		void setScene(ConsoleScene * nConsoleScene);
-		
 		ConsoleUi();
 		~ConsoleUi();
 		
@@ -66,11 +64,10 @@ namespace cc {
 		map<int16_t, ConsoleItemPtr> mConsoleItems;
 		map<int32_t, StringTablePtr> mStringTables;
 		
-		ConsoleScene * mConsoleScene;
-		
 		LuaThreadPtr mLuaThread;
 		set<string> mOnEvents;
 		string mName;
+		int8_t mTick;
 	};
 	typedef SPTR<ConsoleUi> ConsoleUiPtr;
 #endif

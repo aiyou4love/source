@@ -12,15 +12,21 @@ namespace cc {
 		return mEngine;
 	}
 	
-	int8_t UiName::getType()
+	int8_t UiName::getScene()
 	{
-		return mType;
+		return mScene;
+	}
+	
+	bool UiName::isTick()
+	{
+		return mTick;
 	}
 	
 	UiName::UiName()
 		: mName ("")
 		, mEngine (0)
-		, mType (0)
+		, mScene (0)
+		, mTick (false)
 	{
 	}
 	
@@ -28,7 +34,8 @@ namespace cc {
 	{
 		mEngine = 0;
 		mName = "";
-		mType = 0;
+		mScene = 0;
+		mTick = false;
 	}
 	
 }

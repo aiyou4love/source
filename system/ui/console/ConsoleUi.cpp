@@ -3,33 +3,12 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	void ConsoleUi::runCommand(CommandArgsPtr& nCommandArgs)
-	{
-		int16_t itemIndex_ = (int16_t)(nCommandArgs->getSelectId());
-		auto it = mConsoleItems.find(itemIndex_);
-		if (it == mConsoleItems.end()) {
-			LOGE("[%s]%d", __METHOD__, itemIndex_);
-			return;
-		}
-		ConsoleItemPtr& consoleItem_ = it->second;
-		const char * method_ = consoleItem_->getMethod();
-		int8_t type_ = consoleItem_->getType();
-		if (1 == type_) {
-			mLuaThread->runCall<void>(method_);
-		} else if (2 == type_) {
-			int8_t count_ = nCommandArgs->getCommandCount();
-			if (count_ > 0) {
-				const char * commandArgs_ = nCommandArgs->getCommandArgs(1);
-				 mLuaThread->runCall<void, const char *>(method_, commandArgs_);
-			}
-		} else {
-			LOGE("[%s]%d", __METHOD__, type_);
-		}
-	}
-	
-	void ConsoleUi::runInit(const char * nName)
+	void ConsoleUi::runInit(const char * nName, bool nTick)
 	{
 		mName = nName;
+		if (nTick) {
+			mTick = 1;
+		}
 		
 		UiManager& uiManager_ = UiManager::instance();
 		string uiEventPath_ = uiManager_.uiEventPath(nName, EuiEngine::mConsole);
@@ -45,7 +24,7 @@ namespace cc {
 		this->initLua(uiLuaPath_.c_str());
 	}
 	
-	void ConsoleUi::runRefresh(const char * nName, OrderValue& nOrderValue)
+	void ConsoleUi::runNotice(const char * nName, OrderValue& nOrderValue)
 	{
 		IndexValue& indexValue_ = nOrderValue.getIndexValue();
 		ValuePtr& value_ = nOrderValue.getValue();
@@ -78,6 +57,30 @@ namespace cc {
 		}
 	}
 	
+	void ConsoleUi::runCommand(CommandArgsPtr& nCommandArgs)
+	{
+		int16_t itemIndex_ = (int16_t)(nCommandArgs->getSelectId());
+		auto it = mConsoleItems.find(itemIndex_);
+		if (it == mConsoleItems.end()) {
+			LOGE("[%s]%d", __METHOD__, itemIndex_);
+			return;
+		}
+		ConsoleItemPtr& consoleItem_ = it->second;
+		const char * method_ = consoleItem_->getMethod();
+		int8_t type_ = consoleItem_->getType();
+		if (1 == type_) {
+			mLuaThread->runCall<void>(method_);
+		} else if (2 == type_) {
+			int8_t count_ = nCommandArgs->getCommandCount();
+			if (count_ > 0) {
+				const char * commandArgs_ = nCommandArgs->getCommandArgs(1);
+				 mLuaThread->runCall<void, const char *>(method_, commandArgs_);
+			}
+		} else {
+			LOGE("[%s]%d", __METHOD__, type_);
+		}
+	}
+	
 	const char * ConsoleUi::getText(const char * nKey)
 	{
 		int32_t crcId_ = stringCrc(nKey);
@@ -107,6 +110,17 @@ namespace cc {
 		cout << nText;
 	}
 	
+	void ConsoleUi::runTick()
+	{
+		if (2 <= mTick) {
+			mLuaThread->runCall<void>("runTick");
+		} else if (0 < mTick) {
+			mTick++;
+		} else {
+			return;
+		}
+	}
+	
 	void ConsoleUi::runClose()
 	{
 		mLuaThread->runCall<void>("runClose");
@@ -120,11 +134,7 @@ namespace cc {
 		mOnEvents.clear();
 		
 		mName = "";
-	}
-	
-	void ConsoleUi::pushClose()
-	{
-		mConsoleScene->pushClose(mName.c_str());
+		mTick = 0;
 	}
 	
 	void ConsoleUi::initEvent(const char * nPath)
@@ -212,31 +222,29 @@ namespace cc {
 	{
 		LuaEngine& luaEngine_ = LuaEngine::instance();
 		luaEngine_.runClass<ConsoleUi>("ConsoleUi");
-		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::pushClose, "pushClose");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::printText, "printText");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutText, "coutText");
 	}
 	
-	void ConsoleUi::setScene(ConsoleScene * nConsoleScene)
-	{
-		mConsoleScene = nConsoleScene;
-	}
-	
 	ConsoleUi::ConsoleUi()
 		: mName ("")
-		, mConsoleScene (nullptr)
+		, mLuaThread (nullptr)
+		, mTick (0)
 	{
 		mConsoleItems.clear();
+		mStringTables.clear();
 		mOnEvents.clear();
 	}
 	
 	ConsoleUi::~ConsoleUi()
 	{
 		mConsoleItems.clear();
+		mStringTables.clear();
 		mOnEvents.clear();
 		
-		mConsoleScene = nullptr;
+		mLuaThread.reset();
 		mName = "";
+		mTick = 0;
 	}
 #endif
 	

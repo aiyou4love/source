@@ -5,13 +5,15 @@ namespace cc {
 	class UiManager : noncopyable
 	{
 	public:
-		void showUi(UiName& nName);
+		void topScene(UiName& nName);
+		void refreshScene(UiName& nName);
+		void backScene(UiName& nName);
+		
 		void loadUi(UiName& nName);
 		
-		void refreshUi(UiName& nName, OrderValue& nOrderValue);
+		void noticeUi(UiName& nName, OrderValue& nOrderValue);
 		
 		void closeUi(UiName& nName);
-		void clearUi(UiName& nName);
 		
 		string uiEventPath(const char * nPath, int8_t nType);
 		const char * getUiEventName(int8_t nType);

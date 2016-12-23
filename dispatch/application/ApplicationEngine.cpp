@@ -49,12 +49,10 @@ namespace cc {
 	
 	void ApplicationEngine::runStop()
 	{
-		SelectEngine& selectEngine_ = SelectEngine::instance();
-		
 		for ( auto it : mStopIds ) {
 			ValuePtr value_(new Value());
 			value_->pushInt32(it);
-			selectEngine_.runIfSelect(mEntity, value_);
+			mEntity->pushValue(value_);
 		}
 	}
 	

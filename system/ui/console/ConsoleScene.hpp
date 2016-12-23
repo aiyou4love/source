@@ -6,35 +6,31 @@ namespace cc {
 	class ConsoleScene : noncopyable
 	{
 	public:
-		void showUi(const char * nName, bool nShow);
-		void loadUi(const char * nName);
+		void loadUi(const char * nName, bool nTick);
 		
-		void refreshUi(const char * nName, OrderValue& nOrderValue, bool nShow);
+		void noticeUi(const char * nName, OrderValue& nOrderValue);
 		
-		void closeUi(const char * nName, bool nShow);
-		void clearUi(bool nShow);
+		void closeUi(const char * nName);
+		
+		void refreshUi();
 		
 		void pushCommandArgs(CommandArgsPtr& nCommandArgs);
 		CommandArgsPtr popCommandArgs();
-		void runCommandArgs(bool nShow);
+		void runCommandArgs();
 		
-		void runUpdate(bool nShow);
+		void runUpdate();
+		void runTick();
 		
 		void runClose();
 		void runClear();
 		
-		void pushClose(const char * nName);
-		void clearClose();
-		
-		void runRefresh();
-		
-	public:
 		ConsoleScene();
 		~ConsoleScene();
 		
 	private:
 		deque<ConsoleUiPtr> mConsoleUis;
-		list<ConsoleUiPtr> mCloseUis;
+		
+		int32_t mTickTime;
 		
 		deque<CommandArgsPtr> mCommandArgs;
 		mutex mMutex;

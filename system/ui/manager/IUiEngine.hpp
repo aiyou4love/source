@@ -5,13 +5,15 @@ namespace cc {
 	class IUiEngine : noncopyable
 	{
 	public:
-		virtual void showUi(UiName& nName) = 0;
+		virtual void topScene(UiName& nName) = 0;
+		virtual void refreshScene(UiName& nName) = 0;
+		virtual void backScene(UiName& nName) = 0;
+		
 		virtual void loadUi(UiName& nName) = 0;
 		
-		virtual void refreshUi(UiName& nName, OrderValue& nOrderValue) = 0;
+		virtual void noticeUi(UiName& nName, OrderValue& nOrderValue) = 0;
 		
 		virtual void closeUi(UiName& nName) = 0;
-		virtual void clearUi(int8_t nType) = 0;
 	};
 	
 }

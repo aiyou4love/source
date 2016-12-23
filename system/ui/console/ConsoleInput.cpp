@@ -21,8 +21,6 @@ namespace cc {
 			consoleEngine_.pushCommandArgs(commandArgs_);
 		} else if (2 == flag_) {
 			
-		} else if (3 == flag_) {
-			
 		} else {
 			
 		}

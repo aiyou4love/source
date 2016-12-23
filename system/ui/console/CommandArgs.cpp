@@ -48,10 +48,8 @@ namespace cc {
 		}
 		if ("-u" == commands_[0]) {
 			mFlag = 1;
-		} else if ("-s" == commands_[0]) {
+		} else if ("-g" == commands_[0]) {
 			mFlag = 2;
-		} else if ("-b" == commands_[0]) {
-			mFlag = 3;
 		} else {
 			LOGE("[%s]%s", __METHOD__, commands_[0].c_str());
 			mFlag = 0;

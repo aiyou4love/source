@@ -3,111 +3,104 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	void ConsoleEngine::showUi(UiName& nName)
+	void ConsoleEngine::topScene(UiName& nName)
 	{
-		const char * name_ = nName.getName();
-		int8_t type_ = nName.getType();
-		bool show_ = false;
-		if (mSceneType == type_) {
-			show_ = true;
+		int8_t scene_ = nName.getScene();
+		if (scene_ != mCurrentScene) {
+			mLastScene = static_cast<int8_t>(mCurrentScene);
+			mCurrentScene = scene_;
 		}
-		if ( EuiType::mGame != type_ ) {
-			auto it = mConsoleScenes.find(type_);
+	}
+	
+	void ConsoleEngine::refreshScene(UiName& nName)
+	{
+		int8_t scene_ = nName.getScene();
+		if (scene_ != mCurrentScene) {
+			LOGE("[%s]", __METHOD__);
+			return;
+		}
+		if ( EuiScene::mGame != scene_ ) {
+			auto it = mConsoleScenes.find(scene_);
 			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, type_);
+				LOGE("[%s]%d", __METHOD__, scene_);
 				return;
 			}
 			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->showUi(name_, show_);
+			consoleScene_->refreshUi();
 		} else {
-			mConsoleScene->showUi(name_, show_);
+			mConsoleScene->refreshUi();
 		}
+	}
+	
+	void ConsoleEngine::backScene(UiName& nName)
+	{
+		int8_t scene_ = nName.getScene();
+		if (scene_ != mCurrentScene) {
+			LOGE("[%s]", __METHOD__);
+			return;
+		}
+		mCurrentScene = static_cast<int8_t>(mLastScene);
+		mLastScene = EuiScene::mMain;
 	}
 	
 	void ConsoleEngine::loadUi(UiName& nName)
 	{
 		const char * name_ = nName.getName();
-		int8_t type_ = nName.getType();
-		if ( EuiType::mGame != type_ ) {
-			auto it = mConsoleScenes.find(type_);
+		int8_t scene_ = nName.getScene();
+		bool tick_ = nName.isTick();
+		if ( EuiScene::mGame != scene_ ) {
+			auto it = mConsoleScenes.find(scene_);
 			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, type_);
+				LOGE("[%s]%d", __METHOD__, scene_);
 				return;
 			}
 			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->loadUi(name_);
+			consoleScene_->loadUi(name_, tick_);
 		} else {
-			mConsoleScene->loadUi(name_);
+			mConsoleScene->loadUi(name_, tick_);
 		}
 	}
 	
-	void ConsoleEngine::refreshUi(UiName& nName, OrderValue& nOrderValue)
+	void ConsoleEngine::noticeUi(UiName& nName, OrderValue& nOrderValue)
 	{
 		const char * name_ = nName.getName();
-		int8_t type_ = nName.getType();
-		bool show_ = false;
-		if (mSceneType == type_) {
-			show_ = true;
-		}
-		if ( EuiType::mGame != type_ ) {
-			auto it = mConsoleScenes.find(type_);
+		int8_t scene_ = nName.getScene();
+		if ( EuiScene::mGame != scene_ ) {
+			auto it = mConsoleScenes.find(scene_);
 			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, type_);
+				LOGE("[%s]%d", __METHOD__, scene_);
 				return;
 			}
 			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->refreshUi(name_, nOrderValue, show_);
+			consoleScene_->noticeUi(name_, nOrderValue);
 		} else {
-			mConsoleScene->refreshUi(name_, nOrderValue, show_);
+			mConsoleScene->noticeUi(name_, nOrderValue);
 		}
 	}
 	
 	void ConsoleEngine::closeUi(UiName& nName)
 	{
 		const char * name_ = nName.getName();
-		int8_t type_ = nName.getType();
-		bool show_ = false;
-		if (mSceneType == type_) {
-			show_ = true;
-		}
-		if ( EuiType::mGame != type_ ) {
-			auto it = mConsoleScenes.find(type_);
+		int8_t scene_ = nName.getScene();
+		if ( EuiScene::mGame != scene_ ) {
+			auto it = mConsoleScenes.find(scene_);
 			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, type_);
+				LOGE("[%s]%d", __METHOD__, scene_);
 				return;
 			}
 			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->closeUi(name_, show_);
+			consoleScene_->closeUi(name_);
 		} else {
-			mConsoleScene->closeUi(name_, show_);
-		}
-	}
-	
-	void ConsoleEngine::clearUi(int8_t nType)
-	{
-		bool show_ = false;
-		if (mSceneType == nType) {
-			show_ = true;
-		}
-		if ( EuiType::mGame != nType ) {
-			auto it = mConsoleScenes.find(nType);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, nType);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->clearUi(show_);
-		} else {
-			mConsoleScene->clearUi(show_);
+			mConsoleScene->closeUi(name_);
 		}
 	}
 	
 	void ConsoleEngine::pushCommandArgs(CommandArgsPtr& nCommandArgs)
 	{
-		if ( EuiType::mGame != mSceneType ) {
-			auto it = mConsoleScenes.find(mSceneType);
+		if ( EuiScene::mGame != mCurrentScene ) {
+			auto it = mConsoleScenes.find(mCurrentScene);
 			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, mSceneType);
+				LOGE("[%s]%d", __METHOD__, mCurrentScene);
 				return;
 			}
 			ConsoleScenePtr& consoleScene_ = it->second;
@@ -119,11 +112,7 @@ namespace cc {
 	
 	void ConsoleEngine::runUpdateGame()
 	{
-		if ( EuiType::mGame != mSceneType ) {
-			mConsoleScene->runUpdate(false);
-		} else {
-			mConsoleScene->runUpdate(true);
-		}
+		mConsoleScene->runUpdate();
 	}
 	
 	void ConsoleEngine::runUpdateUi()
@@ -131,12 +120,7 @@ namespace cc {
 		auto it = mConsoleScenes.begin();
 		for ( ; it != mConsoleScenes.end(); ++it ) {
 			ConsoleScenePtr& consoleScene_ = it->second;
-			int8_t sceneType_ = it->first;
-			if (sceneType_ == mSceneType) {
-				consoleScene_->runUpdate(true);
-			} else {
-				consoleScene_->runUpdate(false);
-			}
+			consoleScene_->runUpdate();
 		}
 	}
 	
@@ -150,6 +134,8 @@ namespace cc {
 		if (nullptr != mConsoleScene) {
 			mConsoleScene->runClose();
 		}
+		mCurrentScene = EuiScene::mMain;
+		mLastScene = EuiScene::mMain;
 	}
 	
 	void ConsoleEngine::runClear()
@@ -166,12 +152,8 @@ namespace cc {
 		}
 		mConsoleScene.reset();
 		
-		mSceneType = EuiType::mMain;
-	}
-	
-	void ConsoleEngine::setSceneType(int8_t nSceneType)
-	{
-		mSceneType = nSceneType;
+		mCurrentScene = EuiScene::mMain;
+		mLastScene = EuiScene::mMain;
 	}
 	
 	void ConsoleEngine::runPreinit()
@@ -193,12 +175,11 @@ namespace cc {
 		UiManager& uiManager_ = UiManager::instance();
 		uiManager_.registerEngine(EuiEngine::mConsole, this);
 		
-		ConsoleScenePtr gameScene_(new ConsoleScene());
-		mConsoleScenes[EuiType::mGame] = gameScene_;
-		ConsoleScenePtr mainScene_(new ConsoleScene());
-		mConsoleScenes[EuiType::mMain] = mainScene_;
-		ConsoleScenePtr endScene_(new ConsoleScene());
-		mConsoleScenes[EuiType::mEnd] = endScene_;
+		//ConsoleScenePtr mainScene_(new ConsoleScene());
+		//mConsoleScenes[EuiScene::mMain] = mainScene_;
+		ConsoleScenePtr popScene_(new ConsoleScene());
+		mConsoleScenes[EuiScene::mPop] = popScene_;
+		//mConsoleScene.reset(new ConsoleScene());
 		
 		ConsoleUiUpdateClone consoleUiUpdateClone_;
 		ConsoleGameUpdateClone consoleGameUpdateClone_;

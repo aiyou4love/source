@@ -3,7 +3,7 @@
 #include "../engine/Engine.hpp"
 
 #include "ui/manager/EuiEngine.hpp"
-#include "ui/manager/EuiType.hpp"
+#include "ui/manager/EuiScene.hpp"
 #include "ui/manager/UiName.hpp"
 #include "ui/manager/IUiEngine.hpp"
 #include "ui/manager/UiManager.hpp"

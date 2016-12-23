@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	void UiManager::showUi(UiName& nName)
+	void UiManager::topScene(UiName& nName)
 	{
 		int8_t engine_ = nName.getEngine();
 		
@@ -12,7 +12,33 @@ namespace cc {
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
-		uiEngine_->showUi(nName);
+		uiEngine_->topScene(nName);
+	}
+	
+	void UiManager::refreshScene(UiName& nName)
+	{
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]%d", __METHOD__, engine_);
+			return;
+		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->refreshScene(nName);
+	}
+	
+	void UiManager::backScene(UiName& nName)
+	{
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]%d", __METHOD__, engine_);
+			return;
+		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->backScene(nName);
 	}
 	
 	void UiManager::loadUi(UiName& nName)
@@ -28,7 +54,7 @@ namespace cc {
 		uiEngine_->loadUi(nName);
 	}
 	
-	void UiManager::refreshUi(UiName& nName, OrderValue& nOrderValue)
+	void UiManager::noticeUi(UiName& nName, OrderValue& nOrderValue)
 	{
 		int8_t engine_ = nName.getEngine();
 		
@@ -38,7 +64,7 @@ namespace cc {
 			return;
 		}
 		IUiEngine * uiEngine_ = it->second;
-		uiEngine_->refreshUi(nName, nOrderValue);
+		uiEngine_->noticeUi(nName, nOrderValue);
 	}
 	
 	void UiManager::closeUi(UiName& nName)
@@ -52,20 +78,6 @@ namespace cc {
 		}
 		IUiEngine * uiEngine_ = it->second;
 		uiEngine_->closeUi(nName);
-	}
-	
-	void UiManager::clearUi(UiName& nName)
-	{
-		int8_t engine_ = nName.getEngine();
-		int8_t type_ = nName.getType();
-		
-		auto it = mUiEngines.find(engine_);
-		if ( it == mUiEngines.end() ) {
-			LOGE("[%s]%d", __METHOD__, engine_);
-			return;
-		}
-		IUiEngine * uiEngine_ = it->second;
-		uiEngine_->clearUi(type_);
 	}
 	
 	string UiManager::uiEventPath(const char * nPath, int8_t nType)

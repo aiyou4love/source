@@ -4,6 +4,11 @@ using namespace cc;
 
 int main( int argc, char * argv[] )
 {
+#ifdef __WINDOW__
+	//HWND conWnd_ = GetConsoleWindow();
+	//HMENU conMenu_ = GetSystemMenu(conWnd_, 0);
+	//RemoveMenu(conMenu_, 0xF060, 0x0);
+#endif
 	AutoupDirectory& autoupDirectory_ = AutoupDirectory::instance();
 	autoupDirectory_.runInit();
 	{

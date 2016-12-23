@@ -3,35 +3,37 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	void ConsoleScene::showUi(const char * nName, bool nShow)
-	{
-		this->loadUi(nName);
-		if (nShow) {
-			this->runRefresh();
-		}
-	}
-	
-	void ConsoleScene::loadUi(const char * nName)
+	void ConsoleScene::loadUi(const char * nName, bool nTick)
 	{
 		ConsoleUiPtr consoleUi_(new ConsoleUi());
-		consoleUi_->setScene(this);
-		consoleUi_->runInit(nName);
+		consoleUi_->runInit(nName, nTick);
 		mConsoleUis.push_back(consoleUi_);
 	}
 	
-	void ConsoleScene::refreshUi(const char * nName, OrderValue& nOrderValue, bool nShow)
+	void ConsoleScene::noticeUi(const char * nName, OrderValue& nOrderValue)
 	{
 		auto it = mConsoleUis.begin();
 		for ( ; it != mConsoleUis.end(); ++it ) {
 			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runRefresh(nName, nOrderValue);
-		}
-		if (nShow) {
-			this->runRefresh();
+			consoleUi_->runNotice(nName, nOrderValue);
 		}
 	}
 	
-	void ConsoleScene::runRefresh()
+	void ConsoleScene::closeUi(const char * nName)
+	{
+		auto it = mConsoleUis.begin();
+		for ( ; it != mConsoleUis.end(); ++it ) {
+			ConsoleUiPtr& consoleUi_ = (*it);
+			const char * name_ = consoleUi_->getName();
+			if (0 == strcmp(nName, name_)) {
+				consoleUi_->runClose();
+				mConsoleUis.erase(it);
+				break;
+			}
+		}
+	}
+	
+	void ConsoleScene::refreshUi()
 	{
 		//std::system("cls");
 		if (mConsoleUis.empty()) {
@@ -44,36 +46,6 @@ namespace cc {
 		}
 		ConsoleUiPtr& consoleUi_ = mConsoleUis.back();
 		consoleUi_->runShow();
-	}
-	
-	void ConsoleScene::closeUi(const char * nName, bool nShow)
-	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			const char * name_ = consoleUi_->getName();
-			if (0 == strcmp(nName, name_)) {
-				consoleUi_->runClose();
-				mConsoleUis.erase(it);
-				break;
-			}
-		}
-		if (nShow) {
-			this->runRefresh();
-		}
-	}
-	
-	void ConsoleScene::clearUi(bool nShow)
-	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runClose();
-		}
-		mConsoleUis.clear();
-		if (nShow) {
-			this->runRefresh();
-		}
 	}
 	
 	void ConsoleScene::pushCommandArgs(CommandArgsPtr& nCommandArgs)
@@ -93,7 +65,7 @@ namespace cc {
 		return commandArgs_;
 	}
 	
-	void ConsoleScene::runCommandArgs(bool nShow)
+	void ConsoleScene::runCommandArgs()
 	{
 		if (mConsoleUis.empty()) {
 			return;
@@ -104,16 +76,28 @@ namespace cc {
 		}
 		ConsoleUiPtr consoleUi_ = mConsoleUis.back();
 		consoleUi_->runCommand(commandArgs_);
+	}
+	
+	void ConsoleScene::runUpdate()
+	{
+		this->runCommandArgs();
 		
-		if (nShow) {
-			this->runRefresh();
+		cServerTime& serverTime_ = cServerTime::instance();
+		int32_t nowTime_ = serverTime_.getBootTime();
+		if ( (nowTime_ - mTickTime) > 1 ) {
+			this->runTick();
+			mTickTime = nowTime_;
 		}
 	}
 	
-	void ConsoleScene::runUpdate(bool nShow)
+	void ConsoleScene::runTick()
 	{
-		this->runCommandArgs(nShow);
-		this->clearClose();
+		auto it = mConsoleUis.begin();
+		for ( ; it != mConsoleUis.end(); ++it ) {
+			ConsoleUiPtr& consoleUi_ = (*it);
+			cout << "runTick" << endl;
+			consoleUi_->runTick();
+		}
 	}
 	
 	void ConsoleScene::runClose()
@@ -133,45 +117,21 @@ namespace cc {
 		mCommandArgs.clear();
 	}
 	
-	void ConsoleScene::pushClose(const char * nName)
-	{
-		auto it = mConsoleUis.begin();
-		for ( ; it != mConsoleUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			const char * name_ = consoleUi_->getName();
-			if (0 == strcmp(nName, name_)) {
-				mCloseUis.push_back(consoleUi_);
-				mConsoleUis.erase(it);
-				break;
-			}
-		}
-	}
-	
-	void ConsoleScene::clearClose()
-	{
-		if ( mCloseUis.size() <= 0 ) {
-			return;
-		}
-		auto it = mCloseUis.begin();
-		for ( ; it != mCloseUis.end(); ++it ) {
-			ConsoleUiPtr& consoleUi_ = (*it);
-			consoleUi_->runClose();
-		}
-		mCloseUis.clear();
-	}
-	
 	ConsoleScene::ConsoleScene()
 	{
+		cServerTime& serverTime_ = cServerTime::instance();
+		mTickTime = serverTime_.getBootTime();
+		
 		mConsoleUis.clear();
 		mCommandArgs.clear();
-		mCloseUis.clear();
 	}
 	
 	ConsoleScene::~ConsoleScene()
 	{
 		mConsoleUis.clear();
 		mCommandArgs.clear();
-		mCloseUis.clear();
+		
+		mTickTime = 0;
 	}
 #endif
 	

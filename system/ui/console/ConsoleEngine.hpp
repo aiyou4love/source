@@ -6,20 +6,20 @@ namespace cc {
 	class ConsoleEngine : public IUiEngine
 	{
 	public:
-		void showUi(UiName& nName);
+		void topScene(UiName& nName);
+		void refreshScene(UiName& nName);
+		void backScene(UiName& nName);
+		
 		void loadUi(UiName& nName);
 		
-		void refreshUi(UiName& nName, OrderValue& nOrderValue);
+		void noticeUi(UiName& nName, OrderValue& nOrderValue);
 		
 		void closeUi(UiName& nName);
-		void clearUi(int8_t nType);
 		
 		void pushCommandArgs(CommandArgsPtr& nCommandArgs);
 		
 		void runUpdateGame();
 		void runUpdateUi();
-		
-		void setSceneType(int8_t nSceneType);
 		
 		void runPreinit();
 		void runLuaApi();
@@ -36,7 +36,8 @@ namespace cc {
 	private:
 		map<int8_t, ConsoleScenePtr> mConsoleScenes;
 		ConsoleScenePtr mConsoleScene;
-		atomic<int8_t> mSceneType;
+		atomic<int8_t> mCurrentScene;
+		atomic<int8_t> mLastScene;
 		
 		static ConsoleEngine mConsoleEngine;
 	};

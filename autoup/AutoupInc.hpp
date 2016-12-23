@@ -41,6 +41,10 @@ using namespace boost;
 #define SODLLNAME "aspect.so"
 #endif
 
+#ifdef __WINDOW__
+#include <windows.h>
+#endif
+
 #include "zip/miniz.h"
 #include "zip/zip_file.hpp"
 

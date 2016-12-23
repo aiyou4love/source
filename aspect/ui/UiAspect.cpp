@@ -4,11 +4,12 @@ namespace cc {
 	
 	struct EuiReward
 	{
-		static const int16_t mLoadUi = 1;
-		static const int16_t mShowUi = 2;
-		static const int16_t mRefreshUi = 3;
-		static const int16_t mCloseUi = 4;
-		static const int16_t mClearUi = 5;
+		static const int16_t mTopScene = 1;
+		static const int16_t mRefreshScene = 2;
+		static const int16_t mBackScene = 3;
+		static const int16_t mLoadUi = 4;
+		static const int16_t mNoticeUi = 5;
+		static const int16_t mCloseUi = 6;
 	};
 	
 	void UiAspect::runReward(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue)
@@ -26,17 +27,19 @@ namespace cc {
 		UiName& uiName_ = uiReward_->getUiName();
 		int16_t type_ = uiReward_->getType();
 		
-		if (EuiReward::mLoadUi == type_) {
+		if (EuiReward::mTopScene == type_) {
+			uiManager_.topScene(uiName_);
+		} else if (EuiReward::mRefreshScene == type_) {
+			uiManager_.refreshScene(uiName_);
+		} else if (EuiReward::mBackScene == type_) {
+			uiManager_.backScene(uiName_);
+		} else if (EuiReward::mLoadUi == type_) {
 			uiManager_.loadUi(uiName_);
-		} else if (EuiReward::mShowUi == type_) {
-			uiManager_.showUi(uiName_);
-		} else if (EuiReward::mRefreshUi == type_) {
+		} else if (EuiReward::mNoticeUi == type_) {
 			OrderValue orderValue_(indexValue_, nValue);
-			uiManager_.refreshUi(uiName_, orderValue_);
+			uiManager_.noticeUi(uiName_, orderValue_);
 		} else if (EuiReward::mCloseUi == type_) {
 			uiManager_.closeUi(uiName_);
-		} else if (EuiReward::mClearUi == type_) {
-			uiManager_.clearUi(uiName_);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}
