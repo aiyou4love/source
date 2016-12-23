@@ -19,7 +19,7 @@ namespace cc {
 		void runPreinit();
 		void runLoad();
 		void runInit();
-		void runStart();
+		void initUpdate();
 		void runUpdate();
 		void runStop();
 		void runClear();

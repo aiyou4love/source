@@ -6,6 +6,7 @@ namespace cc {
 	{
 	public:
 		void runContext(int64_t nTick);
+		void initContext();
 		
 		ApplicationUpdate();
 		~ApplicationUpdate();

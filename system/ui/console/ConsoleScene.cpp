@@ -95,7 +95,6 @@ namespace cc {
 		auto it = mConsoleUis.begin();
 		for ( ; it != mConsoleUis.end(); ++it ) {
 			ConsoleUiPtr& consoleUi_ = (*it);
-			cout << "runTick" << endl;
 			consoleUi_->runTick();
 		}
 	}

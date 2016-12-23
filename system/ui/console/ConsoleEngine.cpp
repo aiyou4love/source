@@ -175,11 +175,11 @@ namespace cc {
 		UiManager& uiManager_ = UiManager::instance();
 		uiManager_.registerEngine(EuiEngine::mConsole, this);
 		
-		//ConsoleScenePtr mainScene_(new ConsoleScene());
-		//mConsoleScenes[EuiScene::mMain] = mainScene_;
+		ConsoleScenePtr mainScene_(new ConsoleScene());
+		mConsoleScenes[EuiScene::mMain] = mainScene_;
 		ConsoleScenePtr popScene_(new ConsoleScene());
 		mConsoleScenes[EuiScene::mPop] = popScene_;
-		//mConsoleScene.reset(new ConsoleScene());
+		mConsoleScene.reset(new ConsoleScene());
 		
 		ConsoleUiUpdateClone consoleUiUpdateClone_;
 		ConsoleGameUpdateClone consoleGameUpdateClone_;

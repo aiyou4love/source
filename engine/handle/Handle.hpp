@@ -14,6 +14,7 @@ namespace cc {
 		
 	private:
 		bool runInternal();
+		void initRun();
 		void runHandle();
 		void runClear();
 		

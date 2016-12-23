@@ -17,7 +17,6 @@ namespace cc {
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tLoadBegin.connect(bind(&ApplicationEngine::runLoad, this));
 		lifeCycle_.m_tIniting.connect(bind(&ApplicationEngine::runInit, this));
-		lifeCycle_.m_tRunning.connect(bind(&ApplicationEngine::runStart, this));
 		lifeCycle_.m_tNoticeStop.connect(bind(&ApplicationEngine::runStop, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&ApplicationEngine::runClear, this));
 	}
@@ -36,7 +35,7 @@ namespace cc {
 		handleEngine_.addContext(&applicationUpdateClone_);
 	}
 	
-	void ApplicationEngine::runStart()
+	void ApplicationEngine::initUpdate()
 	{
 		SelectEngine& selectEngine_ = SelectEngine::instance();
 		

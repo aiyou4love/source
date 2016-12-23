@@ -2,6 +2,11 @@
 
 namespace cc {
 	
+	void Context::initContext()
+	{
+		
+	}
+	
 	Context::Context()
 	{
 	}

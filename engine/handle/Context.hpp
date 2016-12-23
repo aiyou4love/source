@@ -6,6 +6,7 @@ namespace cc {
 	{
 	public:
 		virtual void runContext(int64_t nTick) = 0;
+		virtual void initContext();
 		
 		Context();
 		virtual ~Context();

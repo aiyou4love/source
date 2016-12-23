@@ -22,6 +22,8 @@ namespace cc {
 		chrono::milliseconds dura_(2000);
 		this_thread::sleep_for(dura_);
 		
+		this->initRun();
+		
 		mStop = false;
 		while (runInternal());
 		mStop = true;
@@ -44,6 +46,15 @@ namespace cc {
 		mStop = true;
 		mTicks = 0;
 		mFrame = 0;
+	}
+	
+	void Handle::initRun()
+	{
+		auto it = mContexts.begin();
+		for ( ; it != mContexts.end(); ++it ) {
+			ContextPtr& context_ = (*it);
+			context_->initContext();
+		}
 	}
 	
 	bool Handle::runInternal()

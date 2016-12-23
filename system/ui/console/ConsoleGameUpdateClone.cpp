@@ -5,7 +5,7 @@ namespace cc {
 #ifdef __CLIENT__
 	ContextPtr ConsoleGameUpdateClone::createContext()
 	{
-		return ContextPtr(new ConsoleUiUpdate());
+		return ContextPtr(new ConsoleGameUpdate());
 	}
 	
 	const char * ConsoleGameUpdateClone::contextName()
