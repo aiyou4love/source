@@ -4,9 +4,9 @@ namespace cc {
 	
 	void Plugin::runPlugin()
 	{
-		LOGI("[%s]", __METHOD__);
-		
 		aspectInit();
+		
+		LOGI("[%s]", __METHOD__);
 		
 		serializeStart();
 	}
