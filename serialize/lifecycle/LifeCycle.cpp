@@ -5,11 +5,6 @@ namespace cc {
 	void LifeCycle::runLuaApi()
 	{
 		this->m_tRunLuaApi();
-		
-		LuaEngine& luaEngine_ = LuaEngine::instance();
-		luaEngine_.runClass<LifeCycle>("LifeCycle");
-		luaEngine_.runStatic<LifeCycle>(LifeCycle::instance, "instance");
-		luaEngine_.runMethod<LifeCycle>(&LifeCycle::stopJoin, "stopJoin");
 	}
 	
 	void LifeCycle::loadBegin()

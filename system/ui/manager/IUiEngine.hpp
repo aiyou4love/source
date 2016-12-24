@@ -8,6 +8,7 @@ namespace cc {
 		virtual void topScene(UiName& nName) = 0;
 		virtual void clearScene(UiName& nName) = 0;
 		virtual void refreshScene(UiName& nName) = 0;
+		virtual void drawScene() = 0;
 		virtual void backScene(UiName& nName) = 0;
 		
 		virtual void loadUi(UiName& nName) = 0;

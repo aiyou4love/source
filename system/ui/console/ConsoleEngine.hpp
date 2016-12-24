@@ -9,6 +9,7 @@ namespace cc {
 		void topScene(UiName& nName);
 		void clearScene(UiName& nName);
 		void refreshScene(UiName& nName);
+		void drawScene();
 		void backScene(UiName& nName);
 		
 		void loadUi(UiName& nName);

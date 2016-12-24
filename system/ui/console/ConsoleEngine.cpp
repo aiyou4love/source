@@ -48,6 +48,21 @@ namespace cc {
 		}
 	}
 	
+	void ConsoleEngine::drawScene()
+	{
+		if ( EuiScene::mGame != mCurrentScene ) {
+			auto it = mConsoleScenes.find(mCurrentScene);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, mCurrentScene);
+				return;
+			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->refreshUi();
+		} else {
+			mConsoleScene->refreshUi();
+		}
+	}
+	
 	void ConsoleEngine::backScene(UiName& nName)
 	{
 		int8_t scene_ = nName.getScene();
@@ -128,7 +143,11 @@ namespace cc {
 	
 	void ConsoleEngine::runUpdateGame()
 	{
-		mConsoleScene->runUpdate();
+		if ( EuiScene::mGame != mCurrentScene ) {
+			mConsoleScene->runUpdate(false);
+		} else {
+			mConsoleScene->runUpdate(true);
+		}
 	}
 	
 	void ConsoleEngine::runUpdateUi()
@@ -136,7 +155,12 @@ namespace cc {
 		auto it = mConsoleScenes.begin();
 		for ( ; it != mConsoleScenes.end(); ++it ) {
 			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->runUpdate();
+			int8_t scene_ = it->first;
+			if ( scene_ != mCurrentScene ) {
+				consoleScene_->runUpdate(false);
+			} else {
+				consoleScene_->runUpdate(true);
+			}
 		}
 	}
 	
@@ -204,6 +228,8 @@ namespace cc {
 		mConsoleScenes[EuiScene::mMain] = mainScene_;
 		ConsoleScenePtr popScene_(new ConsoleScene());
 		mConsoleScenes[EuiScene::mPop] = popScene_;
+		ConsoleScenePtr existScene_(new ConsoleScene());
+		mConsoleScenes[EuiScene::mExist] = existScene_;
 		mConsoleScene.reset(new ConsoleScene());
 		
 		ConsoleUiUpdateClone consoleUiUpdateClone_;

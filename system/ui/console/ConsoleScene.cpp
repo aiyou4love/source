@@ -78,19 +78,19 @@ namespace cc {
 		consoleUi_->runCommand(commandArgs_);
 	}
 	
-	void ConsoleScene::runUpdate()
+	void ConsoleScene::runUpdate(bool nShow)
 	{
 		this->runCommandArgs();
 		
 		cServerTime& serverTime_ = cServerTime::instance();
 		int32_t nowTime_ = serverTime_.getBootTime();
 		if ( (nowTime_ - mTickTime) > 1 ) {
-			this->runTick();
+			this->runTick(nShow);
 			mTickTime = nowTime_;
 		}
 	}
 	
-	void ConsoleScene::runTick()
+	void ConsoleScene::runTick(bool nShow)
 	{
 		if ( mConsoleUis.size() <= 0 ) {
 			return;
@@ -100,8 +100,10 @@ namespace cc {
 			ConsoleUiPtr& consoleUi_ = (*it);
 			consoleUi_->runTick();
 		}
-		ConsoleUiPtr& consoleUi_ = mConsoleUis.back();
-		consoleUi_->showTick();
+		if (nShow) {
+			ConsoleUiPtr& consoleUi_ = mConsoleUis.back();
+			consoleUi_->showTick();
+		}
 	}
 	
 	void ConsoleScene::runClose()

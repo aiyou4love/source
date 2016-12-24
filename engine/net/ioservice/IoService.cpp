@@ -8,6 +8,7 @@ namespace cc {
 		lifeCycle_.m_tLoadBegin.connect(bind(&IoService::runLoad, this));
 		lifeCycle_.m_tInitBegin.connect(bind(&IoService::runInit, this));
 		lifeCycle_.m_tStartBegin.connect(bind(&IoService::runStart, this));
+		lifeCycle_.m_tNoticeStart.connect(bind(&IoService::noticeStart, this));
 		lifeCycle_.m_tRunJoin.connect(bind(&IoService::runJoin, this));
 		lifeCycle_.m_tStopJoin.connect(bind(&IoService::runStop, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&IoService::runClear, this));
@@ -31,12 +32,22 @@ namespace cc {
 	
 	void IoService::runStart()
 	{
-		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		mSignals.reset(new asio::signal_set(this->getIoHandle()));
 		mSignals->add(SIGINT); mSignals->add(SIGTERM);
 	#ifdef __WINDOW__
 		mSignals->add(SIGBREAK);
 	#endif
+		LifeCycle& lifeCycle_ = LifeCycle::instance();
+		mSignals->async_wait(boost::bind(&LifeCycle::noticeStop, &lifeCycle_));
+	}
+		
+	void IoService::noticeStart()
+	{
+		mSignals->add(SIGINT); mSignals->add(SIGTERM);
+	#ifdef __WINDOW__
+		mSignals->add(SIGBREAK);
+	#endif
+		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		mSignals->async_wait(boost::bind(&LifeCycle::noticeStop, &lifeCycle_));
 	}
 	

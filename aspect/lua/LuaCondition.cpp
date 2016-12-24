@@ -1,7 +1,7 @@
 #include "../Aspect.hpp"
 
 namespace cc {
-		
+	
 	const char * LuaCondition::getFunction()
 	{
 		return mFunction.c_str();

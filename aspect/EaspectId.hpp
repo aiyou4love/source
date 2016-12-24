@@ -11,7 +11,7 @@ namespace cc {
 		static const int32_t mServerId = 5;
 		static const int32_t mRoleId = 6;
 		static const int32_t mNetId = 7;
-		static const int32_t mStateId = 8;
+		static const int32_t mAppId = 8;
 	};
 	
 }

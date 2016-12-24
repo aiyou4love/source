@@ -34,6 +34,7 @@ namespace cc {
 		const char * getText(const char * nKey);
 		void printText(const char * nKey);
 		void coutText(const char * nText);
+		void coutInt(int32_t nText);
 		
 	public:
 		template<class T>

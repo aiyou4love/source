@@ -18,8 +18,8 @@ namespace cc {
 		CommandArgsPtr popCommandArgs();
 		void runCommandArgs();
 		
-		void runUpdate();
-		void runTick();
+		void runUpdate(bool nShow);
+		void runTick(bool nShow);
 		
 		void runClose();
 		void runClear();

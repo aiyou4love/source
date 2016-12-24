@@ -7,10 +7,11 @@ namespace cc {
 		static const int16_t mTopScene = 1;
 		static const int16_t mClearScene = 2;
 		static const int16_t mRefreshScene = 3;
-		static const int16_t mBackScene = 4;
-		static const int16_t mLoadUi = 5;
-		static const int16_t mNoticeUi = 6;
-		static const int16_t mCloseUi = 7;
+		static const int16_t mDrawScene = 4;
+		static const int16_t mBackScene = 5;
+		static const int16_t mLoadUi = 6;
+		static const int16_t mNoticeUi = 7;
+		static const int16_t mCloseUi = 8;
 	};
 	
 	void UiAspect::runReward(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue)
@@ -34,6 +35,8 @@ namespace cc {
 			uiManager_.clearScene(uiName_);
 		} else if (EuiReward::mRefreshScene == type_) {
 			uiManager_.refreshScene(uiName_);
+		} else if (EuiReward::mDrawScene == type_) {
+			uiManager_.drawScene(uiName_);
 		} else if (EuiReward::mBackScene == type_) {
 			uiManager_.backScene(uiName_);
 		} else if (EuiReward::mLoadUi == type_) {

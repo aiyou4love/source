@@ -110,6 +110,11 @@ namespace cc {
 		cout << nText;
 	}
 	
+	void ConsoleUi::coutInt(int32_t nText)
+	{
+		cout << nText;
+	}
+	
 	void ConsoleUi::runTick()
 	{
 		if (2 <= mTick) {
@@ -231,6 +236,7 @@ namespace cc {
 		luaEngine_.runClass<ConsoleUi>("ConsoleUi");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::printText, "printText");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutText, "coutText");
+		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutInt, "coutInt");
 	}
 	
 	ConsoleUi::ConsoleUi()

@@ -20,4 +20,7 @@ void aspectInit()
 	
 	cServerAspect& serverAspect_ = cServerAspect::instance();
 	serverAspect_.runPreinit();
+	
+	AppAspect& appAspect_ = AppAspect::instance();
+	appAspect_.runPreinit();
 }

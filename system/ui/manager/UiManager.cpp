@@ -41,6 +41,19 @@ namespace cc {
 		uiEngine_->refreshScene(nName);
 	}
 	
+	void UiManager::drawScene(UiName& nName)
+	{
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]%d", __METHOD__, engine_);
+			return;
+		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->drawScene();
+	}
+	
 	void UiManager::backScene(UiName& nName)
 	{
 		int8_t engine_ = nName.getEngine();

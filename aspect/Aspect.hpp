@@ -13,6 +13,9 @@
 #include "ui/UiReward.hpp"
 #include "ui/UiAspect.hpp"
 
+#include "app/AppReward.hpp"
+#include "app/AppAspect.hpp"
+
 #include "account/account/AccountCondition.hpp"
 #include "account/account/AccountReward.hpp"
 #include "account/account/AccountAspect.hpp"

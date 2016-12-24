@@ -19,6 +19,7 @@ namespace cc {
 		void runLoad();
 		void runInit();
 		void runStart();
+		void noticeStart();
 		void runStop();
 		void runJoin();
 		
