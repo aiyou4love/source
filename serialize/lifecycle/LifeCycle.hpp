@@ -43,6 +43,8 @@ namespace cc {
 		
 		STD_SIGNAL<void()> m_tNoticeStop;
 		void noticeStop();
+		STD_SIGNAL<void()> m_tNoticeStart;
+		void noticeStart();
 		
 		STD_SIGNAL<void()> m_tStopBegin;
 		void stopBegin();

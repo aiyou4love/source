@@ -5,11 +5,12 @@ namespace cc {
 	struct EuiReward
 	{
 		static const int16_t mTopScene = 1;
-		static const int16_t mRefreshScene = 2;
-		static const int16_t mBackScene = 3;
-		static const int16_t mLoadUi = 4;
-		static const int16_t mNoticeUi = 5;
-		static const int16_t mCloseUi = 6;
+		static const int16_t mClearScene = 2;
+		static const int16_t mRefreshScene = 3;
+		static const int16_t mBackScene = 4;
+		static const int16_t mLoadUi = 5;
+		static const int16_t mNoticeUi = 6;
+		static const int16_t mCloseUi = 7;
 	};
 	
 	void UiAspect::runReward(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue)
@@ -29,6 +30,8 @@ namespace cc {
 		
 		if (EuiReward::mTopScene == type_) {
 			uiManager_.topScene(uiName_);
+		} else if (EuiReward::mClearScene == type_) {
+			uiManager_.clearScene(uiName_);
 		} else if (EuiReward::mRefreshScene == type_) {
 			uiManager_.refreshScene(uiName_);
 		} else if (EuiReward::mBackScene == type_) {

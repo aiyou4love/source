@@ -92,11 +92,16 @@ namespace cc {
 	
 	void ConsoleScene::runTick()
 	{
+		if ( mConsoleUis.size() <= 0 ) {
+			return;
+		}
 		auto it = mConsoleUis.begin();
 		for ( ; it != mConsoleUis.end(); ++it ) {
 			ConsoleUiPtr& consoleUi_ = (*it);
 			consoleUi_->runTick();
 		}
+		ConsoleUiPtr& consoleUi_ = mConsoleUis.back();
+		consoleUi_->showTick();
 	}
 	
 	void ConsoleScene::runClose()

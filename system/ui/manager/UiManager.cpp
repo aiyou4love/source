@@ -15,6 +15,19 @@ namespace cc {
 		uiEngine_->topScene(nName);
 	}
 	
+	void UiManager::clearScene(UiName& nName)
+	{
+		int8_t engine_ = nName.getEngine();
+		
+		auto it = mUiEngines.find(engine_);
+		if ( it == mUiEngines.end() ) {
+			LOGE("[%s]%d", __METHOD__, engine_);
+			return;
+		}
+		IUiEngine * uiEngine_ = it->second;
+		uiEngine_->clearScene(nName);
+	}
+	
 	void UiManager::refreshScene(UiName& nName)
 	{
 		int8_t engine_ = nName.getEngine();

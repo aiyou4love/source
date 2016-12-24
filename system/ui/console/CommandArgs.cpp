@@ -43,7 +43,6 @@ namespace cc {
 			}
 		}
 		if (commands_.size() < 2) {
-			LOGE("[%s]size:%d", __METHOD__, commands_.size());
 			return;
 		}
 		if ("-u" == commands_[0]) {

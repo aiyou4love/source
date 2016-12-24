@@ -6,6 +6,7 @@ namespace cc {
 	{
 	public:
 		void topScene(UiName& nName);
+		void clearScene(UiName& nName);
 		void refreshScene(UiName& nName);
 		void backScene(UiName& nName);
 		

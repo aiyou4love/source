@@ -7,6 +7,7 @@ namespace cc {
 	{
 	public:
 		void topScene(UiName& nName);
+		void clearScene(UiName& nName);
 		void refreshScene(UiName& nName);
 		void backScene(UiName& nName);
 		
@@ -21,9 +22,13 @@ namespace cc {
 		void runUpdateGame();
 		void runUpdateUi();
 		
+		bool isStop();
+		
 		void runPreinit();
 		void runLuaApi();
 		void runInit();
+		void noticeStop();
+		void noticeStart();
 		
 		void runClose();
 		void runClear();
@@ -38,6 +43,7 @@ namespace cc {
 		ConsoleScenePtr mConsoleScene;
 		atomic<int8_t> mCurrentScene;
 		atomic<int8_t> mLastScene;
+		atomic<bool> mStop;
 		
 		static ConsoleEngine mConsoleEngine;
 	};

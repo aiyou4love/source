@@ -121,6 +121,13 @@ namespace cc {
 		}
 	}
 	
+	void ConsoleUi::showTick()
+	{
+		if (2 <= mTick) {
+			mLuaThread->runCall<void>("showTick");
+		}
+	}
+	
 	void ConsoleUi::runClose()
 	{
 		mLuaThread->runCall<void>("runClose");

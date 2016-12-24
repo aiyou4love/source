@@ -17,7 +17,7 @@ namespace cc {
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tLoadBegin.connect(bind(&ApplicationEngine::runLoad, this));
 		lifeCycle_.m_tIniting.connect(bind(&ApplicationEngine::runInit, this));
-		lifeCycle_.m_tNoticeStop.connect(bind(&ApplicationEngine::runStop, this));
+		lifeCycle_.m_tNoticeStop.connect(bind(&ApplicationEngine::noticeStop, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&ApplicationEngine::runClear, this));
 	}
 	
@@ -46,7 +46,7 @@ namespace cc {
 		}
 	}
 	
-	void ApplicationEngine::runStop()
+	void ApplicationEngine::noticeStop()
 	{
 		for ( auto it : mStopIds ) {
 			ValuePtr value_(new Value());

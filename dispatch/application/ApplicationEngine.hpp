@@ -21,7 +21,7 @@ namespace cc {
 		void runInit();
 		void initUpdate();
 		void runUpdate();
-		void runStop();
+		void noticeStop();
 		void runClear();
 		
 		static ApplicationEngine& instance();

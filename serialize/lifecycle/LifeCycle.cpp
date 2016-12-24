@@ -87,6 +87,11 @@ namespace cc {
 		this->m_tNoticeStop();
 	}
 	
+	void LifeCycle::noticeStart()
+	{
+		this->m_tNoticeStart();
+	}
+	
 	void LifeCycle::stopBegin()
 	{
 		this->m_tStopBegin();
@@ -168,6 +173,7 @@ namespace cc {
 		m_tStopJoin.disconnect_all_slots();
 		
 		m_tNoticeStop.disconnect_all_slots();
+		m_tNoticeStart.disconnect_all_slots();
 		
 		m_tStopBegin.disconnect_all_slots();
 		m_tStoping.disconnect_all_slots();

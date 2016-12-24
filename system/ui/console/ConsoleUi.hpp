@@ -18,6 +18,7 @@ namespace cc {
 		void runCommand(CommandArgsPtr& nCommandArgs);
 		
 		void runTick();
+		void showTick();
 		
 		const char * getName();
 		

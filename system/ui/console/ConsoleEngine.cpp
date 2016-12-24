@@ -12,6 +12,22 @@ namespace cc {
 		}
 	}
 	
+	void ConsoleEngine::clearScene(UiName& nName)
+	{
+		int8_t scene_ = nName.getScene();
+		if ( EuiScene::mGame != scene_ ) {
+			auto it = mConsoleScenes.find(scene_);
+			if ( it == mConsoleScenes.end() ) {
+				LOGE("[%s]%d", __METHOD__, scene_);
+				return;
+			}
+			ConsoleScenePtr& consoleScene_ = it->second;
+			consoleScene_->runClose();
+		} else {
+			mConsoleScene->runClose();
+		}
+	}
+	
 	void ConsoleEngine::refreshScene(UiName& nName)
 	{
 		int8_t scene_ = nName.getScene();
@@ -124,6 +140,11 @@ namespace cc {
 		}
 	}
 	
+	bool ConsoleEngine::isStop()
+	{
+		return mStop;
+	}
+	
 	void ConsoleEngine::runClose()
 	{
 		auto it = mConsoleScenes.begin();
@@ -154,6 +175,8 @@ namespace cc {
 		
 		mCurrentScene = EuiScene::mMain;
 		mLastScene = EuiScene::mMain;
+		
+		mStop = true;
 	}
 	
 	void ConsoleEngine::runPreinit()
@@ -164,6 +187,8 @@ namespace cc {
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tRunLuaApi.connect(bind(&ConsoleEngine::runLuaApi, this));
 		lifeCycle_.m_tIniting.connect(bind(&ConsoleEngine::runInit, this));
+		lifeCycle_.m_tNoticeStop.connect(bind(&ConsoleEngine::noticeStop, this));
+		lifeCycle_.m_tNoticeStart.connect(bind(&ConsoleEngine::noticeStart, this));
 		lifeCycle_.m_tCloseBegin.connect(bind(&ConsoleEngine::runClose, this));
 		lifeCycle_.m_tClearBegin.connect(bind(&ConsoleEngine::runClear, this));
 	}
@@ -189,11 +214,23 @@ namespace cc {
 		handleEngine_.addContext(&consoleUiUpdateClone_);
 		handleEngine_.addContext(&consoleGameUpdateClone_);
 		handleEngine_.addContext(&consoleInputClone_);
+		
+		mStop = false;
 	}
 	
 	void ConsoleEngine::runLuaApi()
 	{
 		ConsoleUi::runLuaApi();
+	}
+	
+	void ConsoleEngine::noticeStop()
+	{
+		mStop = true;
+	}
+	
+	void ConsoleEngine::noticeStart()
+	{
+		mStop = false;
 	}
 	
 	ConsoleEngine& ConsoleEngine::instance()
