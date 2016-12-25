@@ -28,6 +28,7 @@ namespace cc {
 		void initEvent(const char * nPath);
 		void initLua(const char * nPath);
 		void initCore(const char * nPath);
+		void initCommon(const char * nPath);
 		void initUi(const char * nPath);
 		void initString(const char * nPath);
 		

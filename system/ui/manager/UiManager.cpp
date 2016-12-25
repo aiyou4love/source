@@ -239,6 +239,28 @@ namespace cc {
 		}
 	}
 	
+	string UiManager::uiCommonPath(const char * nPath, int8_t nType)
+	{
+		const char * comName_ = this->getUiCommonName(nType);
+		
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		return workDirectory_.getUiPath(nPath, comName_);
+	}
+	
+	const char * UiManager::getUiCommonName(int8_t nType)
+	{
+		if (EuiEngine::mConsole == nType) {
+			return "/com.con.lua";
+		} else if (EuiEngine::mCocos2dx == nType) {
+			return "/com.2dx.lua";
+		} else if (EuiEngine::mUE4 == nType) {
+			return "/com.ue4.lua";
+		} else {
+			LOGE("[%s]%d", __METHOD__, nType);
+			return "/com.lua";
+		}
+	}
+	
 	void UiManager::registerEngine(int8_t nType, IUiEngine * nUiEngine)
 	{
 		mUiEngines[nType] = nUiEngine;

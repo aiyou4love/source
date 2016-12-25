@@ -27,6 +27,8 @@ namespace cc {
 		string getUiStringName(int8_t nType);
 		string uiCorePath(const char * nPath, int8_t nType);
 		const char * getUiCoreName(int8_t nType);
+		string uiCommonPath(const char * nPath, int8_t nType);
+		const char * getUiCommonName(int8_t nType);
 		
 		void registerEngine(int8_t nType, IUiEngine * nUiEngine);
 		

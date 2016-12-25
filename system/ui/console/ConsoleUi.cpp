@@ -13,6 +13,7 @@ namespace cc {
 		UiManager& uiManager_ = UiManager::instance();
 		string uiEventPath_ = uiManager_.uiEventPath(nName, EuiEngine::mConsole);
 		string uiCorePath_ = uiManager_.uiCorePath(nName, EuiEngine::mConsole);
+		string uiComPath_ = uiManager_.uiCommonPath(nName, EuiEngine::mConsole);
 		string uiLuaPath_ = uiManager_.uiLuaPath(nName, EuiEngine::mConsole);
 		string uiJsonPath_ = uiManager_.uiJsonPath(nName, EuiEngine::mConsole);
 		string uiStringPath_ = uiManager_.uiStringPath(nName, EuiEngine::mConsole);
@@ -21,6 +22,7 @@ namespace cc {
 		this->initUi(uiJsonPath_.c_str());
 		this->initString(uiStringPath_.c_str());
 		this->initCore(uiCorePath_.c_str());
+		this->initCommon(uiComPath_.c_str());
 		this->initLua(uiLuaPath_.c_str());
 	}
 	
@@ -164,6 +166,11 @@ namespace cc {
 	{
 		mLuaThread->openFile(nPath);
 		mLuaThread->runCall<void, ConsoleUi *>("runInit", this);
+	}
+	
+	void ConsoleUi::initCommon(const char * nPath)
+	{
+		mLuaThread->openFile(nPath);
 	}
 	
 	void ConsoleUi::initCore(const char * nPath)

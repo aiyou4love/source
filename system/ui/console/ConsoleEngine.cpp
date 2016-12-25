@@ -6,72 +6,62 @@ namespace cc {
 	void ConsoleEngine::topScene(UiName& nName)
 	{
 		int8_t scene_ = nName.getScene();
-		if (scene_ != mCurrentScene) {
-			mLastScene = static_cast<int8_t>(mCurrentScene);
-			mCurrentScene = scene_;
+		if (scene_ != mCurrent) {
+			mLast1 = static_cast<int8_t>(mLast0);
+			mLast0 = static_cast<int8_t>(mCurrent);
+			mCurrent = scene_;
 		}
 	}
 	
 	void ConsoleEngine::clearScene(UiName& nName)
 	{
 		int8_t scene_ = nName.getScene();
-		if ( EuiScene::mGame != scene_ ) {
-			auto it = mConsoleScenes.find(scene_);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, scene_);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->runClose();
+		if ( EuiScene::mMain == scene_ ) {
+			mUiScene->runClose();
+		} else if ( EuiScene::mGame == scene_ ) {
+			mGameScene->runClose();
 		} else {
-			mConsoleScene->runClose();
+			mExistScene->runClose();
 		}
 	}
 	
 	void ConsoleEngine::refreshScene(UiName& nName)
 	{
 		int8_t scene_ = nName.getScene();
-		if (scene_ != mCurrentScene) {
+		if (scene_ != mCurrent) {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
-		if ( EuiScene::mGame != scene_ ) {
-			auto it = mConsoleScenes.find(scene_);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, scene_);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->refreshUi();
+		if ( EuiScene::mMain == scene_ ) {
+			mUiScene->refreshUi();
+		} else if ( EuiScene::mGame == scene_ ) {
+			mGameScene->refreshUi();
 		} else {
-			mConsoleScene->refreshUi();
+			mExistScene->refreshUi();
 		}
 	}
 	
 	void ConsoleEngine::drawScene()
 	{
-		if ( EuiScene::mGame != mCurrentScene ) {
-			auto it = mConsoleScenes.find(mCurrentScene);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, mCurrentScene);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->refreshUi();
+		if ( EuiScene::mMain == mCurrent ) {
+			mUiScene->refreshUi();
+		} else if ( EuiScene::mGame == mCurrent ) {
+			mGameScene->refreshUi();
 		} else {
-			mConsoleScene->refreshUi();
+			mExistScene->refreshUi();
 		}
 	}
 	
 	void ConsoleEngine::backScene(UiName& nName)
 	{
 		int8_t scene_ = nName.getScene();
-		if (scene_ != mCurrentScene) {
+		if (scene_ != mCurrent) {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
-		mCurrentScene = static_cast<int8_t>(mLastScene);
-		mLastScene = EuiScene::mMain;
+		mCurrent = static_cast<int8_t>(mLast0);
+		mLast0 = static_cast<int8_t>(mLast1);
+		mLast1 = EuiScene::mMain;
 	}
 	
 	void ConsoleEngine::loadUi(UiName& nName)
@@ -79,16 +69,12 @@ namespace cc {
 		const char * name_ = nName.getName();
 		int8_t scene_ = nName.getScene();
 		bool tick_ = nName.isTick();
-		if ( EuiScene::mGame != scene_ ) {
-			auto it = mConsoleScenes.find(scene_);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, scene_);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->loadUi(name_, tick_);
+		if ( EuiScene::mMain == scene_ ) {
+			mUiScene->loadUi(name_, tick_);
+		} else if ( EuiScene::mGame == scene_ ) {
+			mGameScene->loadUi(name_, tick_);
 		} else {
-			mConsoleScene->loadUi(name_, tick_);
+			mExistScene->loadUi(name_, tick_);
 		}
 	}
 	
@@ -96,16 +82,12 @@ namespace cc {
 	{
 		const char * name_ = nName.getName();
 		int8_t scene_ = nName.getScene();
-		if ( EuiScene::mGame != scene_ ) {
-			auto it = mConsoleScenes.find(scene_);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, scene_);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->noticeUi(name_, nOrderValue);
+		if ( EuiScene::mMain == scene_ ) {
+			mUiScene->noticeUi(name_, nOrderValue);
+		} else if ( EuiScene::mGame == scene_ ) {
+			mGameScene->noticeUi(name_, nOrderValue);
 		} else {
-			mConsoleScene->noticeUi(name_, nOrderValue);
+			mExistScene->noticeUi(name_, nOrderValue);
 		}
 	}
 	
@@ -113,94 +95,81 @@ namespace cc {
 	{
 		const char * name_ = nName.getName();
 		int8_t scene_ = nName.getScene();
-		if ( EuiScene::mGame != scene_ ) {
-			auto it = mConsoleScenes.find(scene_);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, scene_);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->closeUi(name_);
+		if ( EuiScene::mMain == scene_ ) {
+			mUiScene->closeUi(name_);
+		} else if ( EuiScene::mGame == scene_ ) {
+			mGameScene->closeUi(name_);
 		} else {
-			mConsoleScene->closeUi(name_);
+			mExistScene->closeUi(name_);
 		}
 	}
 	
 	void ConsoleEngine::pushCommandArgs(CommandArgsPtr& nCommandArgs)
 	{
-		if ( EuiScene::mGame != mCurrentScene ) {
-			auto it = mConsoleScenes.find(mCurrentScene);
-			if ( it == mConsoleScenes.end() ) {
-				LOGE("[%s]%d", __METHOD__, mCurrentScene);
-				return;
-			}
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->pushCommandArgs(nCommandArgs);
+		if ( EuiScene::mMain == mCurrent ) {
+			mUiScene->pushCommandArgs(nCommandArgs);
+		} else if ( EuiScene::mGame == mCurrent ) {
+			mGameScene->pushCommandArgs(nCommandArgs);
 		} else {
-			mConsoleScene->pushCommandArgs(nCommandArgs);
+			mExistScene->pushCommandArgs(nCommandArgs);
 		}
 	}
 	
 	void ConsoleEngine::runUpdateGame()
 	{
-		if ( EuiScene::mGame != mCurrentScene ) {
-			mConsoleScene->runUpdate(false);
+		if ( EuiScene::mGame != mCurrent ) {
+			mGameScene->runUpdate(false);
 		} else {
-			mConsoleScene->runUpdate(true);
+			mGameScene->runUpdate(true);
 		}
 	}
 	
 	void ConsoleEngine::runUpdateUi()
 	{
-		auto it = mConsoleScenes.begin();
-		for ( ; it != mConsoleScenes.end(); ++it ) {
-			ConsoleScenePtr& consoleScene_ = it->second;
-			int8_t scene_ = it->first;
-			if ( scene_ != mCurrentScene ) {
-				consoleScene_->runUpdate(false);
-			} else {
-				consoleScene_->runUpdate(true);
-			}
+		if ( EuiScene::mMain == mCurrent ) {
+			mUiScene->runUpdate(true);
+		} else if ( EuiScene::mGame == mCurrent ) {
+			mUiScene->runUpdate(false);
+		} else {
+			mUiScene->runUpdate(false);
+			mExistScene->runUpdate(true);
 		}
-	}
-	
-	bool ConsoleEngine::isStop()
-	{
-		return mStop;
 	}
 	
 	void ConsoleEngine::runClose()
 	{
-		auto it = mConsoleScenes.begin();
-		for ( ; it != mConsoleScenes.end(); ++it ) {
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->runClose();
+		if (nullptr != mUiScene) {
+			mUiScene->runClose();
 		}
-		if (nullptr != mConsoleScene) {
-			mConsoleScene->runClose();
+		if (nullptr != mGameScene) {
+			mGameScene->runClose();
 		}
-		mCurrentScene = EuiScene::mMain;
-		mLastScene = EuiScene::mMain;
+		if (nullptr != mExistScene) {
+			mExistScene->runClose();
+		}
+		mCurrent = EuiScene::mMain;
+		mLast0 = EuiScene::mMain;
+		mLast1 = EuiScene::mMain;
 	}
 	
 	void ConsoleEngine::runClear()
 	{
-		auto it = mConsoleScenes.begin();
-		for ( ; it != mConsoleScenes.end(); ++it ) {
-			ConsoleScenePtr& consoleScene_ = it->second;
-			consoleScene_->runClear();
+		if (nullptr != mUiScene) {
+			mUiScene->runClear();
 		}
-		mConsoleScenes.clear();
-		
-		if (nullptr != mConsoleScene) {
-			mConsoleScene->runClear();
+		mUiScene.reset();
+		if (nullptr != mGameScene) {
+			mGameScene->runClear();
 		}
-		mConsoleScene.reset();
+		mGameScene.reset();
+		if (nullptr != mExistScene) {
+			mExistScene->runClear();
+		}
+		mExistScene.reset();
 		
-		mCurrentScene = EuiScene::mMain;
-		mLastScene = EuiScene::mMain;
-		
-		mStop = true;
+		mCurrent = EuiScene::mMain;
+		mLast0 = EuiScene::mMain;
+		mLast1 = EuiScene::mMain;
 	}
 	
 	void ConsoleEngine::runPreinit()
@@ -211,8 +180,6 @@ namespace cc {
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tRunLuaApi.connect(bind(&ConsoleEngine::runLuaApi, this));
 		lifeCycle_.m_tIniting.connect(bind(&ConsoleEngine::runInit, this));
-		lifeCycle_.m_tNoticeStop.connect(bind(&ConsoleEngine::noticeStop, this));
-		lifeCycle_.m_tNoticeStart.connect(bind(&ConsoleEngine::noticeStart, this));
 		lifeCycle_.m_tCloseBegin.connect(bind(&ConsoleEngine::runClose, this));
 		lifeCycle_.m_tClearBegin.connect(bind(&ConsoleEngine::runClear, this));
 	}
@@ -224,13 +191,9 @@ namespace cc {
 		UiManager& uiManager_ = UiManager::instance();
 		uiManager_.registerEngine(EuiEngine::mConsole, this);
 		
-		ConsoleScenePtr mainScene_(new ConsoleScene());
-		mConsoleScenes[EuiScene::mMain] = mainScene_;
-		ConsoleScenePtr popScene_(new ConsoleScene());
-		mConsoleScenes[EuiScene::mPop] = popScene_;
-		ConsoleScenePtr existScene_(new ConsoleScene());
-		mConsoleScenes[EuiScene::mExist] = existScene_;
-		mConsoleScene.reset(new ConsoleScene());
+		mUiScene.reset(new ConsoleScene());
+		mGameScene.reset(new ConsoleScene());
+		mExistScene.reset(new ConsoleScene());
 		
 		ConsoleUiUpdateClone consoleUiUpdateClone_;
 		ConsoleGameUpdateClone consoleGameUpdateClone_;
@@ -240,23 +203,11 @@ namespace cc {
 		handleEngine_.addContext(&consoleUiUpdateClone_);
 		handleEngine_.addContext(&consoleGameUpdateClone_);
 		handleEngine_.addContext(&consoleInputClone_);
-		
-		mStop = false;
 	}
 	
 	void ConsoleEngine::runLuaApi()
 	{
 		ConsoleUi::runLuaApi();
-	}
-	
-	void ConsoleEngine::noticeStop()
-	{
-		mStop = true;
-	}
-	
-	void ConsoleEngine::noticeStart()
-	{
-		mStop = false;
 	}
 	
 	ConsoleEngine& ConsoleEngine::instance()

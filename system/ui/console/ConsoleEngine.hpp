@@ -23,13 +23,9 @@ namespace cc {
 		void runUpdateGame();
 		void runUpdateUi();
 		
-		bool isStop();
-		
 		void runPreinit();
 		void runLuaApi();
 		void runInit();
-		void noticeStop();
-		void noticeStart();
 		
 		void runClose();
 		void runClear();
@@ -40,11 +36,13 @@ namespace cc {
 		~ConsoleEngine();
 		
 	private:
-		map<int8_t, ConsoleScenePtr> mConsoleScenes;
-		ConsoleScenePtr mConsoleScene;
-		atomic<int8_t> mCurrentScene;
-		atomic<int8_t> mLastScene;
-		atomic<bool> mStop;
+		ConsoleScenePtr mUiScene;
+		ConsoleScenePtr mGameScene;
+		ConsoleScenePtr mExistScene;
+		
+		atomic<int8_t> mCurrent;
+		atomic<int8_t> mLast0;
+		atomic<int8_t> mLast1;
 		
 		static ConsoleEngine mConsoleEngine;
 	};
