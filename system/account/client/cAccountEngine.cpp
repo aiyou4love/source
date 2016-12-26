@@ -21,10 +21,13 @@ namespace cc {
 			nName, nPassword, operatorName_, versionNo_, nType) ) {
 			return 0;
 		}
+		int64_t accountId_ = loginResult_.getAccountId();
+		if (0 == accountId_) {
+			return 2;
+		}
 		ServerItemPtr& serverItem_ = loginResult_.getServerItem();
 		int32_t serverId_ = serverItem_->getServerId();
 		RoleItemPtr& roleItem_ = loginResult_.getRoleItem();
-		int64_t accountId_ = loginResult_.getAccountId();
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
 		account_->setRoleItem(roleItem_);
 		account_->setServerId(serverId_);
@@ -93,7 +96,7 @@ namespace cc {
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
 		RoleItemPtr& roleItem_ = account_->getRoleItem();
-		if (!roleItem_) {
+		if (nullptr != roleItem_) {
 			return roleItem_->getRoleId();
 		}
 		return 0;
