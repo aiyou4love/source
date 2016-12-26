@@ -16,6 +16,7 @@ namespace cc {
 		void runLoginReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue);
 		void runEnterReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue);
 		void runCreateReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue);
+		void runServerListReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue);
 		
 		static cAccountAspect& instance();
 		

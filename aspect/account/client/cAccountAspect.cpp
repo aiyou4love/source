@@ -61,6 +61,16 @@ namespace cc {
 		static const int16_t mEnd = 79;
 	};
 	
+	struct EserverListUiReward
+	{
+		static const int16_t mBegin = 80;
+		
+		static const int16_t mAccountId = 81;
+		static const int16_t mServerId = 82;
+		
+		static const int16_t mEnd = 99;
+	};
+	
 	bool cAccountAspect::runLoginCondition(AccountConditionPtr& nAccountCondition, EntityPtr& nEntity, ValuePtr& nValue)
 	{
 		int16_t type_ = nAccountCondition->getType();
@@ -172,6 +182,24 @@ namespace cc {
 		}
 	}
 	
+	void cAccountAspect::runServerListReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue)
+	{
+		vector<int8_t>& params_ = nAccountReward->getParams();
+		int16_t type_ = nAccountReward->getType();
+		
+		if ( type_ == EserverListUiReward::mAccountId ) {
+			cAccountEngine& accountEngine_ = cAccountEngine::instance();
+			int64_t accountId_ = accountEngine_.getAccountId();
+			nValue->pushInt64(accountId_);
+		} else if ( type_ == EserverListUiReward::mServerId ) {
+			int32_t serverId_ = nValue->getInt32(params_[0]);
+			cAccountEngine& accountEngine_ = cAccountEngine::instance();
+			accountEngine_.setServerId(serverId_);
+		} else {
+			LOGE("[%s]type:%d", __METHOD__, type_);
+		}
+	}
+	
 	bool cAccountAspect::runCondition(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue)
 	{
 		auto it = mAccountConditions.find(nDoingId);
@@ -211,6 +239,8 @@ namespace cc {
 			return this->runEnterReward(acountReward_, nEntity, nValue);
 		} else if ( (type_ >= EcreateUiReward::mBegin) && (type_ <= EcreateUiReward::mEnd) ) {
 			return this->runCreateReward(acountReward_, nEntity, nValue);
+		} else if ( (type_ >= EserverListUiReward::mBegin) && (type_ <= EserverListUiReward::mEnd) ) {
+			return this->runServerListReward(acountReward_, nEntity, nValue);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}

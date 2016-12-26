@@ -99,6 +99,13 @@ namespace cc {
 		return 0;
 	}
 	
+	void cAccountEngine::setServerId(int32_t nServerId)
+	{
+		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
+		account_->setServerId(nServerId);
+		account_->runSave();
+	}
+	
 	int32_t cAccountEngine::getServerId()
 	{
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);

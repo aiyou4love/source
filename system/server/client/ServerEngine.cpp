@@ -23,7 +23,7 @@ namespace cc {
 	string ServerEngine::getServerInfos()
 	{
 		LuaWriter luaWriter_;
-		luaWriter_.luaMapStreamPtrs<map<int32_t, ServerItemPtr>, ServerItemPtr>(mServerItems, "serverItems");
+		luaWriter_.luaMapStreamPtrs<map<int32_t, ServerItemPtr>, ServerItemPtr>(mServerItems, "mServerList");
 		return luaWriter_.getLuaValue();
 	}
 	

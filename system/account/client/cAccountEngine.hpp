@@ -13,6 +13,7 @@ namespace cc {
 		int8_t isRegister(const char * nName);
 		void runCancel();
 		int32_t getRoleId();
+		void setServerId(int32_t nServerId);
 		int32_t getServerId();
 		
 		int8_t roleCreate(const char * nRoleName, int16_t nRoleRace);

@@ -9,7 +9,7 @@ namespace cc {
 		cServerTime& serverTime_ = cServerTime::instance();
 		int64_t nowTime_ = serverTime_.getServerTime();
 		int64_t seconds_ = nowTime_ - mUpdateTime;
-		if (seconds_ < 43200) {
+		if ( (mUpdateTime > 0) && (seconds_ < 43200) ) {
 			return 1;
 		}
 		
