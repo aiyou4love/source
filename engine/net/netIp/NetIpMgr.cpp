@@ -60,10 +60,17 @@ namespace cc {
 		return nullptr;
 	}
 	
+	void NetIpMgr::pushNetIp(NetIpPtr& nNetIp)
+	{
+		mNetIps[nNetIp->getKey()] = nNetIp;
+	}
+	
 	void NetIpMgr::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tInitBegin.connect(bind(&NetIpMgr::runInit, this));
+		lifeCycle_.m_tLoadBegin.connect(bind(&NetIpMgr::runLoad, this));
+		lifeCycle_.m_tSaveBegin.connect(bind(&NetIpMgr::runSave, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&NetIpMgr::runClear, this));
 	}
 	
@@ -77,7 +84,8 @@ namespace cc {
 		int16_t versionNo_ = workDirectory_.getVersionNo();
 		int16_t classifyId_ = workDirectory_.getClassifyId();
 		
-		if ( !urlMgr_.runStream(this, mNetUrl, netName(), operatorName_, versionNo_, classifyId_) ) {
+		if ( !urlMgr_.runStream(this, mNetUrl, netName(),
+			operatorName_, versionNo_, classifyId_) ) {
 			LOGE("[%s]%s", __METHOD__, mNetUrl);
 		}
 	}
@@ -99,9 +107,31 @@ namespace cc {
 		}
 	}
 	
+	void NetIpMgr::runLoad()
+	{
+		UserDefault& userDefault_ = UserDefault::instance();
+		userDefault_.runReader<NetIpMgr>(this, saveUrl(), saveName());
+	}
+	
+	void NetIpMgr::runSave()
+	{
+		UserDefault& userDefault_ = UserDefault::instance();
+		userDefault_.runSave<NetIpMgr>(this, saveUrl(), saveName());
+	}
+	
 	void NetIpMgr::runClear()
 	{
 		mNetIps.clear();
+	}
+	
+	const char * NetIpMgr::saveName()
+	{
+		return "netSave";
+	}
+	
+	const char * NetIpMgr::saveUrl()
+	{
+		return "netSave.json";
 	}
 	
 	const char * NetIpMgr::netName()

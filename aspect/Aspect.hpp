@@ -23,6 +23,12 @@
 #include "account/client/cAccountAspect.hpp"
 #include "account/social/cAccountAspect.hpp"
 
+#include "net/net/NetReward.hpp"
+#include "net/net/NetAspect.hpp"
+#include "net/agent/cNetAspect.hpp"
+#include "net/client/cAgentResult.hpp"
+#include "net/client/cNetAspect.hpp"
+
 #include "role/role/RoleCondition.hpp"
 #include "role/role/RoleReward.hpp"
 #include "role/role/RoleAspect.hpp"

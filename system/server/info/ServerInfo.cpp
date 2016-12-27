@@ -7,6 +7,11 @@ namespace cc {
 		return mServerStart;
 	}
 	
+	int16_t ServerInfo::getClassify()
+	{
+		return mClassify;
+	}
+	
 	int32_t ServerInfo::getServerNo()
 	{
 		return mServerNo;
@@ -14,7 +19,7 @@ namespace cc {
 	
 	bool ServerInfo::isDefault()
 	{
-		return ( (0 == mServerNo) || (0 == mServerStart) );
+		return ( (0 == mServerNo) || (0 == mServerStart) || (0 == mClassify) );
 	}
 	
 	int32_t ServerInfo::getKey()
@@ -25,6 +30,7 @@ namespace cc {
 	ServerInfo::ServerInfo()
 		: mServerStart (0)
 		, mServerNo (0)
+		, mClassify (0)
 	{
 	}
 	
@@ -32,6 +38,7 @@ namespace cc {
 	{
 		mServerStart = 0;
 		mServerNo = 0;
+		mClassify = 0;
 	}
 	
 }

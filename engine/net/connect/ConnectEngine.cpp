@@ -44,7 +44,7 @@ namespace cc {
 		
 		auto it0 = mConnectInfos.find(appType_);
 		if ( it0 == mConnectInfos.end() ) {
-			LOGE("[%s]%s", __METHOD__, appType_);
+			LOGE("[%s]%d", __METHOD__, appType_);
 			return;
 		}
 		ConnectInfoPtr& connectInfo_ = it0->second;

@@ -67,6 +67,7 @@ namespace cc {
 		
 		static const int16_t mAccountId = 81;
 		static const int16_t mServerId = 82;
+		static const int16_t mGetServerId = 83;
 		
 		static const int16_t mEnd = 99;
 	};
@@ -195,6 +196,10 @@ namespace cc {
 			int32_t serverId_ = nValue->getInt32(params_[0]);
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
 			accountEngine_.setServerId(serverId_);
+		}  else if ( type_ == EserverListUiReward::mGetServerId ) {
+			cAccountEngine& accountEngine_ = cAccountEngine::instance();
+			int32_t serverId_ = accountEngine_.getServerId();
+			nValue->pushInt32(serverId_);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}

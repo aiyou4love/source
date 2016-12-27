@@ -8,12 +8,14 @@ namespace cc {
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{
-			nSerialize->runNumber(mServerStart, "mServerStart");
 			nSerialize->runNumber(mServerNo, "mServerNo");
+			nSerialize->runNumber(mServerStart, "mServerStart");
+			nSerialize->runNumber(mClassify, "mClassify");
 		}
 		
 		int64_t getServerStart();
-        int32_t getServerNo();
+        int16_t getClassify();
+		int32_t getServerNo();
 		
 		bool isDefault();
 		int32_t getKey();
@@ -24,6 +26,7 @@ namespace cc {
 	private:
         int64_t mServerStart;
         int32_t mServerNo;
+        int16_t mClassify;
 	};
 	typedef SPTR<ServerInfo> ServerInfoPtr;
 	

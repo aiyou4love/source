@@ -5,9 +5,13 @@ namespace cc {
 	class NetIp : noncopyable
 	{
 	public:
+		void setPort(const char * nPort);
 		const char * getPort();
+		void setIp(const char * nIp);
 		const char * getIp();
+		void setAppType(int16_t nAppType);
 		int16_t getAppType();
+		void setAppNo(int32_t nAppNo);
 		int32_t getAppNo();
 		
 		template <class T>

@@ -8,6 +8,7 @@ namespace cc {
 	public:
 		void pushServerItem(ServerItemPtr& nServerItem);
 		const char * getServerName(int32_t nServerId);
+		void pushServerInfo(ServerInfoPtr& nServerInfo);
 		string getServerInfos();
 		
 		template<class T>

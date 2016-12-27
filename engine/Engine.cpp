@@ -56,7 +56,8 @@ void engineInit()
 	UrlMgr& urlMgr_ = UrlMgr::instance();
 	urlMgr_.runPreinit();
 	
-	NetIpMgr::instance();
+	NetIpMgr& netIpMgr_ = NetIpMgr::instance();
+	netIpMgr_.runPreinit();
 	
 	LOGI("[%s]11", __METHOD__);
 	

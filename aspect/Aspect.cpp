@@ -38,4 +38,7 @@ void aspectInit()
 	
 	LOGI("[%s]8", __METHOD__);
 	
+	cNetAspect& netAspect_ = cNetAspect::instance();
+	netAspect_.runPreinit();
+	
 }

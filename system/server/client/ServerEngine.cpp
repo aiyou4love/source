@@ -9,6 +9,12 @@ namespace cc {
 		mServerItems[serverId_] = nServerItem;
 	}
 	
+	void ServerEngine::pushServerInfo(ServerInfoPtr& nServerInfo)
+	{
+		int32_t serverNo_ = nServerInfo->getServerNo();
+		mServerInfos[serverNo_] = nServerInfo;
+	}
+	
 	const char * ServerEngine::getServerName(int32_t nServerId)
 	{
 		auto it = mServerItems.find(nServerId);

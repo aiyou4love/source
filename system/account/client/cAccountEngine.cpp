@@ -134,8 +134,9 @@ namespace cc {
 		int32_t roleId_ = roleItem0_->getRoleId();
 		
 		cRoleResult roleResult_;
-		if ( !urlMgr_.runStream(roleResult_, mRoleCreate, roleResult_.streamName(), accountName_, password_, accountType_,
-			operatorName_, versionNo_, accountId_, serverId_, nRoleName, nRoleRace, (roleId_ > 0)) ) {
+		if ( !urlMgr_.runStream(roleResult_, mRoleCreate, roleResult_.streamName(),
+			accountName_, password_, accountType_, operatorName_, versionNo_,
+			accountId_, serverId_, nRoleName, nRoleRace, (roleId_ > 0)) ) {
 			return 0;
 		}
 		int32_t errorCode_ = roleResult_.getErrorCode();
