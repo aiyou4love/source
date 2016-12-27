@@ -1,4 +1,4 @@
-#include "../../System.hpp"
+#include "../../Dispatch.hpp"
 
 namespace cc {
 	
@@ -154,6 +154,20 @@ namespace cc {
 		return mAccount;
 	}
 	
+	void cAccountEngine::pushValue(ValuePtr& nValue)
+	{
+		mAccount->pushValue(nValue);
+	}
+	
+	void cAccountEngine::runUpdate()
+	{
+		SelectEngine& selectEngine_ = SelectEngine::instance();
+		
+		ValuePtr value_ = mAccount->popValue();
+		if (!value_) return;
+		selectEngine_.runIfSelect(mAccount, value_);
+	}
+	
 	void cAccountEngine::runLuaApi()
 	{
 		LuaEngine& luaEngine_ = LuaEngine::instance();
@@ -168,6 +182,14 @@ namespace cc {
 		account_->runLoad();
 	}
 	
+	void cAccountEngine::runInit()
+	{
+		AccountUpdateClone accountUpdateClone_;
+		
+		HandleEngine& handleEngine_ = HandleEngine::instance();
+		handleEngine_.addContext(&accountUpdateClone_);
+	}
+	
 	void cAccountEngine::runClear()
 	{
 		mAccount.reset();
@@ -175,10 +197,14 @@ namespace cc {
 	
 	void cAccountEngine::runPreinit()
 	{
+		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
+		dispatchEngine_.registerDispatch(EdispatchId::mAccountId, this);
+		
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		
 		lifeCycle_.m_tRunLuaApi.connect(bind(&cAccountEngine::runLuaApi, this));
 		lifeCycle_.m_tLoadBegin.connect(bind(&cAccountEngine::runLoad, this));
+		lifeCycle_.m_tIniting.connect(bind(&cAccountEngine::runInit, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&cAccountEngine::runClear, this));
 		
 		mAccount.reset(new cAccount());

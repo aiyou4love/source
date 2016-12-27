@@ -12,4 +12,7 @@ void dispatchInit()
 	applicationEngine_.runPreinit();
 	
 	LOGI("[%s]2", __METHOD__);
+	
+	cAccountEngine& accountEngine_ = cAccountEngine::instance();
+	accountEngine_.runPreinit();
 }

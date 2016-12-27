@@ -18,11 +18,15 @@ namespace cc {
 		
 		int8_t roleCreate(const char * nRoleName, int16_t nRoleRace);
 		
+		void pushValue(ValuePtr& nValue);
+		void runUpdate();
+		
 		EntityPtr& getAccount();
 		
 		void runPreinit();
 		void runLuaApi();
 		void runLoad();
+		void runInit();
 		void runClear();
 		
 		static cAccountEngine& instance();
