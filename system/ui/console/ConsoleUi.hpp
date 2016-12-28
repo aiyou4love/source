@@ -36,6 +36,8 @@ namespace cc {
 		void printText(const char * nKey);
 		void coutText(const char * nText);
 		void coutInt(int32_t nText);
+		void hideItem(int16_t nItemId);
+		void showItem(int16_t nItemId);
 		
 	public:
 		template<class T>
@@ -66,6 +68,8 @@ namespace cc {
 	private:
 		map<int16_t, ConsoleItemPtr> mConsoleItems;
 		map<int32_t, StringTablePtr> mStringTables;
+		
+		set<int16_t> mHides;
 		
 		LuaThreadPtr mLuaThread;
 		set<string> mOnEvents;

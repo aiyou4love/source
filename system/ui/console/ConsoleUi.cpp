@@ -50,10 +50,15 @@ namespace cc {
 		
 		auto it = mConsoleItems.begin();
 		for ( ; it != mConsoleItems.end(); ++it ) {
+			int16_t itemId_ = it->first;
+			auto it1 = mHides.find(itemId_);
+			if ( it1 != mHides.end() ) {
+				continue;
+			}
 			ConsoleItemPtr& consoleItem_ = it->second;
 			const char * key_ = consoleItem_->getName();
 			const char * value_ = this->getText(key_);
-			cout << it->first;
+			cout << itemId_;
 			cout << ":) ";
 			cout << value_ << endl;
 		}
@@ -117,6 +122,16 @@ namespace cc {
 		cout << nText;
 	}
 	
+	void ConsoleUi::hideItem(int16_t nItemId)
+	{
+		mHides.insert(nItemId);
+	}
+	
+	void ConsoleUi::showItem(int16_t nItemId)
+	{
+		mHides.erase(nItemId);
+	}
+	
 	void ConsoleUi::runTick()
 	{
 		if (2 <= mTick) {
@@ -146,6 +161,8 @@ namespace cc {
 		mStringTables.clear();
 		
 		mOnEvents.clear();
+		
+		mHides.clear();
 		
 		mName = "";
 		mTick = 0;
@@ -244,6 +261,8 @@ namespace cc {
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::printText, "printText");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutText, "coutText");
 		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::coutInt, "coutInt");
+		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::hideItem, "hideItem");
+		luaEngine_.runMethod<ConsoleUi>(&ConsoleUi::showItem, "showItem");
 	}
 	
 	ConsoleUi::ConsoleUi()
@@ -254,6 +273,7 @@ namespace cc {
 		mConsoleItems.clear();
 		mStringTables.clear();
 		mOnEvents.clear();
+		mHides.clear();
 	}
 	
 	ConsoleUi::~ConsoleUi()
@@ -261,8 +281,10 @@ namespace cc {
 		mConsoleItems.clear();
 		mStringTables.clear();
 		mOnEvents.clear();
+		mHides.clear();
 		
 		mLuaThread.reset();
+		
 		mName = "";
 		mTick = 0;
 	}
