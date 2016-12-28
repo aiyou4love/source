@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../dispatch/Dispatch.hpp"
+#include "../system/System.hpp"
 
 #include "plugin/Plugin.hpp"
 

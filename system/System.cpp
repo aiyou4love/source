@@ -49,4 +49,12 @@ void systemInit()
 	
 	LOGI("[%s]8", __METHOD__);
 	
+	ApplicationEngine& applicationEngine_ = ApplicationEngine::instance();
+	applicationEngine_.runPreinit();
+	
+	LOGI("[%s]9", __METHOD__);
+	
+	cAccountEngine& accountEngine_ = cAccountEngine::instance();
+	accountEngine_.runPreinit();
+	
 }

@@ -4,7 +4,7 @@ using namespace cc;
 
 void aspectInit()
 {
-	dispatchInit();
+	systemInit();
 	
 	LOGI("[%s]1", __METHOD__);
 	
