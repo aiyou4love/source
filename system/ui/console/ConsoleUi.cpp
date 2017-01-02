@@ -72,6 +72,10 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, itemIndex_);
 			return;
 		}
+		auto it1 = mHides.find(itemIndex_);
+		if (it1 != mHides.end()) {
+			return;
+		}
 		ConsoleItemPtr& consoleItem_ = it->second;
 		const char * method_ = consoleItem_->getMethod();
 		int8_t type_ = consoleItem_->getType();
