@@ -2,9 +2,13 @@
 
 namespace cc {
 	
-	void Account::setRoleItem(RoleItemPtr& nRoleItem)
+	void Account::setRoleItem(RoleItemPtr * nRoleItem)
 	{
-		mRoleItem = nRoleItem;
+		if (nullptr == nRoleItem) {
+			mRoleItem.reset();
+			return;
+		}
+		mRoleItem = (*nRoleItem);
 	}
 	
 	RoleItemPtr& Account::getRoleItem()

@@ -3,6 +3,19 @@
 namespace cc {
 	
 #ifdef __CLIENT__
+	RoleItemPtr * RoleEngine::getRoleItem(int32_t nServerId)
+	{
+		auto it = mRoleItems.begin();
+		for ( ; it != mRoleItems.end(); ++it ) {
+			RoleItemPtr& roleItem_ = it->second;
+			int32_t serverId_ = roleItem_->getServerId();
+			if (serverId_ == nServerId) {
+				return (&roleItem_);
+			}
+		}
+		return nullptr;
+	}
+	
 	const char * mRoleListUrl = "roleList";
 	int8_t RoleEngine::runRoleList(int64_t nAccountId)
 	{

@@ -33,10 +33,9 @@ namespace cc {
 		
 		auto it = mOnEvents.find(nName);
 		if ( it == mOnEvents.end() ) {
-			LOGE("[%s]%s", __METHOD__, nName);
 			return;
 		}
-		mLuaThread->runCall<void, IndexValue *, ValuePtr&>(nName, &indexValue_, value_);
+		mLuaThread->runCall<void, ValuePtr&, IndexValue *>(nName, value_, &indexValue_);
 	}
 	
 	void ConsoleUi::runText()

@@ -19,14 +19,14 @@ namespace cc {
 		
 		try {
 			boost::asio::async_connect((*mSession)->getSocket(), iterator_,
-			boost::bind(&Connector::handleConnect, this, boost::asio::placeholders::error));
+			boost::bind(&Connector::handleConnect, SED_THIS(), boost::asio::placeholders::error));
 			
 			mConnectTimer.expires_from_now(boost::posix_time::seconds(Connector::connect_timeout));
 			mConnectTimer.async_wait(boost::bind(&Connector::handleConnectTimeout, 
-				this, boost::asio::placeholders::error));
+				SED_THIS(), boost::asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
-			this->runClose();
+			mConnectTimer.cancel();
 			this->runSelectId(mConnectErrorId);
 		}
 	}
@@ -34,9 +34,7 @@ namespace cc {
 	void Connector::handleConnectTimeout(const boost::system::error_code& nError)
 	{
 		if (nError) {
-			LOGE("[%s]%s", __METHOD__, nError.message().c_str());
 			this->runClose();
-			this->runSelectId(mConnectErrorId);
 			return;
 		}
 		if (mConnectTimer.expires_at() <= asio::deadline_timer::traits_type::now()) {
@@ -50,7 +48,7 @@ namespace cc {
 	{
 		if (nError) {
 			LOGE("[%s]%s", __METHOD__, nError.message().c_str());
-			this->runClose();
+			mConnectTimer.cancel();
 			this->runSelectId(mConnectErrorId);
 			return;
 		}
@@ -107,7 +105,6 @@ namespace cc {
 	
 	Connector::~Connector()
 	{
-		mConnectTimer.cancel();
 		mSession = nullptr;
 		mDispatch = nullptr;
 		mConnectErrorId = 0;

@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class Connector : noncopyable
+	class Connector : public SPTR_THIS<Connector>, noncopyable
 	{
 	public:
 		void runConnect(const char * nIp, const char * nPort, ConnectInfoPtr& nConnectInfo);

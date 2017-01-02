@@ -6,6 +6,8 @@ namespace cc {
 	class RoleEngine : noncopyable
 	{
 	public:
+		RoleItemPtr * getRoleItem(int32_t nServerId);
+		
 		int8_t runRoleList(int64_t nAccountId);
 		string getRoleInfos();
 		

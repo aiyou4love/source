@@ -34,6 +34,5 @@ int main( int argc, char * argv[] )
 		LogEx& logEx_ = LogEx::instance();
 		logEx_.runClear();
 	}
-	cin.get();
 	return 0;
 }

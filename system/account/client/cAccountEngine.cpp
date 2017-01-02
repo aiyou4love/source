@@ -29,7 +29,7 @@ namespace cc {
 		int32_t serverId_ = serverItem_->getServerId();
 		RoleItemPtr& roleItem_ = loginResult_.getRoleItem();
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
-		account_->setRoleItem(roleItem_);
+		account_->setRoleItem(&roleItem_);
 		account_->setServerId(serverId_);
 		account_->setName(nName);
 		account_->setPassword(nPassword);
@@ -104,8 +104,12 @@ namespace cc {
 	
 	void cAccountEngine::setServerId(int32_t nServerId)
 	{
+		RoleEngine& roleEngine_ = RoleEngine::instance();
+		RoleItemPtr * roleItem_ = roleEngine_.getRoleItem(nServerId);
+		
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
 		account_->setServerId(nServerId);
+		
 		account_->runSave();
 	}
 	
@@ -144,7 +148,7 @@ namespace cc {
 			return 2;
 		}
 		RoleItemPtr& roleItem1_ = roleResult_.getRoleItem();
-		account_->setRoleItem(roleItem1_);
+		account_->setRoleItem(&roleItem1_);
 		account_->runSave();
 		return 1;
 	}

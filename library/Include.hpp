@@ -79,6 +79,7 @@ using namespace rapidxml;
 #define PTR_SCST std::static_pointer_cast
 #define PTR_DCST std::dynamic_pointer_cast
 #define SPTR_THIS std::enable_shared_from_this
+#define SED_THIS shared_from_this
 #define LKGUD std::lock_guard
 
 #define PACKETSIZE 8192

@@ -5,7 +5,7 @@ namespace cc {
 	class Account : public Entity
 	{
 	public:
-		void setRoleItem(RoleItemPtr& nRoleItem);
+		void setRoleItem(RoleItemPtr * nRoleItem);
 		RoleItemPtr& getRoleItem();
 		
 		void setPassword(const char * nPassword);
