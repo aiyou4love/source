@@ -156,20 +156,19 @@ namespace cc {
 		return mIsConsole;
 	}
 	
-	WorkDirectory& WorkDirectory::instance()
+	void WorkDirectory::initRootPath()
 	{
-		return mWorkDirectory;
-	}
-	
-	void WorkDirectory::runPreinit()
-	{
-#ifdef __WINDOW__
+	#ifdef __WINDOW__
 		TCHAR buf[MAX_PATH];
 		GetCurrentDirectory(MAX_PATH, buf);
 		basic_string<TCHAR> workingDirectory(buf);
 		string value_(workingDirectory.begin(), workingDirectory.end());
 		mRootPath = stringBackslant(value_);
-#endif
+	#endif
+	}
+	
+	void WorkDirectory::initPath()
+	{
 		mLogPath = mRootPath + "/log/";
 		mStoragePath = mRootPath + "/storage/";
 		mAssetPath = mRootPath + "/asset/";
@@ -182,6 +181,17 @@ namespace cc {
 		mUpdateTable = mUpdatePath + "table/";
 		mUiPath = mAssetPath + "ui/";
 		mUpdateUi = mUpdatePath + "ui/";
+	}
+	
+	WorkDirectory& WorkDirectory::instance()
+	{
+		return mWorkDirectory;
+	}
+	
+	void WorkDirectory::runPreinit()
+	{
+		this->initRootPath();
+		this->initPath();
 		
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tClearEnd.connect(bind(&WorkDirectory::runClear, this));

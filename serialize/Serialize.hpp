@@ -19,6 +19,8 @@
 #include "workDirectory/EappType.hpp"
 #include "workDirectory/WorkDirectory.hpp"
 
+#include "dump/Dump.hpp"
+
 #include "lifecycle/LifeCycle.hpp"
 
 #include "time/LocalTime.hpp"

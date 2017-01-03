@@ -32,6 +32,9 @@ namespace cc {
 		bool isLog();
 		bool isJson();
 		
+		void initRootPath();
+		void initPath();
+		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{

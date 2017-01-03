@@ -4,6 +4,11 @@ using namespace cc;
 
 void serializeInit()
 {
+#ifdef __WINDOW__
+	Dump& dump_ = Dump::instance();
+	dump_.runPreinit();
+#endif
+	
 	LifeCycle::instance();
 	
 	WorkDirectory& workDirectory_ = WorkDirectory::instance();

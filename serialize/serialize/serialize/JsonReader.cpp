@@ -82,6 +82,9 @@ namespace cc {
 	void JsonReader::runPush(const char * nName)
 	{
 		mValues.push(mValue);
+		if ( !mValue->HasMember(nName) ) {
+			return;
+		}
 		mValue = &((*mValue)[nName]);
 	}
 	
@@ -122,6 +125,9 @@ namespace cc {
 	void JsonReader::pushClass(const char * nName)
 	{
 		mValues.push(mValue);
+		if ( !mValue->HasMember(nName) ) {
+			return;
+		}
 		mValue = &((*mValue)[nName]);
 	}
 	

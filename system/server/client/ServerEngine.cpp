@@ -6,6 +6,9 @@ namespace cc {
 	void ServerEngine::pushServerItem(ServerItemPtr& nServerItem)
 	{
 		int32_t serverId_ = nServerItem->getServerId();
+		if (0 == serverId_) {
+			return;
+		}
 		mServerItems[serverId_] = nServerItem;
 	}
 	

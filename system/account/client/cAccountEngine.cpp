@@ -109,6 +109,7 @@ namespace cc {
 		
 		cAccountPtr account_ = PTR_DCST<cAccount>(mAccount);
 		account_->setServerId(nServerId);
+		account_->setRoleItem(roleItem_);
 		
 		account_->runSave();
 	}
