@@ -11,11 +11,13 @@ namespace cc {
 			nSerialize->runNumber(mServerId, "mServerId");
 			nSerialize->runNumber(mServerName, "mServerName");
 			nSerialize->runNumber(mServerNo, "mServerNo");
+			nSerialize->runNumber(mServerState, "mServerState");
 		}
 		
 		int32_t getServerId();
         const char * getServerName();
-        int16_t getServerNo();
+        int32_t getServerNo();
+        int16_t getServerState();
 		
 		bool isDefault();
 		int32_t getKey();
@@ -27,6 +29,7 @@ namespace cc {
 		int32_t mServerId;
         string mServerName;
         int32_t mServerNo;
+        int16_t mServerState;
 	};
 	typedef SPTR<ServerItem> ServerItemPtr;
 	

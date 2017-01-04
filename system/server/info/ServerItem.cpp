@@ -12,9 +12,14 @@ namespace cc {
 		return mServerName.c_str();
 	}
 	
-	int16_t ServerItem::getServerNo()
+	int32_t ServerItem::getServerNo()
 	{
 		return mServerNo;
+	}
+	
+	int16_t ServerItem::getServerState()
+	{
+		return mServerState;
 	}
 	
 	bool ServerItem::isDefault()
@@ -31,6 +36,7 @@ namespace cc {
 		: mServerId (0)
 		, mServerName ("")
 		, mServerNo (0)
+		, mServerState (0)
 	{
 	}
 	
@@ -39,6 +45,7 @@ namespace cc {
 		mServerId = 0;
 		mServerName = "";
 		mServerNo = 0;
+		mServerState = 0;
 	}
 	
 }

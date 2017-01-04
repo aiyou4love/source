@@ -20,7 +20,7 @@ namespace cc {
 	int8_t RoleEngine::runRoleList(int64_t nAccountId)
 	{
 		cServerTime& serverTime_ = cServerTime::instance();
-		int64_t nowTime_ = serverTime_.getServerTime();
+		int64_t nowTime_ = serverTime_.getLocalTime();
 		int64_t seconds_ = nowTime_ - mUpdateTime;
 		if ( (mUpdateTime > 0) && (seconds_ < 43200) ) {
 			return 1;

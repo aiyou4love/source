@@ -68,70 +68,26 @@ namespace cc {
 	void NetIpMgr::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
-		lifeCycle_.m_tInitBegin.connect(bind(&NetIpMgr::runInit, this));
 		lifeCycle_.m_tLoadBegin.connect(bind(&NetIpMgr::runLoad, this));
 		lifeCycle_.m_tSaveBegin.connect(bind(&NetIpMgr::runSave, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&NetIpMgr::runClear, this));
 	}
 	
-	const char * mNetUrl = "netList";
-	void NetIpMgr::initNet()
-	{
-		WorkDirectory& workDirectory_ = WorkDirectory::instance();
-		UrlMgr& urlMgr_ = UrlMgr::instance();
-		
-		const char * operatorName_ = workDirectory_.getOperatorName();
-		int16_t versionNo_ = workDirectory_.getVersionNo();
-		int16_t classifyId_ = workDirectory_.getClassifyId();
-		
-		if ( !urlMgr_.runStream(this, mNetUrl, netName(),
-			operatorName_, versionNo_, classifyId_) ) {
-			LOGE("[%s]%s", __METHOD__, mNetUrl);
-		}
-	}
-	
-	bool NetIpMgr::isInit()
-	{
-		WorkDirectory& workDirectory_ = WorkDirectory::instance();
-		int16_t appType_ = workDirectory_.getAppType();
-		if ( EappType::mGameClient == appType_ ) {
-			return false;
-		}
-		return true;
-	}
-	
-	void NetIpMgr::runInit()
-	{
-		if ( this->isInit() ) {
-			this->initNet();
-		}
-	}
-	
 	void NetIpMgr::runLoad()
 	{
 		UserDefault& userDefault_ = UserDefault::instance();
-		userDefault_.runReader<NetIpMgr>(this, saveUrl(), saveName());
+		userDefault_.runReader<NetIpMgr>(this, netUrl(), netName());
 	}
 	
 	void NetIpMgr::runSave()
 	{
 		UserDefault& userDefault_ = UserDefault::instance();
-		userDefault_.runSave<NetIpMgr>(this, saveUrl(), saveName());
+		userDefault_.runSave<NetIpMgr>(this, netUrl(), netName());
 	}
 	
 	void NetIpMgr::runClear()
 	{
 		mNetIps.clear();
-	}
-	
-	const char * NetIpMgr::saveName()
-	{
-		return "netSave";
-	}
-	
-	const char * NetIpMgr::saveUrl()
-	{
-		return "netSave.json";
 	}
 	
 	const char * NetIpMgr::netName()

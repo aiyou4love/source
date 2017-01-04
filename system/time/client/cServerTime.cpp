@@ -33,6 +33,11 @@ namespace cc {
 		return (mServerTime + timeSpan_.count());
 	}
 	
+	int64_t cServerTime::getLocalTime()
+	{
+		return (int64_t)(time(nullptr));
+	}
+	
 	int32_t cServerTime::getBootTime()
 	{
 		steady_clock::time_point nowPoint_ = steady_clock::now();

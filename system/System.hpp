@@ -55,6 +55,7 @@
 #include "server/info/ServerItem.hpp"
 #include "server/info/ServerInfo.hpp"
 #include "server/client/ServerEngine.hpp"
+#include "server/server/ServerEngine.hpp"
 
 #include "role/role/RoleItem.hpp"
 #include "role/client/cRoleListResult.hpp"
