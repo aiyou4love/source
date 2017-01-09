@@ -33,6 +33,15 @@ namespace cc {
 		static const int16_t mEnd = 14;
 	};
 	
+	struct EenterUiCondition
+	{
+		static const int16_t mBegin = 5;
+		
+		static const int16_t mHaveRole = 5;
+		
+		static const int16_t mEnd = 9;
+	};
+	
 	struct EenterUiReward
 	{
 		static const int16_t mBegin = 15;
@@ -57,7 +66,7 @@ namespace cc {
 		static const int16_t mBegin = 25;
 		
 		static const int16_t mGetAccountId = 25;
-		static const int16_t mServerId = 26;
+		static const int16_t mSetServerId = 26;
 		static const int16_t mGetServerId = 27;
 		
 		static const int16_t mEnd = 29;
@@ -75,6 +84,20 @@ namespace cc {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}
 		return true;
+	}
+	
+	bool cAccountAspect::runEnterCondition(AccountConditionPtr& nAccountCondition, EntityPtr& nEntity, ValuePtr& nValue)
+	{
+		int16_t type_ = nAccountCondition->getType();
+		int8_t param_ = nAccountCondition->getParam();
+		
+		if ( type_ == EenterUiCondition::mHaveRole ) {
+			cAccountEngine& accountEngine_ = cAccountEngine::instance();
+			return ( accountEngine_.getRoleId() > 0 );
+		} else {
+			LOGE("[%s]type:%d", __METHOD__, type_);
+		}
+		return false;
 	}
 	
 	void cAccountAspect::runRegisterReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue)
@@ -128,10 +151,10 @@ namespace cc {
 		vector<int8_t>& params_ = nAccountReward->getParams();
 		int16_t type_ = nAccountReward->getType();
 		
-		if ( type_ == EenterUiReward::mRunCancel ) {
+		if ( type_ == EenterUiReward::mAccountCancel ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
 			accountEngine_.runCancel();
-		} else if ( type_ == EenterUiReward::mEnterInfo ) {
+		} else if ( type_ == EenterUiReward::mEnterUiInfo ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
 			const char * accountName_ = accountEngine_.getAccountName();
 			int32_t roleId_ = accountEngine_.getRoleId();
@@ -165,11 +188,11 @@ namespace cc {
 		vector<int8_t>& params_ = nAccountReward->getParams();
 		int16_t type_ = nAccountReward->getType();
 		
-		if ( type_ == EserverListUiReward::mAccountId ) {
+		if ( type_ == EserverListUiReward::mGetAccountId ) {
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
 			int64_t accountId_ = accountEngine_.getAccountId();
 			nValue->pushInt64(accountId_);
-		} else if ( type_ == EserverListUiReward::mServerId ) {
+		} else if ( type_ == EserverListUiReward::mSetServerId ) {
 			int32_t serverId_ = nValue->getInt32(params_[0]);
 			cAccountEngine& accountEngine_ = cAccountEngine::instance();
 			accountEngine_.setServerId(serverId_);

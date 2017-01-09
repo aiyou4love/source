@@ -13,7 +13,7 @@ namespace cc {
 	void ServerEngine::pushServerInfo(ServerInfoPtr& nServerInfo)
 	{
 		int32_t serverNo_ = nServerInfo->getServerNo();
-		if (0 == serverId_) return;
+		if (0 == serverNo_) return;
 		mServerInfos[serverNo_] = nServerInfo;
 	}
 	

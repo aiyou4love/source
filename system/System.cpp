@@ -38,14 +38,14 @@ void systemInit()
 	taskEngine_.runPreinit();
 	
 	LOGI("[%s]7", __METHOD__);
-		
+	
 #ifdef __CLIENT__
 	ActivityEngine& activityEngine_ = ActivityEngine::instance();
 	activityEngine_.runPreinit();
-#endif
 	
 	cRoleList& roleList_ = cRoleList::instance();
 	roleList_.runPreinit();
+#endif
 	
 	cRoleEngine& roleEngine_ = cRoleEngine::instance();
 	roleEngine_.runPreinit();
@@ -57,7 +57,7 @@ void systemInit()
 	
 	LOGI("[%s]9", __METHOD__);
 	
-#if defined (__CLIENT__ || __AGENT__)
+#if ( (defined __CLIENT__) || (defined __AGENT__) )
 	cAccountEngine& accountEngine_ = cAccountEngine::instance();
 	accountEngine_.runPreinit();
 #endif

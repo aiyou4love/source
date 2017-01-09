@@ -7,6 +7,7 @@ namespace cc {
 	{
 	public:
 		RoleItemPtr * getRoleItem(int32_t nServerId);
+		void pushRoleItem(RoleItemPtr& nRoleItem);
 		
 		int8_t runRoleList(int64_t nAccountId);
 		string getListInfos();

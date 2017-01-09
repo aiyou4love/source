@@ -10,6 +10,7 @@ namespace cc {
 		void runReward(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue);
 		
 		bool runLoginCondition(AccountConditionPtr& nAccountCondition, EntityPtr& nEntity, ValuePtr& nValue);
+		bool runEnterCondition(AccountConditionPtr& nAccountCondition, EntityPtr& nEntity, ValuePtr& nValue);
 		
 		void runRegisterReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue);
 		void runLoginReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue);

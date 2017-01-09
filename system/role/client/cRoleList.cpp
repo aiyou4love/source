@@ -16,6 +16,13 @@ namespace cc {
 		return nullptr;
 	}
 	
+	void cRoleList::pushRoleItem(RoleItemPtr& nRoleItem)
+	{
+		int64_t id_ = nRoleItem->getId();
+		mRoleItems[id_] = nRoleItem;
+		this->runSave();
+	}
+	
 	const char * mRoleListUrl = "roleList";
 	int8_t cRoleList::runRoleList(int64_t nAccountId)
 	{

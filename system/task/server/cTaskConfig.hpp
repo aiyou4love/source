@@ -17,7 +17,7 @@ namespace cc {
 		cTaskConfig();
 		~cTaskConfig();
 	};
-	typedef SPTR<cTaskConfig> TaskConfigPtr;
+	typedef SPTR<cTaskConfig> cTaskConfigPtr;
 #endif
 	
 }

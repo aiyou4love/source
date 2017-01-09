@@ -13,6 +13,16 @@ namespace cc {
 		return mServerId;
 	}
 	
+	void cAccount::setRoleId(int32_t nRoleId)
+	{
+		mRoleId = nRoleId;
+	}
+	
+	int32_t cAccount::getRoleId()
+	{
+		return mRoleId;
+	}
+	
 	const char * cAccount::streamName()
 	{
 		return "account";
@@ -40,16 +50,19 @@ namespace cc {
 		Account::runClear();
 		
 		mServerId = 0;
+		mRoleId = 0;
 	}
 	
 	cAccount::cAccount()
 		: mServerId (0)
+		, mRoleId (0)
 	{
 	}
 	
 	cAccount::~cAccount()
 	{
 		mServerId = 0;
+		mRoleId = 0;
 	}
 #endif
 	

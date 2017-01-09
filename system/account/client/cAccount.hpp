@@ -9,6 +9,9 @@ namespace cc {
 		void setServerId(int32_t nServerId);
 		int32_t getServerId();
 		
+		void setRoleId(int32_t nRoleId);
+		int32_t getRoleId();
+		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
@@ -16,6 +19,7 @@ namespace cc {
 			nSerialize.runNumber(mName, "mName");
 			
 			nSerialize.runNumber(mServerId, "mServerId");
+			nSerialize.runNumber(mRoleId, "mRoleId");
 			
 			nSerialize.runNumber(mType, "mType");
 			nSerialize.runNumber(mId, "mId");
@@ -32,6 +36,7 @@ namespace cc {
 		
 	private:
 		int32_t mServerId;
+		int32_t mRoleId;
 	};
 	typedef SPTR<cAccount> cAccountPtr;
 #endif

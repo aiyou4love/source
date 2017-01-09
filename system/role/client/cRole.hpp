@@ -18,6 +18,8 @@ namespace cc {
 			nSerialize->runNumber(mRoleStep, "mRoleStep");
 		}
 		
+		void setRoleItem(RoleItemPtr& nRoleItem);
+		
 		int32_t getServerId();
         int32_t getRoleId();
         int16_t getRoleType();

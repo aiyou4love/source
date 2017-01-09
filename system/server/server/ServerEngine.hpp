@@ -9,12 +9,12 @@ namespace cc {
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
-			if ( 0 == strcmp(nName, netName()) ) {
+			if ( 0 == strcmp(nName, streamName()) ) {
 				nSerialize.template runMapStreamPtrs<int32_t, ServerInfoPtr>(mServerInfos, "mServerInfos", "mServerInfo");
 				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerList", "mServerItem");
 				
 				NetIpMgr& netIpMgr_ = NetIpMgr::instance();
-				netIpMgr_.headSerialize(nSerialize, netIpMgr_.streamName());
+				netIpMgr_.headSerialize(nSerialize, netIpMgr_.netName());
 				netIpMgr_.runSave();
 			} else if ( 0 == strcmp(saveName(), nName) ) {
 				nSerialize.template runMapStreamPtrs<int32_t, ServerInfoPtr>(mServerInfos, "mServerInfos", "mServerInfo");

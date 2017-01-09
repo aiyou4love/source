@@ -36,7 +36,7 @@
 #include "role/agent/cRoleAspect.hpp"
 #include "role/client/cRoleAspect.hpp"
 #include "role/game/cRoleAspect.hpp"
-#include "role/client/cRoleAspect.hpp"
+#include "role/social/cRoleAspect.hpp"
 
 #include "server/common/ServerCondition.hpp"
 #include "server/common/ServerReward.hpp"

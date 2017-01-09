@@ -18,8 +18,10 @@ void aspectInit()
 	
 	LOGI("[%s]3", __METHOD__);
 	
+#if ( (defined __CLIENT__) || (defined __AGENT__) )
 	cAccountAspect& accountAspect_ = cAccountAspect::instance();
 	accountAspect_.runPreinit();
+#endif
 	
 	LOGI("[%s]5", __METHOD__);
 	

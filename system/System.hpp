@@ -89,6 +89,8 @@
 #include "account/account/AccountEngine.hpp"
 #include "account/agent/cAccount.hpp"
 #include "account/agent/cAccountEngine.hpp"
+#include "account/client/cLoginResult.hpp"
+#include "account/client/cRoleResult.hpp"
 #include "account/client/cAccount.hpp"
 #include "account/client/cAccountEngine.hpp"
 

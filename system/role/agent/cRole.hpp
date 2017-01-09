@@ -5,7 +5,7 @@ namespace cc {
 #ifdef __AGENT__
 	class cRole : public Role
 	{
-	public
+	public:
 		int64_t getId();
 		
 		cRole();

@@ -26,7 +26,7 @@ namespace cc {
 		} else if (EroleReward::mGetRoleList == type_) {
 			cRoleList& roleList_ = cRoleList::instance();
 			int64_t accountId_ = nValue->getInt64(params_[0]);
-			int8_t errorCode_ = roleEngine_.runRoleList(accountId_);
+			int8_t errorCode_ = roleList_.runRoleList(accountId_);
 			nValue->pushInt8(errorCode_);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);

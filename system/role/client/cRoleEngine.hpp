@@ -6,6 +6,12 @@ namespace cc {
 	class cRoleEngine : public RoleEngine
 	{
 	public:
+		int32_t setServerId(int32_t nServerId);
+		
+		void runCancel();
+		
+		void setRoleItem(RoleItemPtr& nRoleItem);
+		
 		void pushValue(ValuePtr& nValue);
 		void runUpdate();
 		

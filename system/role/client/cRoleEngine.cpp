@@ -3,6 +3,38 @@
 namespace cc {
 	
 #ifdef __CLIENT__
+	int32_t cRoleEngine::setServerId(int32_t nServerId)
+	{
+		cRoleList& roleList_ = cRoleList::instance();
+		RoleItemPtr * roleItem_ = roleList_.getRoleItem(nServerId);
+		if (nullptr == roleItem_) {
+			return 0;
+		}
+		cRolePtr role_ = PTR_DCST<cRole>(mRole);
+		role_->setRoleItem(*roleItem_);
+		
+		return ((*roleItem_)->getServerId());
+	}
+	
+	void cRoleEngine::runCancel()
+	{
+		cRolePtr role_ = PTR_DCST<cRole>(mRole);
+		role_->runClear();
+		
+		cRoleList& roleList_ = cRoleList::instance();
+		roleList_.runClear();
+		roleList_.runSave();
+	}
+	
+	void cRoleEngine::setRoleItem(RoleItemPtr& nRoleItem)
+	{
+		cRolePtr role_ = PTR_DCST<cRole>(mRole);
+		role_->setRoleItem(nRoleItem);
+		
+		cRoleList& roleList_ = cRoleList::instance();
+		roleList_.pushRoleItem(nRoleItem);
+	}
+	
 	void cRoleEngine::pushValue(ValuePtr& nValue)
 	{
 		mRole->pushValue(nValue);
