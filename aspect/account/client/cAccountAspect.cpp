@@ -12,64 +12,55 @@ namespace cc {
 		static const int16_t mCheckPassword = 3;
 		static const int16_t mRunRegister = 4;
 		
-		static const int16_t mEnd = 19;
+		static const int16_t mEnd = 9;
 	};
 	
 	struct EloginUiCondition
 	{
-		static const int16_t mBegin = 20;
+		static const int16_t mBegin = 1;
 		
-		static const int16_t mIsLogin = 20;
+		static const int16_t mIsLogin = 1;
 		
-		static const int16_t mEnd = 39;
+		static const int16_t mEnd = 4;
 	};
 	
 	struct EloginUiReward
 	{
-		static const int16_t mBegin = 20;
+		static const int16_t mBegin = 10;
 		
-		static const int16_t mRunLogin = 20;
+		static const int16_t mRunLogin = 10;
 		
-		static const int16_t mEnd = 39;
-	};
-	
-	struct EenterUiCondition
-	{
-		static const int16_t mBegin = 40;
-		
-		static const int16_t mHaveRole = 40;
-		
-		static const int16_t mEnd = 59;
+		static const int16_t mEnd = 14;
 	};
 	
 	struct EenterUiReward
 	{
-		static const int16_t mBegin = 40;
+		static const int16_t mBegin = 15;
 		
-		static const int16_t mRunCancel = 40;
-		static const int16_t mEnterInfo = 41;
+		static const int16_t mAccountCancel = 15;
+		static const int16_t mEnterUiInfo = 16;
 		
-		static const int16_t mEnd = 59;
+		static const int16_t mEnd = 19;
 	};
 	
 	struct EcreateUiReward
 	{
-		static const int16_t mBegin = 60;
+		static const int16_t mBegin = 20;
 		
-		static const int16_t mRunCreate = 60;
+		static const int16_t mRunCreate = 20;
 		
-		static const int16_t mEnd = 79;
+		static const int16_t mEnd = 24;
 	};
 	
 	struct EserverListUiReward
 	{
-		static const int16_t mBegin = 80;
+		static const int16_t mBegin = 25;
 		
-		static const int16_t mAccountId = 81;
-		static const int16_t mServerId = 82;
-		static const int16_t mGetServerId = 83;
+		static const int16_t mGetAccountId = 25;
+		static const int16_t mServerId = 26;
+		static const int16_t mGetServerId = 27;
 		
-		static const int16_t mEnd = 99;
+		static const int16_t mEnd = 29;
 	};
 	
 	bool cAccountAspect::runLoginCondition(AccountConditionPtr& nAccountCondition, EntityPtr& nEntity, ValuePtr& nValue)
@@ -84,20 +75,6 @@ namespace cc {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}
 		return true;
-	}
-	
-	bool cAccountAspect::runEnterCondition(AccountConditionPtr& nAccountCondition, EntityPtr& nEntity, ValuePtr& nValue)
-	{
-		int16_t type_ = nAccountCondition->getType();
-		int8_t param_ = nAccountCondition->getParam();
-		
-		if ( type_ == EenterUiCondition::mHaveRole ) {
-			cAccountEngine& accountEngine_ = cAccountEngine::instance();
-			return ( accountEngine_.getRoleId() > 0 );
-		} else {
-			LOGE("[%s]type:%d", __METHOD__, type_);
-		}
-		return false;
 	}
 	
 	void cAccountAspect::runRegisterReward(AccountRewardPtr& nAccountReward, EntityPtr& nEntity, ValuePtr& nValue)
@@ -217,8 +194,6 @@ namespace cc {
 		
 		if ( (type_ >= EloginUiCondition::mBegin) && (type_ <= EloginUiCondition::mEnd) ) {
 			return this->runLoginCondition(accountCondition_, nEntity, nValue);
-		} else if ( (type_ >= EenterUiCondition::mBegin) && (type_ <= EenterUiCondition::mEnd) ) {
-			return this->runEnterCondition(accountCondition_, nEntity, nValue);
 		} else {
 			LOGE("[%s]type:%d", __METHOD__, type_);
 		}

@@ -10,7 +10,7 @@ namespace cc {
 		void headSerialize(T& nSerialize, const char * nName)
 		{
 			if ( 0 == strcmp(streamName(), nName) ) {
-				nSerialize.template runMapStreamPtrs<int16_t, ActivityConfigPtr>(mActivityConfigs, "activityConfigs", "activityConfigs");
+				nSerialize.template runMapStreamPtrs<int32_t, ActivityConfigPtr>(mActivityConfigs, "activityConfigs", "activityConfigs");
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}
@@ -28,7 +28,7 @@ namespace cc {
 		~ActivityEngine();
 		
 	private:
-		map<int16_t, ActivityConfigPtr> mActivityConfigs;
+		map<int32_t, ActivityConfigPtr> mActivityConfigs;
 		
 		static ActivityEngine mActivityEngine;
 	};

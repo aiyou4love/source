@@ -15,8 +15,6 @@ namespace cc {
 		
 	private:
 		static cAccountEngine mAccountEngine;
-		
-		map<int64_t, cAccountPtr> mAccounts;
 	};
 #endif
 	

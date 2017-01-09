@@ -5,8 +5,8 @@ namespace cc {
 #ifdef __CLIENT__
 	struct EserverReward
 	{
-		static const int16_t mGetInfo = 1;
-		static const int16_t mGetName = 2;
+		static const int16_t mServerListInfo = 1;
+		static const int16_t mGetServerName = 2;
 	};
 	
 	void cServerAspect::runReward(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue)
@@ -19,11 +19,11 @@ namespace cc {
 		ServerRewardPtr& serverReward_ = it->second;
 		vector<int8_t>& params_ = serverReward_->getParams();
 		int16_t type_ = serverReward_->getType();
-		if (EserverReward::mGetInfo == type_) {
+		if (EserverReward::mServerListInfo == type_) {
 			ServerEngine& serverEngine_ = ServerEngine::instance();
-			string serverInfos_ = serverEngine_.getServerInfos();
-			nValue->pushString(serverInfos_.c_str());
-		} else if (EserverReward::mGetName == type_) {
+			string serverListInfos_ = serverEngine_.getServerListInfo();
+			nValue->pushString(serverListInfos_.c_str());
+		} else if (EserverReward::mGetServerName == type_) {
 			ServerEngine& serverEngine_ = ServerEngine::instance();
 			int32_t serverId_ = nValue->getInt32(params_[0]);
 			string serverName_ = serverEngine_.getServerName(serverId_);

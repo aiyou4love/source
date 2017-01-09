@@ -57,9 +57,26 @@
 #include "server/client/ServerEngine.hpp"
 #include "server/server/ServerEngine.hpp"
 
-#include "role/role/RoleItem.hpp"
+#include "role/role/Role.hpp"
+#include "role/role/RoleEngine.hpp"
+#include "role/role/RoleUpdate.hpp"
+#include "role/role/RoleUpdateClone.hpp"
+
+#include "role/client/EroleId.hpp"
+#include "role/client/RoleItem.hpp"
+#include "role/client/cRoleList.hpp"
 #include "role/client/cRoleListResult.hpp"
-#include "role/client/RoleEngine.hpp"
+#include "role/client/cRole.hpp"
+#include "role/client/cRoleEngine.hpp"
+
+#include "role/agent/cRole.hpp"
+#include "role/agent/cRoleEngine.hpp"
+
+#include "role/game/cRole.hpp"
+#include "role/game/cRoleEngine.hpp"
+
+#include "role/social/cRole.hpp"
+#include "role/social/cRoleEngine.hpp"
 
 #include "EdispatchId.hpp"
 
@@ -68,17 +85,10 @@
 #include "application/ApplicationUpdateClone.hpp"
 #include "application/ApplicationEngine.hpp"
 
-#include "account/account/AccountUpdate.hpp"
-#include "account/account/AccountUpdateClone.hpp"
 #include "account/account/Account.hpp"
 #include "account/account/AccountEngine.hpp"
 #include "account/agent/cAccount.hpp"
 #include "account/agent/cAccountEngine.hpp"
-#include "account/social/cAccount.hpp"
-#include "account/social/cAccountEngine.hpp"
-#include "account/client/EaccountId.hpp"
-#include "account/client/cRoleResult.hpp"
-#include "account/client/cLoginResult.hpp"
 #include "account/client/cAccount.hpp"
 #include "account/client/cAccountEngine.hpp"
 

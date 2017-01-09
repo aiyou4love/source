@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class AccountEngine : public IDispatch
+	class AccountEngine : noncopyable
 	{
 	public:
 		AccountEngine();

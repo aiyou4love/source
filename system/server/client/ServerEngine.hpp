@@ -9,7 +9,7 @@ namespace cc {
 		void pushServerItem(ServerItemPtr& nServerItem);
 		const char * getServerName(int32_t nServerId);
 		void pushServerInfo(ServerInfoPtr& nServerInfo);
-		string getServerInfos();
+		string getServerListInfo();
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)

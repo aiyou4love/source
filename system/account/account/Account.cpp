@@ -2,20 +2,6 @@
 
 namespace cc {
 	
-	void Account::setRoleItem(RoleItemPtr * nRoleItem)
-	{
-		if (nullptr == nRoleItem) {
-			mRoleItem.reset();
-			return;
-		}
-		mRoleItem = (*nRoleItem);
-	}
-	
-	RoleItemPtr& Account::getRoleItem()
-	{
-		return mRoleItem;
-	}
-	
 	void Account::setPassword(const char * nPassword)
 	{
 		mPassword = nPassword;
@@ -58,8 +44,6 @@ namespace cc {
 	
 	void Account::runClear()
 	{
-		mRoleItem->runClear();
-		
 		mPassword = "";
 		mName = "";
 		
@@ -68,17 +52,20 @@ namespace cc {
 	}
 	
 	Account::Account()
-		: mRoleItem (new RoleItem())
+		: mPassword ("")
+		, mName ("")
 		, mType (0)
 		, mId (0)
-		, mPassword ("")
-		, mName ("")
 	{
 	}
 	
 	Account::~Account()
 	{
-		this->runClear();
+		mPassword = "";
+		mName = "";
+		
+		mType = 0;
+		mId = 0;
 	}
 	
 }

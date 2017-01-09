@@ -6,15 +6,14 @@ namespace cc {
 	void ServerEngine::pushServerItem(ServerItemPtr& nServerItem)
 	{
 		int32_t serverId_ = nServerItem->getServerId();
-		if (0 == serverId_) {
-			return;
-		}
+		if (0 == serverId_) return;
 		mServerItems[serverId_] = nServerItem;
 	}
 	
 	void ServerEngine::pushServerInfo(ServerInfoPtr& nServerInfo)
 	{
 		int32_t serverNo_ = nServerInfo->getServerNo();
+		if (0 == serverId_) return;
 		mServerInfos[serverNo_] = nServerInfo;
 	}
 	
@@ -22,14 +21,14 @@ namespace cc {
 	{
 		auto it = mServerItems.find(nServerId);
 		if ( it == mServerItems.end() ) {
-			LOGE("[%s]serverId:%d", __METHOD__, nServerId);
+			LOGE("[%s]%d", __METHOD__, nServerId);
 			return "";
 		}
 		ServerItemPtr& serverItem_ = it->second;
 		return serverItem_->getServerName();
 	}
 	
-	string ServerEngine::getServerInfos()
+	string ServerEngine::getServerListInfo()
 	{
 		LuaWriter luaWriter_;
 		luaWriter_.luaMapStreamPtrs<map<int32_t, ServerItemPtr>, ServerItemPtr>(mServerItems, "mServerList");

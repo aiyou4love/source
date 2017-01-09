@@ -23,7 +23,7 @@ namespace cc {
 		return mText.c_str();
 	}
 	
-	int16_t ActivityConfig::getActivityId()
+	int32_t ActivityConfig::getActivityId()
 	{
 		return mActivityId;
 	}
@@ -33,7 +33,7 @@ namespace cc {
 		return (0 == mActivityId);
 	}
 	
-	int16_t ActivityConfig::getKey()
+	int32_t ActivityConfig::getKey()
 	{
 		return mActivityId;
 	}

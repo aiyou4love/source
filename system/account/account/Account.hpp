@@ -2,12 +2,9 @@
 
 namespace cc {
 	
-	class Account : public Entity
+	class Account : public Property
 	{
 	public:
-		void setRoleItem(RoleItemPtr * nRoleItem);
-		RoleItemPtr& getRoleItem();
-		
 		void setPassword(const char * nPassword);
 		const char * getPassword();
 		
@@ -20,14 +17,12 @@ namespace cc {
 		void setId(int64_t nId);
 		int64_t getId();
 		
-		void runClear();
+		virtual void runClear();
 		
 		Account();
 		virtual ~Account();
 		
 	protected:
-		RoleItemPtr mRoleItem;
-		
 		string mPassword;
 		string mName;
 		

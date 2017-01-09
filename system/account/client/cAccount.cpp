@@ -13,6 +13,16 @@ namespace cc {
 		return mServerId;
 	}
 	
+	const char * cAccount::streamName()
+	{
+		return "account";
+	}
+	
+	const char * cAccount::streamUrl()
+	{
+		return "account.json";
+	}
+	
 	void cAccount::runLoad()
 	{
 		UserDefault& userDefault_ = UserDefault::instance();
@@ -25,14 +35,11 @@ namespace cc {
 		userDefault_.runSave<cAccount>(this, streamUrl(), streamName());
 	}
 	
-	const char * cAccount::streamName()
+	void cAccount::runClear()
 	{
-		return "account";
-	}
-	
-	const char * cAccount::streamUrl()
-	{
-		return "account.json";
+		Account::runClear();
+		
+		mServerId = 0;
 	}
 	
 	cAccount::cAccount()

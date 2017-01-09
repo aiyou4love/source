@@ -11,7 +11,7 @@ namespace cc {
 		int16_t getOpenType();
 		int32_t getOpenId();
 		
-		int16_t getActivityId();
+		int32_t getActivityId();
 		
 		template <class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
@@ -24,13 +24,13 @@ namespace cc {
 		}
 		
 		bool isDefault();
-		int16_t getKey();
+		int32_t getKey();
 		
 		ActivityConfig();
 		~ActivityConfig();
 		
 	private:
-		int16_t mActivityId;
+		int32_t mActivityId;
 		int16_t mOpenType;
 		int32_t mOpenId;
 		string mName;

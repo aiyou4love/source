@@ -4,7 +4,7 @@ namespace cc {
 	
 	class AccountAspect : public IAspect
 	{
-	public:		
+	public:
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
