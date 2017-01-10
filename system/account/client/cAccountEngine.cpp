@@ -62,7 +62,7 @@ namespace cc {
 		mAccount.runSave();
 	}
 	
-	const char * mLoginUrl = "gameLogin";
+	const char * mLoginUrl = "accountLogin";
 	int8_t cAccountEngine::runLogin(const char * nName, const char * nPassword, int16_t nType)
 	{
 		UrlMgr& urlMgr_ = UrlMgr::instance();
@@ -99,7 +99,7 @@ namespace cc {
 		return 1;
 	}
 	
-	const char * mRegisterUrl = "gameRegister";
+	const char * mRegisterUrl = "accountRegister";
 	int8_t cAccountEngine::runRegister(const char * nName, const char * nPassword)
 	{
 		UrlMgr& urlMgr_ = UrlMgr::instance();
@@ -117,7 +117,7 @@ namespace cc {
 		}
 	}
 	
-	const char * mCheckUrl = "isRegister";
+	const char * mCheckUrl = "accountCheck";
 	int8_t cAccountEngine::isRegister(const char * nName)
 	{
 		UrlMgr& urlMgr_ = UrlMgr::instance();
