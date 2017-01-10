@@ -7,6 +7,7 @@ namespace cc {
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		lifeCycle_.m_tLoadBegin.connect(bind(&ServerEngine::runLoad, this));
+		lifeCycle_.m_tInitBegin.connect(bind(&ServerEngine::runInit, this));
 		lifeCycle_.m_tSaveBegin.connect(bind(&ServerEngine::runSave, this));
 		lifeCycle_.m_tClearEnd.connect(bind(&ServerEngine::runClear, this));
 	}
