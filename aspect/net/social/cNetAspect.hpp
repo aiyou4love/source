@@ -6,6 +6,8 @@ namespace cc {
 	class cNetAspect : public NetAspect
 	{
 	public:
+		void runReward(int32_t nDoingId, EntityPtr& nEntity, ValuePtr& nValue);
+		
 		static cNetAspect& instance();
 		
 		cNetAspect();
