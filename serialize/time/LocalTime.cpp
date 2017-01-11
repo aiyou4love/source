@@ -190,28 +190,34 @@ namespace cc {
 		
 		pos = dateStr.find(".");
 		string tempStr = dateStr.substr(0, pos);
+		tempStr = stringTrimLeft(tempStr, "0");
 		int16_t year_ = convertValue<string, int16_t>(tempStr);
 		this->setYear(year_);
 		
 		dateStr = dateStr.substr(pos + 1);
 		pos = dateStr.find(".");
 		tempStr = dateStr.substr(0, pos);
+		tempStr = stringTrimLeft(tempStr, "0");
 		int8_t month_ = convertValue<string, int8_t>(tempStr);
 		this->setMonth(month_);
 		
 		tempStr = dateStr.substr(pos + 1);
+		tempStr = stringTrimLeft(tempStr, "0");
 		mDay = convertValue<string, int8_t>(tempStr);
 		
 		pos = timeStr.find(":");
 		tempStr = timeStr.substr(0, pos);
+		tempStr = stringTrimLeft(tempStr, "0");
 		mHour = convertValue<string, int8_t>(tempStr);
 		
 		timeStr = timeStr.substr(pos + 1);
 		pos = timeStr.find(":");
 		tempStr = timeStr.substr(0, pos);
+		tempStr = stringTrimLeft(tempStr, "0");
 		mMin = convertValue<string, int8_t>(tempStr);
 		
 		tempStr = timeStr.substr(pos + 1);
+		tempStr = stringTrimLeft(tempStr, "0");
 		mSec = convertValue<string, int8_t>(tempStr);
 	}
 	

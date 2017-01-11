@@ -94,6 +94,52 @@ namespace cc {
 		return value_;
 	}
 	
+	string stringTrimLeft(const string& nValue, const string& nTrim)
+	{
+		string value_("");
+		for (size_t i = 0; i < nValue.length(); ++i) {
+			if ((nValue[i] == ' ') || (nValue[i] == '\t')
+				|| (nValue[i] == '\r') || (nValue[i] == '\n')) {
+				continue;
+			}
+			bool continue_ = false;
+			for (size_t j = 0; j < nTrim.length(); ++j) {
+				if ( nValue[i] == nTrim[j] ) {
+					continue_ = true;
+					break;
+				}
+			}
+			if (continue_) {
+				continue;
+			}
+			value_ = nValue.substr(i);
+			break;
+		}
+		return value_;
+	}
+	
+	string stringTrimRight(const string& nValue, const string& nTrim)
+	{
+		string value_("");
+		for (size_t i = value_.length(); i > 0; --i) {
+			if ((value_[i - 1] == ' ') || (value_[i - 1] == '\t')
+				|| (value_[i - 1] == '\r') || (value_[i - 1] == '\n')) {
+				continue;
+			}
+			bool continue_ = false;
+			for (size_t j = 0; j < nTrim.length(); ++j) {
+				if ( value_[i - 1] == nTrim[j] ) {
+					continue_ = true;
+					break;
+				}
+			}
+			if (continue_) continue;
+			value_ = value_.substr(0, i);
+			break;
+		}
+		return value_;
+	}
+	
 	string stringBackslant(const string& nValue)
 	{
 		string result_ = stringTrim(nValue, "/\\");

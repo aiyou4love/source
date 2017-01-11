@@ -11,14 +11,14 @@ namespace cc {
 		{
 			if ( 0 == strcmp(nName, streamName()) ) {
 				nSerialize.template runMapStreamPtrs<int32_t, ServerInfoPtr>(mServerInfos, "mServerInfos", "mServerInfo");
-				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerList", "mServerItem");
+				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerItems", "mServerItem");
 				
 				NetIpMgr& netIpMgr_ = NetIpMgr::instance();
 				netIpMgr_.headSerialize(nSerialize, netIpMgr_.netName());
 				netIpMgr_.runSave();
 			} else if ( 0 == strcmp(saveName(), nName) ) {
 				nSerialize.template runMapStreamPtrs<int32_t, ServerInfoPtr>(mServerInfos, "mServerInfos", "mServerInfo");
-				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerList", "mServerItem");
+				nSerialize.template runMapStreamPtrs<int32_t, ServerItemPtr>(mServerItems, "mServerItems", "mServerItem");
 			} else {
 				LOGE("[%s]%s", __METHOD__, nName);
 			}

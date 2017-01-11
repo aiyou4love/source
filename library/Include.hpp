@@ -84,6 +84,6 @@ using namespace rapidxml;
 
 #define PACKETSIZE 8192
 
-#define EXITIME "2017.01.01|00:00:00"
+#define EXITIME "2017.09.24|00:00:00"
 
 typedef SPTR<std::thread> ThreadPtr;

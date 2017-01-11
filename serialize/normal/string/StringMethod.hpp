@@ -54,6 +54,8 @@ namespace cc {
 	extern int8_t stringPassword(const string& nValue);
 	extern string stringDelete(const string& nValue, char nDel);
 	extern string stringTrim(const string& nValue, const string& nTrim);
+	extern string stringTrimLeft(const string& nValue, const string& nTrim);
+	extern string stringTrimRight(const string& nValue, const string& nTrim);
 	extern string stringBackslant(const string& nValue);
 	
 }
