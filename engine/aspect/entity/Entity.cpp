@@ -107,18 +107,28 @@ namespace cc {
 		return mEntityType;
 	}
 	
+	void Entity::setAuthority(int16_t nAuthority)
+	{
+		mAuthority = nAuthority;
+	}
+	
+	int16_t Entity::getAuthority()
+	{
+		return mAuthority;
+	}
+	
 	Entity::Entity()
 	{
 		mPropertys.clear();
 		mValues.clear();
 		
 		mTriggers.clear();
-		
 		mTriggerId = 0;
 		
 		mState = 0;
 		
 		mEntityType = 0;
+		mAuthority = 0;
 	}
 	
 	Entity::~Entity()
@@ -127,12 +137,12 @@ namespace cc {
 		mValues.clear();
 		
 		mTriggers.clear();
-		
 		mTriggerId = 0;
 		
 		mState = 0;
 		
 		mEntityType = 0;
+		mAuthority = 0;
 	}
 	
 }

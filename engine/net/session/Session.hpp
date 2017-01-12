@@ -32,6 +32,7 @@ namespace cc {
 		
 		void setDispatch(int16_t nDispatchId);
 		void setSend(PropertyPtr& nSend);
+		void setIsAccept(bool nIsAccept);
 		
 		void runDisconnect();
 		void runException();
@@ -71,6 +72,7 @@ namespace cc {
 		
 		IDispatch * mDispatch;
 		PropertyPtr * mSend;
+		bool mIsAccept;
 		
 		ISessionRemove * mSessionRemove;
 		int64_t mAppId;

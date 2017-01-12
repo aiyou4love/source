@@ -50,6 +50,7 @@
 #include "aspect/reward/Reward.hpp"
 #include "aspect/reward/RewardEngine.hpp"
 #include "aspect/select/EselectSink.hpp"
+#include "aspect/select/Eauthority.hpp"
 #include "aspect/select/Selector.hpp"
 #include "aspect/select/IfSelect.hpp"
 #include "aspect/select/SelectEngine.hpp"

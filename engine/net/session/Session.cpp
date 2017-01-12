@@ -125,9 +125,16 @@ namespace cc {
 		ValuePtr value_(new Value());
 		IoReader<BufReader> ioReader_(mBufReader);
 		value_->headSerialize(ioReader_, "");
-		this->runValue(value_);
 		mBufReader.finishBuf();
 		mReadBuffer.assign(0);
+		
+		SelectEngine& selectEngine_ = SelectEngine::instance();
+		int32_t selectId_ = value_->getInt32(1);
+		if ( selectEngine_.isNetSelect(selectId_) ) {
+			this->runValue(value_);
+		} else {
+			this->runClose();
+		}
 	}
 	
 	void Session::runRead()
@@ -180,6 +187,11 @@ namespace cc {
 	void Session::setSend(PropertyPtr& nSend)
 	{
 		mSend = &nSend;
+	}
+	
+	void Session::setIsAccept(bool nIsAccept)
+	{
+		mIsAccept = nIsAccept;
 	}
 	
 	void Session::runDisconnect()
@@ -265,6 +277,8 @@ namespace cc {
 		mDisconnectId = 0;
 		mExceptionId = 0;
 		mSessionId = 0;
+		
+		mIsAccept = false;
 	}
 	
 	asio::ip::tcp::socket& Session::getSocket()
@@ -291,6 +305,7 @@ namespace cc {
 		, mSend (nullptr)
 		, mSessionRemove (nullptr)
 		, mAppId (0)
+		, mIsAccept (false)
 	{
 		mReadBuffer.fill(0);
 		mValues.clear();

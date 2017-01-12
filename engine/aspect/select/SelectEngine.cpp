@@ -32,20 +32,38 @@ namespace cc {
 	
 	void SelectEngine::runIfSelect(EntityPtr& nEntity, ValuePtr& nValue)
 	{
-		int32_t ifSelectId0_ = nValue->getInt32(1);
-		auto it = mIfSelects.find(ifSelectId0_);
+		int32_t ifSelectId_ = nValue->getInt32(1);
+		auto it = mIfSelects.find(ifSelectId_);
 		if ( it == mIfSelects.end() ) {
-			LOGE("[%s]%d", __METHOD__, ifSelectId0_);
+			LOGE("[%s]%d", __METHOD__, ifSelectId_);
 			return;
 		}
 		IfSelectPtr& ifSelect_ = it->second;
+		
+		int16_t authority0_ = ifSelect_->getAuthority();
+		int16_t authority1_ = nEntity->getAuthority();
+		if (authority0_ > authority1_) {
+			LOGE("[%s]%d,%d,%d", __METHOD__, ifSelectId_, authority0_, authority1_);
+			return;
+		}
+		
 		int32_t selectId_ = ifSelect_->runIfSelect(nEntity, nValue);
-		int32_t ifSelectId1_ = ifSelect_->getIfSelectId();
 		if (selectId_ > 0) {
-			this->runTrigger(nEntity, EselectSink::mIfSelect, ifSelectId1_);
+			this->runTrigger(nEntity, EselectSink::mIfSelect, ifSelectId_);
 			this->runTrigger(nEntity, EselectSink::mSelect, selectId_);
 		}
 		nEntity->runTrigger();
+	}
+	
+	bool SelectEngine::isNetSelect(int32_t nSelectId)
+	{
+		auto it = mIfSelects.find(nSelectId);
+		if ( it == mIfSelects.end() ) {
+			LOGE("[%s]%d", __METHOD__, nSelectId);
+			return false;
+		}
+		IfSelectPtr& select_ = it->second;
+		return select_->isNet();
 	}
 	
 	void SelectEngine::initSink(int16_t nSinkId, EntityPtr& nEntity)

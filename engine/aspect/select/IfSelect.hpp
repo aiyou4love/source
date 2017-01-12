@@ -6,8 +6,12 @@ namespace cc {
 	{
 	public:
 		int32_t runIfSelect(EntityPtr& nEntity, ValuePtr& nValue);
-		
 		int32_t getIfSelectId();
+		
+		void setAuthority(int16_t nAuthority);
+		int16_t getAuthority();
+		
+		bool isNet();
 		
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
@@ -15,10 +19,10 @@ namespace cc {
 			nSerialize->template runMapStreamPtrsCount<int8_t, SelectorPtr>(mSelectors, "selectors", "selector", 10);
 			
 			nSerialize->template runNumberSemi<vector<int16_t>, int16_t>(mIndexs, "indexs");
-			nSerialize->runNumber(mIsIndex, "isIndex");
+			nSerialize->runNumber(mIsNet, "isNet");
 			
+			nSerialize->runNumber(mAuthority, "authority");
 			nSerialize->runNumber(mIfSelectId, "ifSelectorId");
-			nSerialize->runNumber(mAppType, "appType");
 		}
 		bool isDefault();
 		int32_t getKey();
@@ -30,10 +34,10 @@ namespace cc {
 		map<int8_t, SelectorPtr> mSelectors;
 		
 		vector<int16_t> mIndexs;
-		bool mIsIndex;
+		bool mIsNet;
 		
+		int16_t mAuthority;
 		int32_t mIfSelectId;
-		int16_t mAppType;
 	};
 	typedef SPTR<IfSelect> IfSelectPtr;
 	

@@ -25,6 +25,9 @@ namespace cc {
 		void setEntityType(int16_t nEntityType);
 		int16_t getEntityType();
 		
+		void setAuthority(int16_t nAuthority);
+		int16_t getAuthority();
+		
 		Entity();
 		virtual ~Entity();
 		
@@ -35,6 +38,7 @@ namespace cc {
 		int16_t mTriggerId;
 		
 		int16_t mEntityType;
+		int16_t mAuthority;
 		
 		int32_t mState;
 		

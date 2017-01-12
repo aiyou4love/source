@@ -4,12 +4,7 @@ namespace cc {
 	
 	int32_t IfSelect::runIfSelect(EntityPtr& nEntity, ValuePtr& nValue)
 	{
-		WorkDirectory& workDirectory_ = WorkDirectory::instance();
-		if ( workDirectory_.getAppType() != mAppType ) {
-			LOGE("[%s]1:%d", __METHOD__, mIfSelectId);
-			return 0;
-		}
-		if ( mIsIndex && (!nValue->checkValue(mIndexs)) ) {
+		if ( mIsNet && (!nValue->checkValue(mIndexs)) ) {
 			LOGE("[%s]2:%d", __METHOD__, mIfSelectId);
 			return 0;
 		}
@@ -29,10 +24,27 @@ namespace cc {
 		return mIfSelectId;
 	}
 	
+	bool IfSelect::isNet()
+	{
+		if ( mIndexs.size() >= 0 ) {
+			return false;
+		}
+		return mIsNet;
+	}
+	
+	void IfSelect::setAuthority(int16_t nAuthority)
+	{
+		mAuthority = nAuthority;
+	}
+	
+	int16_t IfSelect::getAuthority()
+	{
+		return mAuthority;
+	}
+	
 	bool IfSelect::isDefault()
 	{
-		return ( (0 == mIfSelectId) || (0 == mAppType)
-			|| (mSelectors.size() <= 0) );
+		return ( (0 == mIfSelectId) || (mSelectors.size() <= 0) );
 	}
 	
 	int32_t IfSelect::getKey()
@@ -44,18 +56,18 @@ namespace cc {
 	{
 		mSelectors.clear();
 		mIndexs.clear();
+		mIsNet = false;
 		mIfSelectId = 0;
-		mAppType = 0;
-		mIsIndex = false;
+		mAuthority = 0;
 	}
 	
 	IfSelect::~IfSelect()
 	{
 		mSelectors.clear();
 		mIndexs.clear();
+		mIsNet = false;
 		mIfSelectId = 0;
-		mAppType = 0;
-		mIsIndex = false;
+		mAuthority = 0;
 	}
 	
 }
