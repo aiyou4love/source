@@ -49,6 +49,7 @@ namespace cc {
 		SessionPtr session_(new Session(++mSessionId, ioHandle_));
 		session_->setRemove(&connectRemove_);
 		session_->setAppId(nAppId);
+		session_->setAuthority(Eauthority::mSystem);
 		mSessions[nAppId] = session_;
 		return mSessions[nAppId];
 	}
