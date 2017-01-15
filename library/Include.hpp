@@ -86,4 +86,30 @@ using namespace rapidxml;
 
 #define EXITIME "2017.09.24|00:00:00"
 
+#define __CLIENTB64__ "Y2xpZW50"
+#define __GMCLIENTB64__ "Z21jbGllbnQ="
+#define __AGENTB64__ "YWdlbnQ="
+#define __SOCIALB64__ "c29jaWFs"
+#define __GAMEB64__ "Z2FtZQ=="
+
+#ifdef __GAMEGM__
+#define __CLIENTB64EX__ __GMCLIENTB64__
+#else
+#define __CLIENTB64EX__ __CLIENTB64__
+#endif
+
+#ifdef __CLIENT__
+	#define __EXEBASE64__ __CLIENTB64EX__
+#elif defined __AGENT__
+	#define __EXEBASE64__ __AGENTB64__
+#elif defined __SOCIAL__
+	#define __EXEBASE64__ __SOCIALB64__
+#elif defined __GAME__
+	#define __EXEBASE64__ __GAMEB64__
+#else
+	#define __EXEBASE64__ __CLIENTB64EX__
+#endif
+
+#define __AUTHID__ 99999999
+
 typedef SPTR<std::thread> ThreadPtr;

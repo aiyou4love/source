@@ -106,9 +106,14 @@ namespace cc {
 		return mVersionNo;
 	}
 	
-	int16_t WorkDirectory::getUpdateNo()
+	int16_t WorkDirectory::getVerMax()
 	{
-		return mUpdateNo;
+		return mVerMax;
+	}
+	
+	int16_t WorkDirectory::getVerMin()
+	{
+		return mVerMin;
 	}
 	
 	int16_t WorkDirectory::getAppType()
@@ -211,7 +216,8 @@ namespace cc {
 		mAppType = 0;
 		mAppNo = 0;
 		mClassifyId = 0;
-		mUpdateNo = 0;
+		mVerMax = 0;
+		mVerMin = 0;
 		
 		mRootPath = "";
 		mLogPath = "";

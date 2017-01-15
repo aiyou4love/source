@@ -25,7 +25,8 @@ namespace cc {
 		int32_t getAppNo();
 		int64_t getAppId(int16_t nAppType);
 		int64_t getAppId();
-		int16_t getUpdateNo();
+		int16_t getVerMax();
+		int16_t getVerMin();
 		
 		bool isConsole();
 		bool isRunning();
@@ -44,7 +45,8 @@ namespace cc {
 				nSerialize.runNumber(mOperatorName, "operatorName");
 			} else if ( 0 == strcmp(streamName(), nName) ) {
 				nSerialize.runNumber(mClassifyId, "classifyId");
-				nSerialize.runNumber(mUpdateNo, "updateNo");
+				nSerialize.runNumber(mVerMax, "verMax");
+				nSerialize.runNumber(mVerMin, "verMin");
 				nSerialize.runNumber(mAppNo, "appNo");
 				nSerialize.runNumber(mIsJson, "isJson");
 				nSerialize.runNumber(mRunning, "running");
@@ -93,7 +95,9 @@ namespace cc {
 		int16_t mAppType;
 		int16_t mClassifyId;
 		int32_t mAppNo;
-		int16_t mUpdateNo;
+		
+		int16_t mVerMax;
+		int16_t mVerMin;
 		
 		bool mRunning;
 		bool mIsJson;
