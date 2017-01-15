@@ -12,6 +12,8 @@ namespace cc {
 		int16_t getConnectDispatch();
 		int32_t getDisconnectId();
 		int32_t getExceptionId();
+		int32_t getVerMaxId();
+		int32_t getVerMinId();
 		int16_t getDispatchId();
 		
 		bool isReconnect();
@@ -28,6 +30,8 @@ namespace cc {
 			
 			nSerialize->runNumber(mDisconnectId, "disconnectId");
 			nSerialize->runNumber(mExceptionId, "exceptionId");
+			nSerialize->runNumber(mVerMaxId, "verMaxId");
+			nSerialize->runNumber(mVerMinId, "verMinId");
 			nSerialize->runNumber(mDispatchId, "dispatchId");
 			
 			nSerialize->runNumber(mReconnect, "reconnect");
@@ -48,6 +52,8 @@ namespace cc {
 		
 		int32_t mDisconnectId;
 		int32_t mExceptionId;
+		int32_t mVerMaxId;
+		int32_t mVerMinId;
 		int16_t mDispatchId;
 		
 		bool mReconnect;

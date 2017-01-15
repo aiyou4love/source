@@ -37,6 +37,16 @@ namespace cc {
 		return mDispatchId;
 	}
 	
+	int32_t ConnectInfo::getVerMaxId()
+	{
+		return mVerMaxId;
+	}
+	
+	int16_t ConnectInfo::getVerMinId()
+	{
+		return mVerMinId;
+	}
+	
 	bool ConnectInfo::isReconnect()
 	{
 		return mReconnect;
@@ -44,8 +54,9 @@ namespace cc {
 	
 	bool ConnectInfo::isDefault()
 	{
-		return ((0 == mConnectId) || (0 == mTimeoutId) || (0 == mConnectErrorId) || (0 == mDisconnectId)
-			|| (0 == mExceptionId) || (0 == mAppType) || (0 == mDispatchId) || (0 == mConnectDispatch) );
+		return ((0 == mConnectId) || (0 == mTimeoutId) || (0 == mConnectErrorId)
+			|| (0 == mDisconnectId) || (0 == mExceptionId) || (0 == mAppType)
+			|| (0 == mDispatchId) || (0 == mConnectDispatch) );
 	}
 	
 	int16_t ConnectInfo::getKey()
@@ -62,6 +73,8 @@ namespace cc {
 		, mDisconnectId (0)
 		, mExceptionId (0)
 		, mDispatchId (0)
+		, mVerMaxId (0)
+		, mVerMinId (0)
 		, mReconnect (false)
 	{
 	}
@@ -77,6 +90,8 @@ namespace cc {
 		
 		mDisconnectId = 0;
 		mExceptionId = 0;
+		mVerMaxId = 0;
+		mVerMaxId = 0;
 		mDispatchId = 0;
 		
 		mReconnect = false;
