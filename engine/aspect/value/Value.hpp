@@ -37,6 +37,9 @@ namespace cc {
 		void setIndex(int32_t nIndex);
 		int32_t getIndex();
 		
+		int8_t verCheck(bool nHigh); 
+		void verInit();
+		
 		void printType(int8_t nIndex);
 		int8_t getType(int8_t nIndex);
 		int8_t getCount();
@@ -59,6 +62,9 @@ namespace cc {
 			nSerialize.template runNumbers<vector<double>, double>(mDoubles, "doubles", "double");
 			nSerialize.template runNumbers<vector<string>, string>(mStrings, "strings", "string");
 			nSerialize.template runStreamPtrs<vector<BufferPtr>, BufferPtr>(mBuffers, "buffers", "buffer");
+			
+			nSerialize.runNumber(mVerMax, "verMax");
+			nSerialize.runNumber(mVerMin, "verMin");
 		}
 		
 		const char * streamName();
@@ -80,6 +86,9 @@ namespace cc {
 		vector<string> mStrings;
 		vector<BufferPtr> mBuffers;
 		vector<intptr_t> mIntptrs;
+		
+		int16_t mVerMax;
+		int16_t mVerMin;
 		
 		int32_t mIndex;
 	};

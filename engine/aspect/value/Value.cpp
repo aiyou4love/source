@@ -285,6 +285,36 @@ namespace cc {
 		return mIndex;
 	}
 	
+	int8_t Value::verCheck(bool nHigh)
+	{
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		int16_t verMax_ = workDirectory_.getVerMax();
+		int16_t verMin_ = workDirectory_.getVerMin();
+		if (nHigh) {
+			if (mVerMax < verMax_) {
+				return 0;
+			}
+			if (mVerMin < verMin_) {
+				return 2;
+			}
+		} else {
+			if (mVerMax > verMax_) {
+				return 0;
+			}
+			if (mVerMin > verMin_) {
+				return 2;
+			}
+		}
+		return 1;
+	}
+	
+	void Value::verInit()
+	{
+		WorkDirectory& workDirectory_ = WorkDirectory::instance();
+		mVerMax = workDirectory_.getVerMax();
+		mVerMin = workDirectory_.getVerMin();
+	}
+	
 	void Value::printType(int8_t nIndex)
 	{
 		size_t index_ = (size_t)nIndex;
@@ -356,8 +386,7 @@ namespace cc {
 		int64_t value_ = this->getInt64(nIndex);
 		if (0 == value_) return result_;
 		LocalTime localTime_(value_);
-		result_ = localTime_.getTextTime();
-		return result_;
+		return localTime_.getTextTime();
 	}
 	
 	void Value::runClear()
@@ -372,6 +401,9 @@ namespace cc {
 		mStrings.clear();
 		mBuffers.clear();
 		mIntptrs.clear();
+		
+		mVerMax = 0;
+		mVerMin = 0;
 		
 		mIndex = 0;
 	}
