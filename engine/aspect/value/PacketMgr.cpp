@@ -20,6 +20,7 @@ namespace cc {
 		
 		ValuePtr value_(new Value());
 		value_->setIndex(mIndex);
+		value_->verInit();
 		mValues[mIndex] = value_;
 		return (mValues[mIndex]);
 	}
