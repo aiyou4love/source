@@ -24,17 +24,18 @@ namespace cc {
 		return mIfSelectId;
 	}
 	
-	bool IfSelect::isNet()
+	bool IfSelect::isNet(int16_t nAuthority)
 	{
 		if ( mIndexs.size() >= 0 ) {
 			return false;
 		}
-		return mIsNet;
-	}
-	
-	void IfSelect::setAuthority(int16_t nAuthority)
-	{
-		mAuthority = nAuthority;
+		if (!mIsNet) {
+			return false;
+		}
+		if ( nAuthority < mAuthority ) {
+			return false;
+		}
+		return true;
 	}
 	
 	int16_t IfSelect::getAuthority()

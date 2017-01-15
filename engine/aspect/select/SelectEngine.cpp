@@ -55,7 +55,7 @@ namespace cc {
 		nEntity->runTrigger();
 	}
 	
-	bool SelectEngine::isNetSelect(int32_t nSelectId)
+	bool SelectEngine::isNetSelect(int32_t nSelectId, int16_t nAuthority)
 	{
 		auto it = mIfSelects.find(nSelectId);
 		if ( it == mIfSelects.end() ) {
@@ -63,7 +63,7 @@ namespace cc {
 			return false;
 		}
 		IfSelectPtr& select_ = it->second;
-		return select_->isNet();
+		return select_->isNet(nAuthority);
 	}
 	
 	void SelectEngine::initSink(int16_t nSinkId, EntityPtr& nEntity)

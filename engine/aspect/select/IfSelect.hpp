@@ -8,10 +8,9 @@ namespace cc {
 		int32_t runIfSelect(EntityPtr& nEntity, ValuePtr& nValue);
 		int32_t getIfSelectId();
 		
-		void setAuthority(int16_t nAuthority);
 		int16_t getAuthority();
 		
-		bool isNet();
+		bool isNet(int16_t nAuthority);
 		
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)

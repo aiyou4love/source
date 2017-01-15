@@ -10,7 +10,7 @@ namespace cc {
 		void runTrigger(EntityPtr& nEntity, int16_t nSinkType, int32_t nValue);
 		
 		void runIfSelect(EntityPtr& nEntity, ValuePtr& nValue);
-		bool isNetSelect(int32_t nSelectId);
+		bool isNetSelect(int32_t nSelectId, int16_t nAuthority);
 		
 		void initSink(int16_t nSinkId, EntityPtr& nEntity);
 		
