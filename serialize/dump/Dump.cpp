@@ -1,17 +1,31 @@
 #include "../Serialize.hpp"
 
 #ifdef __WINDOW__
-#include <shlwapi.h>
-
-#pragma comment(lib, "shlwapi.lib")
+#include <windows.h>
+#include <dbghelp.h>
+#pragma comment(lib, "dbghelp.lib")
 #endif
 
 namespace cc {
 	
 #ifdef __WINDOW__
+	LONG WINAPI exceptionFilter(struct _EXCEPTION_POINTERS * nExceptionInfo)
+	{
+		string fileName = APPNAME; fileName += ".dmp";
+		HANDLE fileHandle = ::CreateFileA(fileName.c_str(), GENERIC_WRITE,
+			FILE_SHARE_READ, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+		MINIDUMP_EXCEPTION_INFORMATION miniDumpExceptionInfo;
+		miniDumpExceptionInfo.ThreadId = ::GetCurrentThreadId();
+		miniDumpExceptionInfo.ExceptionPointers = nExceptionInfo;
+		miniDumpExceptionInfo.ClientPointers = FALSE;
+		::MiniDumpWriteDump(::GetCurrentProcess(), ::GetCurrentProcessId(),
+			fileHandle, MiniDumpNormal, &miniDumpExceptionInfo, nullptr, nullptr);
+		return EXCEPTION_CONTINUE_SEARCH;
+	}
+	
 	void Dump::runPreinit()
 	{
-		_filter = SetUnhandledExceptionFilter(TopLevelExceptionFilter);
+		::SetUnhandledExceptionFilter( exceptionFilter );
 	}
 	
 	Dump& Dump::instance()
@@ -20,51 +34,11 @@ namespace cc {
 	}
 	
 	Dump::Dump()
-		: _filter(nullptr)
 	{
 	}
 	
 	Dump::~Dump()
 	{
-		SetUnhandledExceptionFilter(_filter);
-	}
-	
-	LONG Dump::TopLevelExceptionFilter(EXCEPTION_POINTERS * e)
-	{
-		wchar_t dbghelp[MAX_PATH];
-		GetModuleFileNameW(NULL, dbghelp, MAX_PATH);
-		PathRemoveFileSpecW(dbghelp);
-		PathAddBackslashW(dbghelp);
-		wcscat_s(dbghelp, L"dbghelp.dll");
-		
-		HMODULE dll = LoadLibraryW(dbghelp);
-		if (!dll)
-			return EXCEPTION_CONTINUE_SEARCH;
-		
-		typedef BOOL (WINAPI *MINIDUMPWRITEDUMP)(IN HANDLE hProcess, IN DWORD ProcessId, IN HANDLE hFile, IN MINIDUMP_TYPE DumpType, IN CONST PMINIDUMP_EXCEPTION_INFORMATION THROWEXCEPTIONParam, OPTIONAL IN CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam, OPTIONAL IN CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam OPTIONAL);
-		MINIDUMPWRITEDUMP MiniDumpWriteDump = (MINIDUMPWRITEDUMP)GetProcAddress(dll, "MiniDumpWriteDump");
-		if (!MiniDumpWriteDump)
-			return EXCEPTION_CONTINUE_SEARCH;
-		
-		wchar_t path[MAX_PATH];
-		GetModuleFileNameW(NULL, path, MAX_PATH);
-		PathRenameExtensionW(path, L".dmp");
-		
-		HANDLE file = CreateFileW(path, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-		if (file ==INVALID_HANDLE_VALUE)
-			return EXCEPTION_CONTINUE_SEARCH;
-		
-		MINIDUMP_EXCEPTION_INFORMATION info;
-		info.ThreadId = GetCurrentThreadId();
-		info.ExceptionPointers = e;
-		info.ClientPointers = NULL;
-		
-		if (!MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file, MiniDumpWithFullMemory, &info, NULL, NULL))
-			return EXCEPTION_CONTINUE_SEARCH;
-		
-		CloseHandle(file);
-		
-		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	
 	Dump Dump::mDump;

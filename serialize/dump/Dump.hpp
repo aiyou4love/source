@@ -1,25 +1,10 @@
 #pragma once
 
-#ifdef __WINDOW__
-
-#pragma warning(push)
-#pragma warning(disable:4091)
-#include <windows.h>
-#include <dbghelp.h>
-#pragma warning(pop)
-#endif
-
 namespace cc {
 	
 #ifdef __WINDOW__
-	class Dump
+	class Dump : noncopyable
 	{
-	private:
-		PTOP_LEVEL_EXCEPTION_FILTER _filter;
-		static Dump mDump;
-		
-		static LONG WINAPI TopLevelExceptionFilter(EXCEPTION_POINTERS * info);
-		
 	public:
 		void runPreinit();
 		
@@ -27,6 +12,9 @@ namespace cc {
 		
 		Dump();
 		~Dump();
+		
+	private:
+		static Dump mDump;
 	};
 #endif
 	
