@@ -17,6 +17,9 @@ void serializeInit()
 	LuaEngine& luaEngine_ = LuaEngine::instance();
 	luaEngine_.runPreinit();
 	
+	RandomEngine& randomEngine_ = RandomEngine::instance();
+	randomEngine_.runPreinit();
+	
 	{
 		string logPath_ = workDirectory_.logPath();
 		LogEngine& logEngine_ = LogEngine::instance();

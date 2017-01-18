@@ -146,7 +146,7 @@ namespace cc {
 		if ( (nIndex <= 0) || 
 			(index_ > mIndexs.size()) ) {
 			LOGE("[%s]nIndex:%d", __METHOD__, nIndex);
-			return 0;
+			return "";
 		}
 		int16_t number_ = mIndexs[index_ - 1];
 		int8_t type_ = (int8_t)(number_ >> 12);
@@ -154,11 +154,11 @@ namespace cc {
 		index_ = (size_t)number_;
 		if (7 != type_) {
 			LOGE("[%s]type:%d", __METHOD__, type_);
-			return 0;
+			return "";
 		}
 		if (index_ > mStrings.size()) {
 			LOGE("[%s]index:%d", __METHOD__, index_);
-			return 0;
+			return "";
 		}
 		return mStrings[index_ - 1].c_str();
 	}

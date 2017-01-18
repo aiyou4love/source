@@ -16,6 +16,8 @@
 #include "lua/LuaThread.hpp"
 #include "lua/LuaEngine.hpp"
 
+#include "random/RandomEngine.hpp"
+
 #include "workDirectory/EappType.hpp"
 #include "workDirectory/WorkDirectory.hpp"
 
