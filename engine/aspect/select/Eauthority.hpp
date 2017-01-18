@@ -26,8 +26,8 @@ namespace cc {
 		static const int16_t mPlayer18 = 20;
 		static const int16_t mPlayer19 = 21;
 		static const int16_t mGM = 22;
-		static const int16_t mDeveloper = 23;
-		static const int16_t mSystem = 24;
+		static const int16_t mSystem = 23;
+		static const int16_t mDeveloper = 24;
 	};
 	
 }

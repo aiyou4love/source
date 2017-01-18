@@ -21,6 +21,11 @@
 #include <chrono>
 #include <iostream>
 
+#include <zstd.h>
+
+#include <lz4/lz4hc.h>
+#include <lz4/lz4.h>
+
 #pragma warning(push)
 #pragma warning(disable:4819)
 #pragma warning(disable:4003)
@@ -88,26 +93,34 @@ using namespace rapidxml;
 
 #define __CLIENTB64__ "Y2xpZW50"
 #define __GMCLIENTB64__ "Z21jbGllbnQ="
+#define __DECLIENTB64__ "ZGVjbGllbnQ="
 #define __AGENTB64__ "YWdlbnQ="
 #define __SOCIALB64__ "c29jaWFs"
 #define __GAMEB64__ "Z2FtZQ=="
 
 #ifdef __GAMEGM__
 #define __CLIENTB64EX__ __GMCLIENTB64__
+#elif defined __GAMEDE__
+#define __CLIENTB64EX__ __DECLIENTB64__
 #else
 #define __CLIENTB64EX__ __CLIENTB64__
 #endif
 
 #ifdef __CLIENT__
 	#define __EXEBASE64__ __CLIENTB64EX__
+	#define APPNAME "client"
 #elif defined __AGENT__
 	#define __EXEBASE64__ __AGENTB64__
+	#define APPNAME "agent"
 #elif defined __SOCIAL__
 	#define __EXEBASE64__ __SOCIALB64__
+	#define APPNAME "social"
 #elif defined __GAME__
 	#define __EXEBASE64__ __GAMEB64__
+	#define APPNAME "game"
 #else
 	#define __EXEBASE64__ __CLIENTB64EX__
+	#define APPNAME "client"
 #endif
 
 #define __AUTHID__ 99999999
