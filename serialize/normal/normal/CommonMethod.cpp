@@ -112,4 +112,101 @@ namespace cc {
 		return result_;
 	}
 	
+	char * zstdcompress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize)
+	{
+		int destSize_ = ZSTD_compressBound(nInsize);
+		char * result_ = new char[destSize_];
+		
+		nOutsize = ZSTD_compress(result_, destSize_, nValue, nInsize, nLevel);
+		if (ZSTD_isError(nOutsize)) {
+			LOGE("[%s]%s", __METHOD__, ZSTD_getErrorName(nOutsize));
+			delete [] result_;
+			result_ = nullptr;
+			nOutsize = 0;
+		}
+		return result_;
+	}
+	
+	char * zstdecompress(const char * nValue, size_t nInsize, size_t& nOutsize)
+	{
+		uint64_t size_ = ZSTD_getDecompressedSize(nValue, nInsize);
+		if ( 0 == size_ ) {
+			LOGE("[%s]0 == size_", __METHOD__);
+			nOutsize = 0;
+			return nullptr;
+		}
+		char * result_ = = new char[size_];
+		
+		nOutsize = ZSTD_decompress(result_, size_, nValue, nInsize);
+		if ( nOutsize != size_ ) {
+			LOGE("[%s]nOutsize != size_)", __METHOD__);
+			delete [] result_;
+			nOutsize = 0;
+			return nullptr;
+		}
+		return result_;
+	}
+	
+	char * lz4compress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize)
+	{
+		size_t headSize_ = sizeof(int32_t);
+		
+		int destSize_ = LZ4_compressBound((int)nInsize);
+		size_t maxSize_ = headSize_ + size_t(destSize_);
+		char * result_ = new char[maxSize_];
+		
+		*( (uint32_t *)result_ ) = uint32_t(nInsize);
+		
+		int size_ = 0;
+		if (nLevel > 8) {
+			size_ = LZ4_compress_HC(nValue, result_ + headSize_, int(nInsize), destSize_, 0);
+		} else {
+			size_ = LZ4_compress_default(nValue, result_ + headSize_, int(nInsize), destSize_);
+		}
+		if (size_ <= 0) {
+			delete[] result_;
+			return nullptr;
+		}
+		
+		if ( (double(maxSize_) / double(size_ + headSize_)) >= 1.2 ) {
+			char * bytes_ = new char[size_ + headSize_];
+			memcpy(bytes_, result_, size_ + headSize_);
+			delete[] result_;
+			result_ = bytes_;
+		}
+		
+		nOutsize = size_t(size_) + headSize_;
+		return result_;
+	}
+	
+	char * lz4decompress(const char * nValue, size_t nInsize, size_t& nOutsize)
+	{
+		size_t headSize_ = sizeof(int32_t);
+		
+		uint32_t size_ = *( (uint32_t *)nValue );
+		char * result_ = = new char[size_];
+		
+		if ( (nOutsize > 0) && (nOutsize == size_t(size_)) ) {
+			int length_ = LZ4_decompress_fast(nValue + headSize_,
+				result_, (int)nOutsize);
+				
+			if ( length_ < 0 ) {
+				delete[] result_;
+				result_ = nullptr;
+			}
+		} else {
+			int length_ = LZ4_decompress_safe(nValue + headSize_, 
+				result_, nInsize - headSize_, size_);
+				
+			if ( length_ > 0 ) {
+				nOutsize = size_t(length_);
+			} else {
+				delete[] result_;
+				result_ = nullptr;
+			}
+		}
+		
+		return result_;
+	}
+	
 }
