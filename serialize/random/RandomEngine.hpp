@@ -17,6 +17,8 @@ namespace cc {
 		~RandomEngine();
 		
 	private:
+		static RandomEngine mRandomEngine;
+		
 		random_device mDevice;
 		mt19937 mEngine;
 	};

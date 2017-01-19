@@ -122,18 +122,52 @@ namespace cc {
 		if (EpushBuf::mLength == pushBuf_) {
 			return;
 		}
+		this->runValue();
+	}
+	
+	void Session::runConnect(ValuePtr& nValue)
+	{
+		this->runValue(nValue);
+	}
+	
+	void Session::runAccept(ValuePtr& nValue)
+	{
+		if ( mAuthority > Eauthority::mTourist ) {
+			SelectEngine& selectEngine_ = SelectEngine::instance();
+			int32_t selectId_ = nValue->getInt32(1);
+			if ( selectEngine_.isNetSelect(selectId_, mAuthority) ) {
+				LOGE("[%s]isNetSelect", __METHOD__);
+				this->runValue(nValue);
+			} else {
+				LOGE("[%s]mAuthority > mTourist", __METHOD__);
+				this->runClose();
+			}
+		} else {
+			this->runAuthority(nValue);
+		}
+	}
+	
+	void Session::runValue()
+	{
 		ValuePtr value_(new Value());
 		IoReader<BufReader> ioReader_(mBufReader);
 		value_->headSerialize(ioReader_, "");
 		mBufReader.finishBuf();
 		mReadBuffer.assign(0);
 		
-		SelectEngine& selectEngine_ = SelectEngine::instance();
-		int32_t selectId_ = value_->getInt32(1);
-		if ( selectEngine_.isNetSelect(selectId_) ) {
-			this->runValue(value_);
+		int8_t check_ = value_->verCheck(mIsAccept);
+		if ( 0 == check_ ) {
+			this->runVerMaxId();
+			return;
+		} else if ( 2 == check_ ) {
+			this->runVerMinId();
 		} else {
-			this->runClose();
+		}
+		
+		if (mIsAccept) {
+			this->runAccept(value_);
+		} else {
+			this->runConnect(value_);
 		}
 	}
 	
@@ -164,6 +198,8 @@ namespace cc {
 	{
 		mDisconnectId = nConnectInfo->getDisconnectId();
 		mExceptionId = nConnectInfo->getExceptionId();
+		mVerMaxId = nConnectInfo->getVerMaxId();
+		mVerMinId = nConnectInfo->getVerMinId();
 		int16_t dispatchId_ = nConnectInfo->getDispatchId();
 		this->setDispatch(dispatchId_);
 	}
@@ -194,6 +230,36 @@ namespace cc {
 		mIsAccept = nIsAccept;
 	}
 	
+	void Session::setAuthority(int16_t nAuthority)
+	{
+		mAuthority = nAuthority;
+	}
+	
+	void Session::runAuthority(ValuePtr& nValue)
+	{
+		const char * clientB64_ = nValue->getString(1);
+		if ( 0 == strcmp(clientB64_, __CLIENTB64__) ) {
+			mAuthority = Eauthority::mTourist;
+		} else if ( 0 == strcmp(clientB64_, __GMCLIENTB64__) ) {
+			mAuthority = Eauthority::mGM;
+		} else if ( 0 == strcmp(clientB64_, __DECLIENTB64__) ) {
+			mAuthority = Eauthority::mDeveloper;
+		} else if ( 0 == strcmp(clientB64_, __AGENTB64__) ) {
+			mAuthority = Eauthority::mSystem;
+		} else if ( 0 == strcmp(clientB64_, __SOCIALB64__) ) {
+			mAuthority = Eauthority::mSystem;
+		} else if ( 0 == strcmp(clientB64_, __GAMEB64__) ) {
+			mAuthority = Eauthority::mSystem;
+		} else {
+			mAuthority = Eauthority::mTourist;
+		}
+		
+		ValuePtr value_(new Value());
+		value_->verInit();
+		value_->pushInt32(__AUTHID__);
+		this->runSend(value_);
+	}
+	
 	void Session::runDisconnect()
 	{
 		this->runClose();
@@ -206,6 +272,30 @@ namespace cc {
 		this->runClose();
 		
 		this->runSelectId(mExceptionId);
+	}
+	
+	void Session::runVerMaxId()
+	{
+	#ifdef __AGENT__
+		ValuePtr value_(new Value());
+		value_->verInit();
+		this->runSend(value_);
+	#elif defined __CLIENT__
+		if (mVerMaxId > 0) {
+			this->runSelectId(mVerMaxId);
+		}
+	#else
+		this->runClose();
+	#endif
+	}
+	
+	void Session::runVerMinId()
+	{
+	#ifdef __CLIENT__
+		if (mVerMinId > 0) {
+			this->runSelectId(mVerMinId);
+		}
+	#endif
 	}
 	
 	void Session::runSelectId(int32_t nSelectId)
@@ -273,9 +363,12 @@ namespace cc {
 		
 		mDispatch = nullptr;
 		mSend = nullptr;
+		mAuthority = 0;
 		
 		mDisconnectId = 0;
 		mExceptionId = 0;
+		mVerMaxId = 0;
+		mVerMinId = 0;
 		mSessionId = 0;
 		
 		mIsAccept = false;
@@ -305,6 +398,9 @@ namespace cc {
 		, mSend (nullptr)
 		, mSessionRemove (nullptr)
 		, mAppId (0)
+		, mAuthority (0)
+		, mVerMaxId (0)
+		, mVerMinId (0)
 		, mIsAccept (false)
 	{
 		mReadBuffer.fill(0);

@@ -26,4 +26,7 @@ namespace cc {
 	extern char * lz4compress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize);
 	extern char * lz4decompress(const char * nValue, size_t nInsize, size_t& nOutsize);
 	
+	extern char * lz4compress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize);
+	extern char * lz4decompress(const char * nValue, size_t nInsize, size_t& nOutsize);
+	
 }

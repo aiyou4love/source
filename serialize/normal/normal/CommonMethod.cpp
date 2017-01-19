@@ -114,7 +114,7 @@ namespace cc {
 	
 	char * zstdcompress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize)
 	{
-		int destSize_ = ZSTD_compressBound(nInsize);
+		size_t destSize_ = ZSTD_compressBound(nInsize);
 		char * result_ = new char[destSize_];
 		
 		nOutsize = ZSTD_compress(result_, destSize_, nValue, nInsize, nLevel);
@@ -135,7 +135,7 @@ namespace cc {
 			nOutsize = 0;
 			return nullptr;
 		}
-		char * result_ = = new char[size_];
+		char * result_ = new char[size_];
 		
 		nOutsize = ZSTD_decompress(result_, size_, nValue, nInsize);
 		if ( nOutsize != size_ ) {
@@ -184,11 +184,11 @@ namespace cc {
 		size_t headSize_ = sizeof(int32_t);
 		
 		uint32_t size_ = *( (uint32_t *)nValue );
-		char * result_ = = new char[size_];
+		char * result_ = new char[size_];
 		
 		if ( (nOutsize > 0) && (nOutsize == size_t(size_)) ) {
 			int length_ = LZ4_decompress_fast(nValue + headSize_,
-				result_, (int)nOutsize);
+				result_, int(nOutsize));
 				
 			if ( length_ < 0 ) {
 				delete[] result_;
@@ -196,7 +196,7 @@ namespace cc {
 			}
 		} else {
 			int length_ = LZ4_decompress_safe(nValue + headSize_, 
-				result_, nInsize - headSize_, size_);
+				result_, int(nInsize - headSize_), size_);
 				
 			if ( length_ > 0 ) {
 				nOutsize = size_t(length_);

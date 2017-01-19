@@ -42,7 +42,7 @@ namespace cc {
 		return mVerMaxId;
 	}
 	
-	int16_t ConnectInfo::getVerMinId()
+	int32_t ConnectInfo::getVerMinId()
 	{
 		return mVerMinId;
 	}

@@ -36,6 +36,6 @@ namespace cc {
 	{
 	}
 	
-	static RandomEngine mRandomEngine;
+	RandomEngine RandomEngine::mRandomEngine;
 	
 }

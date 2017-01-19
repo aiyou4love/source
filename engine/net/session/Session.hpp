@@ -32,13 +32,21 @@ namespace cc {
 		
 		void setDispatch(int16_t nDispatchId);
 		void setSend(PropertyPtr& nSend);
+		void setAuthority(int16_t nAuthority);
 		void setIsAccept(bool nIsAccept);
+		void runAuthority(ValuePtr& nValue);
 		
 		void runDisconnect();
 		void runException();
+		void runVerMaxId();
+		void runVerMinId();
 		
 		void runSelectId(int32_t nSelectId);
 		void runValue(ValuePtr& nValue);
+		
+		void runConnect(ValuePtr& nValue);
+		void runAccept(ValuePtr& nValue);
+		void runValue();
 		
 		void setRemove(ISessionRemove * nSessionRemove);
 		void setAppId(int64_t nAppId);
@@ -69,9 +77,12 @@ namespace cc {
 		
 		int32_t mDisconnectId;
 		int32_t mExceptionId;
+		int32_t mVerMaxId;
+		int32_t mVerMinId;
 		
 		IDispatch * mDispatch;
 		PropertyPtr * mSend;
+		int16_t mAuthority;
 		bool mIsAccept;
 		
 		ISessionRemove * mSessionRemove;

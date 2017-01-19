@@ -1,8 +1,11 @@
 #include "../Serialize.hpp"
 
 #ifdef __WINDOW__
+#pragma warning(push)
+#pragma warning(disable:4091)
 #include <windows.h>
 #include <dbghelp.h>
+#pragma warning(pop)
 #pragma comment(lib, "dbghelp.lib")
 #endif
 
