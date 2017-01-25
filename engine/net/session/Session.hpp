@@ -80,6 +80,10 @@ namespace cc {
 		int32_t mVerMaxId;
 		int32_t mVerMinId;
 		
+		int16_t mSeedValue;
+		int32_t mSeedNo;
+		int16_t mSeedType;
+		
 		IDispatch * mDispatch;
 		PropertyPtr * mSend;
 		int16_t mAuthority;

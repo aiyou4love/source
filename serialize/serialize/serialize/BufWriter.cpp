@@ -6,11 +6,11 @@ namespace cc {
 	{
 		int16_t count_ = int16_t(nValue.length());
 		this->runNumber(count_, nName);
-		if ((mLength + sizeof(int16_t) + count_) > PACKETSIZE) {
+		if ((mLength + count_) > PACKETSIZE) {
 			LOGE("[%s]%s", __METHOD__, nName);
 			return;
 		}
-		memcpy((mBuffer + mLength + sizeof(int16_t)), &nValue[0], count_);
+		memcpy(mBuffer + mLength, &nValue[0], count_);
 		mLength += count_;
 	}
 	
@@ -31,13 +31,26 @@ namespace cc {
 	
 	void BufWriter::runBuffer(char *& nValue, int16_t nLength)
 	{
-		if ((mLength + sizeof(int16_t) + nLength) > PACKETSIZE) {
+		if ((mLength + nLength) > PACKETSIZE) {
 			LOGE("[%s]%d", __METHOD__, nLength);
 			return;
-			return;
 		}
-		memcpy((mBuffer + mLength + sizeof(int16_t)), nValue, nLength);
+		memcpy((mBuffer + mLength), nValue, nLength);
 		mLength += nLength;
+	}
+	
+	void BufWriter::runCompress(int8_t nType)
+	{
+		if (EcompressType::mLz4 == nType) {
+			lz4compress(mBuffer, mLength, mValue, mSize);
+		} else {
+			zstdcompress(mBuffer, mLength, mValue, mSize);
+		}
+	}
+	
+	void BufWriter::runEncrypt(int32_t nSeed)
+	{
+		::runEncrypt(mBuffer, mLength, nSeed);
 	}
 	
 	void BufWriter::runPush(const char * nName)
@@ -57,7 +70,7 @@ namespace cc {
 	void BufWriter::popClass(const char * nName)
 	{
 	}
-		
+	
 	void BufWriter::pushChild(const char * nName)
 	{
 	}
@@ -72,23 +85,21 @@ namespace cc {
 	
 	int16_t BufWriter::getSize()
 	{
-		return (mLength + sizeof(int16_t));
+		return mSize;
 	}
 	
 	char * BufWriter::getValue()
 	{
-		return mBuffer;
+		return mValue;
 	}
 	
 	void BufWriter::runClear()
 	{
 		memset(mBuffer, 0, sizeof(mBuffer));
 		mLength = 0;
-	}
-	
-	void BufWriter::runEnd()
-	{
-		memcpy(mBuffer, &mLength, sizeof(int16_t));
+		
+		memset(mValue, 0, sizeof(mValue));
+		mSize = 0;
 	}
 	
 	bool BufWriter::isText()

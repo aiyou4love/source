@@ -2,12 +2,6 @@
 
 namespace cc {
 	
-	enum class EpushBuf : int8_t
-	{
-		mError = 0,
-		mLength = 1,
-		mFinish = 2
-	};
 	class BufReader : noncopyable
 	{
 	public:
@@ -37,6 +31,9 @@ namespace cc {
 		
 		void runBuffer(char *& nValue, int16_t nLength);
 		
+		void runDecompress(int8_t nType);
+		void runDecrypt(int32_t nSeed);
+		
 		void runPush(const char * nName);
 		bool runChild(const char * nName);
 		bool runNext(const char * nName);
@@ -47,7 +44,9 @@ namespace cc {
 		
 		void selectStream(const char * nValue);
 		
-		EpushBuf pushBuf(char * nBuffer, int16_t nSize);
+		int8_t pushBuf(char * nBuffer, int16_t nSize);
+		int8_t nextBuf(char * nBuffer, int16_t nSize);
+		
 		const char * getBuffer(int16_t nSize);
 		void finishBuf();
 		
@@ -59,13 +58,13 @@ namespace cc {
 		~BufReader();
 		
 	private:
-		int16_t mPackageSize;
-		char mValue[PACKETSIZE];
-		int16_t mLeft;
-		char * mBuffer;
-		int16_t mSize;
+		char mBuffer[PACKETSIZE];
+		int16_t mCount;
 		int16_t mLength;
 		int16_t mPos;
+		
+		char mValue[PACKETSIZE];
+		int16_t mSize;
 	};
 	
 }

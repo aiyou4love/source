@@ -112,101 +112,88 @@ namespace cc {
 		return result_;
 	}
 	
-	char * zstdcompress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize)
+	void zstdcompress(const char * nValue, int16_t nInsize, char * nDest, int16_t& nOutsize)
 	{
 		size_t destSize_ = ZSTD_compressBound(nInsize);
-		char * result_ = new char[destSize_];
 		
-		nOutsize = ZSTD_compress(result_, destSize_, nValue, nInsize, nLevel);
+		nOutsize = int16_t(ZSTD_compress(nDest + 2, destSize_, nValue, nInsize, 1));
 		if (ZSTD_isError(nOutsize)) {
 			LOGE("[%s]%s", __METHOD__, ZSTD_getErrorName(nOutsize));
-			delete [] result_;
-			result_ = nullptr;
 			nOutsize = 0;
+		} else {
+			(* ((int16_t *)nDest) ) = nOutsize;
+			nOutsize += 2;
 		}
-		return result_;
 	}
 	
-	char * zstdecompress(const char * nValue, size_t nInsize, size_t& nOutsize)
+	void zstdecompress(const char * nValue, int16_t nInsize, char * nDest, int16_t& nOutsize)
 	{
 		uint64_t size_ = ZSTD_getDecompressedSize(nValue, nInsize);
-		if ( 0 == size_ ) {
-			LOGE("[%s]0 == size_", __METHOD__);
-			nOutsize = 0;
-			return nullptr;
-		}
-		char * result_ = new char[size_];
 		
-		nOutsize = ZSTD_decompress(result_, size_, nValue, nInsize);
+		nOutsize = int16_t( ZSTD_decompress(nDest, size_, nValue, nInsize) );
 		if ( nOutsize != size_ ) {
-			LOGE("[%s]nOutsize != size_)", __METHOD__);
-			delete [] result_;
+			LOGE("[%s]nOutsize != size_", __METHOD__);
 			nOutsize = 0;
-			return nullptr;
 		}
-		return result_;
 	}
 	
-	char * lz4compress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize)
+	void lz4compress(const char * nValue, int16_t nInsize, char * nDest, int16_t& nOutsize)
 	{
-		size_t headSize_ = sizeof(int32_t);
+		int16_t destSize_ = int16_t( LZ4_compressBound(nInsize) );
 		
-		int destSize_ = LZ4_compressBound((int)nInsize);
-		size_t maxSize_ = headSize_ + size_t(destSize_);
-		char * result_ = new char[maxSize_];
-		
-		*( (uint32_t *)result_ ) = uint32_t(nInsize);
-		
-		int size_ = 0;
-		if (nLevel > 8) {
-			size_ = LZ4_compress_HC(nValue, result_ + headSize_, int(nInsize), destSize_, 0);
-		} else {
-			size_ = LZ4_compress_default(nValue, result_ + headSize_, int(nInsize), destSize_);
+		nOutsize = int16_t( LZ4_compress_default(nValue, nDest + 4, nInsize, destSize_) );
+		if ( nOutsize > 0 ) {
+			(* ((int16_t *)nDest) ) = nOutsize;
+			(* ((int16_t *)(nDest + 2)) ) = nInsize;
+			nOutsize += 4;
 		}
-		if (size_ <= 0) {
-			delete[] result_;
-			return nullptr;
-		}
-		
-		if ( (double(maxSize_) / double(size_ + headSize_)) >= 1.2 ) {
-			char * bytes_ = new char[size_ + headSize_];
-			memcpy(bytes_, result_, size_ + headSize_);
-			delete[] result_;
-			result_ = bytes_;
-		}
-		
-		nOutsize = size_t(size_) + headSize_;
-		return result_;
 	}
 	
-	char * lz4decompress(const char * nValue, size_t nInsize, size_t& nOutsize)
+	void lz4decompress(const char * nValue, char * nDest, int16_t& nOutsize)
 	{
-		size_t headSize_ = sizeof(int32_t);
+		nOutsize = (*( (int16_t *)nValue ));
 		
-		uint32_t size_ = *( (uint32_t *)nValue );
-		char * result_ = new char[size_];
+		if ( LZ4_decompress_fast(nValue + 2, nDest, nOutsize) < 0 ) {
+			nOutsize = 0;
+		}
+	}
+	
+	void runEncrypt(char * nValue, int32_t nInsize, int32_t nSeed)
+	{
+		int32_t block_ = (nInsize / 4);
+		int32_t bytes_ = block_ * 4;
 		
-		if ( (nOutsize > 0) && (nOutsize == size_t(size_)) ) {
-			int length_ = LZ4_decompress_fast(nValue + headSize_,
-				result_, int(nOutsize));
-				
-			if ( length_ < 0 ) {
-				delete[] result_;
-				result_ = nullptr;
-			}
-		} else {
-			int length_ = LZ4_decompress_safe(nValue + headSize_, 
-				result_, int(nInsize - headSize_), size_);
-				
-			if ( length_ > 0 ) {
-				nOutsize = size_t(length_);
-			} else {
-				delete[] result_;
-				result_ = nullptr;
-			}
+		for( int32_t i = 0; i < block_; ++i )
+		{
+			((int32_t *)nValue)[i] ^= nSeed;
+			nSeed = ((int32_t *)nValue)[i];
 		}
 		
-		return result_;
+		int8_t seed_ = int8_t(nSeed);
+		for( int32_t i = bytes_; i < nInsize; ++i )
+		{
+			nValue[i] ^= seed_;
+		}
+	}
+	
+	void runDecrypt(char * nValue, int32_t nInsize, int32_t nSeed)
+	{
+		int32_t block_ = (nInsize / 4);
+		int32_t bytes_ = block_ * 4;
+		
+		int32_t iSeed_ = 0;
+		for( int32_t i = 0; i < block_; ++i )
+		{
+			iSeed_ = ((int32_t *)nValue)[i];
+			((int32_t *)nValue)[i] ^= nSeed;
+			nSeed = iSeed_;
+		}
+		
+		int8_t bSeed_ = int8_t(iSeed_);
+		for( int32_t i = bytes_; i < nInsize; ++i )
+		{
+			nValue[i] ^= bSeed_;
+		}
 	}
 	
 }

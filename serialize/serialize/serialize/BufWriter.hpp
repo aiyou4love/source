@@ -8,11 +8,11 @@ namespace cc {
 		template <typename T>
 		void runNumber(T& nValue, const char * nName)
 		{
-			if ((mLength + sizeof(int16_t)+sizeof(T)) > PACKETSIZE) {
+			if ((mLength + sizeof(T)) > PACKETSIZE) {
 				LOGE("[%s]%s", __METHOD__, nName);
 				return;
 			}
-			memcpy((mBuffer + mLength + sizeof(int16_t)), &nValue, sizeof(T));
+			memcpy((mBuffer + mLength), &nValue, sizeof(T));
 			mLength += sizeof(T);
 		}
 		
@@ -30,6 +30,9 @@ namespace cc {
 		
 		void runBuffer(char *& nValue, int16_t nLength);
 		
+		void runCompress(int8_t nType);
+		void runEncrypt(int32_t nSeed);
+		
 		void runPush(const char * nName);
 		void runPop(const char * nName);
 		
@@ -44,7 +47,6 @@ namespace cc {
 		int16_t getSize();
 		char * getValue();
 		void runClear();
-		void runEnd();
 		
 		bool isText();
 		
@@ -54,6 +56,9 @@ namespace cc {
 	private:
 		char mBuffer[PACKETSIZE];
 		int16_t mLength;
+		
+		char mValue[PACKETSIZE];
+		int16_t mSize;
 	};
 	
 }

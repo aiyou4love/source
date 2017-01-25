@@ -41,6 +41,21 @@ namespace cc {
 		memcpy(nValue, buffer_, nLength);
 	}
 	
+	void BufReader::runDecompress(int8_t nType)
+	{
+		if (EcompressType::mLz4 == nType) {
+			
+			lz4decompress(mBuffer, mLength, mValue, mSize);
+		} else {
+			zstdcompress(mBuffer, mLength, mValue, mSize);
+		}
+	}
+	
+	void BufReader::runDecrypt(int32_t nSeed)
+	{
+		::runDecrypt(mValue, mSize, nSeed);
+	}
+	
 	void BufReader::runPush(const char * nName)
 	{
 		LOGE("[%s]%s", __METHOD__, nName);
@@ -77,27 +92,122 @@ namespace cc {
 	{
 	}
 	
-	EpushBuf BufReader::pushBuf(char * nBuffer, int16_t nSize)
+	int8_t BufReader::pushBuf(char * nBuffer, int16_t nSize)
 	{
-		if (nSize <= 0) {
-			LOGE("[%s]%d", __METHOD__, nSize);
-			return EpushBuf::mError;
+		if ( mLength > 0 ) {
+			if ( mCount > 0 ) {
+				if ( nLength > (nSize + mCount) ) {
+					memcpy( (mBuffer + mCount), nBuffer, nSize );
+					mCount += nSize;
+					mPos = 0;
+					return 2;
+				} else {
+					memcpy( (mBuffer + mCount), nBuffer, (mLength - mCount) );
+					mCount += mLength;
+					mPos = mLength - mCount;
+					return 1;
+				}
+			} else {
+				if ( nLength > nSize ) {
+					memcpy( mBuffer, nBuffer, nSize );
+					mCount = nSize;
+					mPos = 0;
+					return 2;
+				} else {
+					mPos = 0;
+					return 1;
+				}
+			}
 		}
-		mBuffer = nBuffer;
-		mSize = nSize;
-		if (0 >= mLength) {
-			this->runNumber(mLength, "");
+		if ( mCount > 0 ) {
+			mBuffer[1] = nBuffer[0];
+			mLength = (*( (int16_t *)mBuffer ));
+			if ( (mLength > PACKETSIZE) || (0 == mLength) ) {
+				LOGE("[%s]> PACKETSIZE or 0", __METHOD__);
+				return 0;
+			}
+			memset(mBuffer, 0, sizeof(mBuffer));
+			if ( (nSize - 1) < 1 ) {
+				mCount = 0;
+				mPos = 0;
+				return 2;
+			}
+			if ( nLength > (nSize - 1) ) {
+				memcpy( mBuffer, (nBuffer + 1), (nSize - 1) );
+				mCount = nSize - 1;
+				mPos = 0;
+				return 2;
+			} else {
+				mPos = 1;
+				mCount = 0;
+				return 1;
+			}
+		} else {
+			if ( nSize > 1 ) {
+				mLength = (*( (int16_t *)nBuffer ));
+				if ( mLength > PACKETSIZE ) {
+					LOGE("[%s]> PACKETSIZE", __METHOD__);
+					return 0;
+				}
+				if ( (nSize - 2) < 1 ) {
+					mCount = 0;
+					mPos = 0;
+					return 2;
+				}
+				if ( nLength > (nSize - 2) ) {
+					memcpy( mBuffer, (nBuffer + 2), (nSize - 2) );
+					mCount = nSize - 2;
+					mPos = 0;
+					return 2;
+				} else {
+					mPos = 2;
+					return 1;
+				}
+			} else {
+				mBuffer[0] = nBuffer[0];
+				mCount = 1;
+				mPos = 0;
+				return 2;
+			}
 		}
-		if ( (mLength <= 0) || (mLength > (PACKETSIZE - 4)) ) {
-			LOGE("[%s]%d", __METHOD__, mLength);
-			return EpushBuf::mError;
+	}
+	
+	int8_t BufReader::nextBuf(char * nBuffer, int16_t nSize)
+	{
+		if ( (nSize - mPos) > 1 ) {
+			mLength = (*( (int16_t *)(nBuffer + mPos) ));
+			if ( mLength > PACKETSIZE ) {
+				LOGE("[%s]> PACKETSIZE", __METHOD__);
+				return 0;
+			}
+			mPos += 2;
+			if ( (nSize - mPos) < 1 ) {
+				mCount = 0;
+				mPos = 0;
+				return 2;
+			}
+			if ( nLength > (nSize - mPos) ) {
+				memset(mBuffer, 0, sizeof(mBuffer));
+				memcpy( mBuffer, (nBuffer + mPos), (nSize - mPos) );
+				mCount = (nSize - mPos);
+				mPos = 0;
+				return 2;
+			} else {
+				mCount = 0;
+				return 1;
+			}
+		} else if ( 1 == (nSize - mPos) ) {
+			memset(mBuffer, 0, sizeof(mBuffer));
+			mBuffer[0] = nBuffer[mPos];
+			mCount = 1;
+			mPos = 0;
+			return 2;
+		} else {
+			memset(mBuffer, 0, sizeof(mBuffer));
+			mCount = 0;
+			mPos = 0;
+			return 2;
 		}
-		if (mLength > (mSize + mLeft - 2)) {
-			memcpy((mValue + mLeft), mBuffer, mSize);
-			mLeft += mSize; mBuffer = nullptr; mSize = 0;
-			return EpushBuf::mLength;
-		}
-		return EpushBuf::mFinish;
 	}
 	
 	const char * BufReader::getBuffer(int16_t nSize)

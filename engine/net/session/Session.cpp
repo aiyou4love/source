@@ -33,7 +33,6 @@ namespace cc {
 		mBufWriter.runClear();
 		IoWriter<BufWriter> ioWriter_(mBufWriter);
 		value_->headSerialize(ioWriter_, "");
-		mBufWriter.runEnd();
 		this->runWrite();
 	}
 	
@@ -94,6 +93,10 @@ namespace cc {
 			this->runException();
 			return;
 		}
+		if ( nBytes <= 0 ) {
+			LOGE("[%s]nBytes <= 0", __METHOD__);
+			return;
+		}
 		mReadTimer.cancel();
 		this->internalRead(nBytes);
 		this->runRead();
@@ -115,7 +118,7 @@ namespace cc {
 		int16_t size_ = (int16_t)nBytes;
 		EpushBuf pushBuf_ = mBufReader.pushBuf(buf_, size_);
 		if (EpushBuf::mError == pushBuf_) {
-			LOGE("[%s]pushBuf:%d", __METHOD__, (int8_t)pushBuf_);
+			LOGE("[%s]%d", __METHOD__, (int8_t)pushBuf_);
 			this->runException();
 			return;
 		}
@@ -371,6 +374,10 @@ namespace cc {
 		mVerMinId = 0;
 		mSessionId = 0;
 		
+		mSeedValue = SEEDVALUE;
+		mSeedNo = SEEDBASE;
+		mSeedType = SEEDTYPE;
+		
 		mIsAccept = false;
 	}
 	
@@ -402,6 +409,9 @@ namespace cc {
 		, mVerMaxId (0)
 		, mVerMinId (0)
 		, mIsAccept (false)
+		, mSeedValue (SEEDVALUE)
+		, mSeedNo (SEEDBASE)
+		, mSeedType (SEEDTYPE)
 	{
 		mReadBuffer.fill(0);
 		mValues.clear();

@@ -20,13 +20,13 @@ namespace cc {
 	extern int16_t linkInt8(int8_t nId0, int8_t nId1);
 	extern int32_t linkInt24(int8_t nId1, int32_t nId0);
 	
-	extern char * zstdcompress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize);
-	extern char * zstdecompress(const char * nValue, size_t nInsize, size_t& nOutsize);
+	extern void zstdecompress(const char * nValue, int16_t nInsize, char * nDest, int16_t& nOutsize);
+	extern void zstdcompress(const char * nValue, int16_t nInsize, char * nDest, int16_t& nOutsize);
 	
-	extern char * lz4compress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize);
-	extern char * lz4decompress(const char * nValue, size_t nInsize, size_t& nOutsize);
+	extern void lz4compress(const char * nValue, int16_t nInsize, char * nDest, int16_t& nOutsize);
+	extern void lz4decompress(const char * nValue, char * nDest, int16_t& nOutsize);
 	
-	extern char * lz4compress(const char * nValue, size_t nInsize, int nLevel, size_t& nOutsize);
-	extern char * lz4decompress(const char * nValue, size_t nInsize, size_t& nOutsize);
+	extern void runEncrypt(char * nValue, int32_t nInsize, int32_t nSeed);
+	extern void runDecrypt(char * nValue, int32_t nInsize, int32_t nSeed);
 	
 }

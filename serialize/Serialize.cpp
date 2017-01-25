@@ -20,6 +20,9 @@ void serializeInit()
 	RandomEngine& randomEngine_ = RandomEngine::instance();
 	randomEngine_.runPreinit();
 	
+	SeedEngine& seedEngine_ = SeedEngine::instance();
+	seedEngine_.runPreinit();
+	
 	{
 		string logPath_ = workDirectory_.logPath();
 		LogEngine& logEngine_ = LogEngine::instance();

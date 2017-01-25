@@ -4,6 +4,7 @@
 
 #include "normal/normal/Instance.hpp"
 #include "normal/normal/DefaultValue.hpp"
+#include "normal/normal/EcompressType.hpp"
 #include "normal/normal/CommonMethod.hpp"
 #include "normal/class/ClassMethod.hpp"
 #include "normal/convert/ConvertValue.hpp"
@@ -17,6 +18,8 @@
 #include "lua/LuaEngine.hpp"
 
 #include "random/RandomEngine.hpp"
+
+#include "seed/SeedEngine.hpp"
 
 #include "workDirectory/EappType.hpp"
 #include "workDirectory/WorkDirectory.hpp"
