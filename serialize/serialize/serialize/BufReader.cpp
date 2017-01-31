@@ -211,12 +211,12 @@ namespace cc {
 	
 	void BufReader::runDecrypt(int32_t nSeed)
 	{
-		::runDecrypt(mValue, mSize, nSeed);
+		runDecrypt(mValue, mSize, nSeed);
 	}
 	
 	const char * BufReader::getBuffer(int16_t nSize)
 	{
-		if ( mPos0 + nSize) > mSize ) {
+		if ( (mPos0 + nSize) > mSize ) {
 			return nullptr;
 		}
 		char * result_ = (mValue + mPos0);
@@ -227,13 +227,11 @@ namespace cc {
 	void BufReader::runClear()
 	{
 		memset(mBuffer, 0, sizeof(mBuffer));
-		mBuffer = nullptr;
 		mLength = 0;
 		mCount = 0;
 		mPos = 0;
 		
 		memset(mValue, 0, sizeof(mValue));
-		mValue = nullptr;
 		mSize = 0;
 		mPos0 = 0;
 	}

@@ -50,7 +50,7 @@ namespace cc {
 	
 	void BufWriter::runEncrypt(int32_t nSeed)
 	{
-		::runEncrypt(mBuffer, mLength, nSeed);
+		runEncrypt(mBuffer, mLength, nSeed);
 	}
 	
 	void BufWriter::runPush(const char * nName)
