@@ -125,8 +125,6 @@ using namespace rapidxml;
 
 #define __AUTHID__ 99999999
 
-#define SEEDBASE  9
-#define SEEDVALUE 24
-#define SEEDTYPE  10
+#define SEEDDEF  924
 
 typedef SPTR<std::thread> ThreadPtr;

@@ -88,4 +88,12 @@ void engineInit()
 	ConnectRemove::instance();
 	
 	LOGI("[%s]13", __METHOD__);
+	
+	TimeEngine& timeEngine_ = TimeEngine::instance();
+	timeEngine_.runPreinit();
+	
+	LOGI("[%s]5", __METHOD__);
+	
+	cServerTime& serverTime_ = cServerTime::instance();
+	serverTime_.runPreinit();
 }

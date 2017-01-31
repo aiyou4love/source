@@ -30,9 +30,13 @@ namespace cc {
 			mWriting = false;
 			return;
 		}
+		int32_t seed_ = value_->getSeed();
+		
 		mBufWriter.runClear();
 		IoWriter<BufWriter> ioWriter_(mBufWriter);
 		value_->headSerialize(ioWriter_, "");
+		mBufWriter.runEncrypt(seed_);
+		mBufWriter.runCompress(EcompressType::mZstd);
 		this->runWrite();
 	}
 	
@@ -72,7 +76,25 @@ namespace cc {
 	void Session::pushValue(ValuePtr& nValue)
 	{
 		LKGUD<mutex> lock_(mMutex);
+		int32_t seed_ = this->getWriteSeed();
+		nValue->setSeed(seed_);
 		mValues.push_back(nValue);
+	}
+	
+	int32_t Session::getWriteSeed()
+	{
+		if ( (0 == mWriteValue) || (0 == mWriteNo) || (0 == mWriteType) ) {
+			return SEEDDEF;
+		}
+		if (mIsFirst && mIsAccept) {
+			mIsFirst = false;
+			return SEEDDEF;
+		}
+		SeedEngine& seedEngine_ = SeedEngine::instance();
+		int32_t result_ = seedEngine_.runSeed(mWriteNo, mWriteValue, mWriteType);
+		mWriteNo = result_;
+		mWriteType++;
+		return result_;
 	}
 	
 	ValuePtr Session::popValue()
@@ -99,7 +121,6 @@ namespace cc {
 		}
 		mReadTimer.cancel();
 		this->internalRead(nBytes);
-		this->runRead();
 	}
 	
 	void Session::handleReadTimeout(const boost::system::error_code& nError)
@@ -116,21 +137,56 @@ namespace cc {
 	{
 		char * buf_ = (char *)(mReadBuffer.data());
 		int16_t size_ = (int16_t)nBytes;
-		EpushBuf pushBuf_ = mBufReader.pushBuf(buf_, size_);
-		if (EpushBuf::mError == pushBuf_) {
-			LOGE("[%s]%d", __METHOD__, (int8_t)pushBuf_);
+		int8_t error_ = mBufReader.pushBuf(buf_, size_);
+		while ( 1 == error_ ) {
+			int32_t seed_ = this->getReadSeed();
+			mBufReader.runDecompress(buf_, EcompressType::mZstd);
+			mBufReader.runDecrypt(seed_);
+			this->runValue();
+			error_ = mBufReader.nextBuf(buf_, size_);
+		}
+		if ( 0 == error_ ) {
 			this->runException();
 			return;
 		}
-		if (EpushBuf::mLength == pushBuf_) {
-			return;
-		}
-		this->runValue();
+		this->runRead();
 	}
 	
-	void Session::runConnect(ValuePtr& nValue)
+	void Session::runRead()
 	{
-		this->runValue(nValue);
+		try {
+			mReadBuffer.assign(0);
+			
+			mReadTimer.expires_from_now(boost::posix_time::seconds(Session::read_timeout));
+			mReadTimer.async_wait(boost::bind(&Session::handleReadTimeout, 
+				SED_THIS(), boost::asio::placeholders::error));
+				
+			mSocket.async_read_some(boost::asio::buffer(mReadBuffer),
+				boost::bind(&Session::handleRead, SED_THIS(),
+				asio::placeholders::error, asio::placeholders::bytes_transferred));
+		} catch (boost::system::system_error& e) {
+			LOGE("[%s]%s", __METHOD__, e.what());
+			this->runException();
+		}
+	}
+	
+	void Session::startRead()
+	{
+		mReading = true;
+		this->runRead();
+		this->startWrite();
+	}
+	
+	int32_t Session::getReadSeed()
+	{
+		if ( (0 == mReadValue) || (0 == mReadNo) || (0 == mReadType) ) {
+			return SEEDDEF;
+		}
+		SeedEngine& seedEngine_ = SeedEngine::instance();
+		int32_t result_ = seedEngine_.runSeed(mReadNo, mReadValue, mReadType);
+		mReadNo = result_;
+		mReadType++;
+		return result_;
 	}
 	
 	void Session::runAccept(ValuePtr& nValue)
@@ -150,13 +206,21 @@ namespace cc {
 		}
 	}
 	
+	void Session::runValue(ValuePtr& nValue)
+	{
+		if (nullptr != mSend) {
+			SendPtr send_ = PTR_DCST<ISend>(*mSend);
+			send_->pushValue(nValue);
+		} else {
+			mDispatch->pushValue(nValue);
+		}
+	}
+	
 	void Session::runValue()
 	{
 		ValuePtr value_(new Value());
 		IoReader<BufReader> ioReader_(mBufReader);
 		value_->headSerialize(ioReader_, "");
-		mBufReader.finishBuf();
-		mReadBuffer.assign(0);
 		
 		int8_t check_ = value_->verCheck(mIsAccept);
 		if ( 0 == check_ ) {
@@ -170,31 +234,8 @@ namespace cc {
 		if (mIsAccept) {
 			this->runAccept(value_);
 		} else {
-			this->runConnect(value_);
+			this->runValue(value_);
 		}
-	}
-	
-	void Session::runRead()
-	{
-		try {
-			mReadTimer.expires_from_now(boost::posix_time::seconds(Session::read_timeout));
-			mReadTimer.async_wait(boost::bind(&Session::handleReadTimeout, 
-				SED_THIS(), boost::asio::placeholders::error));
-				
-			mSocket.async_read_some(boost::asio::buffer(mReadBuffer),
-				boost::bind(&Session::handleRead, SED_THIS(),
-				asio::placeholders::error, asio::placeholders::bytes_transferred));
-		} catch (boost::system::system_error& e) {
-			LOGE("[%s]%s", __METHOD__, e.what());
-			this->runException();
-		}
-	}
-	
-	void Session::startRead()
-	{
-		mReading = true;
-		this->runRead();
-		this->startWrite();
 	}
 	
 	void Session::initSelectId(ConnectInfoPtr& nConnectInfo)
@@ -311,16 +352,6 @@ namespace cc {
 		this->runValue(value_);
 	}
 	
-	void Session::runValue(ValuePtr& nValue)
-	{
-		if (nullptr != mSend) {
-			SendPtr send_ = PTR_DCST<ISend>(*mSend);
-			send_->pushValue(nValue);
-		} else {
-			mDispatch->pushValue(nValue);
-		}
-	}
-	
 	void Session::setRemove(ISessionRemove * nSessionRemove)
 	{
 		mSessionRemove = nSessionRemove;
@@ -374,9 +405,15 @@ namespace cc {
 		mVerMinId = 0;
 		mSessionId = 0;
 		
-		mSeedValue = SEEDVALUE;
-		mSeedNo = SEEDBASE;
-		mSeedType = SEEDTYPE;
+		mWriteValue = 0;
+		mWriteNo = 0;
+		mWriteType = 0;
+		
+		mReadValue = 0;
+		mReadNo = 0;
+		mReadType = 0;
+		
+		mIsFirst = true;
 		
 		mIsAccept = false;
 	}
@@ -409,9 +446,13 @@ namespace cc {
 		, mVerMaxId (0)
 		, mVerMinId (0)
 		, mIsAccept (false)
-		, mSeedValue (SEEDVALUE)
-		, mSeedNo (SEEDBASE)
-		, mSeedType (SEEDTYPE)
+		, mWriteValue (0)
+		, mWriteNo (0)
+		, mWriteType (0)
+		, mReadValue (0)
+		, mReadNo (0)
+		, mReadType (0)
+		, mIsFirst (true)
 	{
 		mReadBuffer.fill(0);
 		mValues.clear();

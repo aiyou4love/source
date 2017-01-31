@@ -13,6 +13,7 @@ namespace cc {
 		void internalWrite();
 		void runWrite();
 		void startWrite();
+		int32_t getWriteSeed();
 		
 		void runSend(ValuePtr& nValue);
 		
@@ -24,6 +25,16 @@ namespace cc {
 		void internalRead(size_t nBytes);
 		void runRead();
 		void startRead();
+		int32_t getReadSeed();
+		
+		void runAccept(ValuePtr& nValue);
+		void runValue(ValuePtr& nValue);
+		void runValue();
+		
+		void runDisconnect();
+		void runException();
+		void runVerMaxId();
+		void runVerMinId();
 		
 		void initSelectId(ConnectInfoPtr& nConnectInfo);
 		
@@ -36,17 +47,7 @@ namespace cc {
 		void setIsAccept(bool nIsAccept);
 		void runAuthority(ValuePtr& nValue);
 		
-		void runDisconnect();
-		void runException();
-		void runVerMaxId();
-		void runVerMinId();
-		
 		void runSelectId(int32_t nSelectId);
-		void runValue(ValuePtr& nValue);
-		
-		void runConnect(ValuePtr& nValue);
-		void runAccept(ValuePtr& nValue);
-		void runValue();
 		
 		void setRemove(ISessionRemove * nSessionRemove);
 		void setAppId(int64_t nAppId);
@@ -75,14 +76,20 @@ namespace cc {
 		BufWriter mBufWriter;
 		mutex mMutex;
 		
+		int16_t mWriteValue;
+		int32_t mWriteNo;
+		int16_t mWriteType;
+		bool mIsFirst;
+		
+		int16_t mReadValue;
+		int32_t mReadNo;
+		int16_t mReadType;
+		
 		int32_t mDisconnectId;
 		int32_t mExceptionId;
+		
 		int32_t mVerMaxId;
 		int32_t mVerMinId;
-		
-		int16_t mSeedValue;
-		int32_t mSeedNo;
-		int16_t mSeedType;
 		
 		IDispatch * mDispatch;
 		PropertyPtr * mSend;
@@ -100,3 +107,4 @@ namespace cc {
 	typedef WPTR<Session> SessionWtr;
 	
 }
+  

@@ -22,16 +22,6 @@ void systemInit()
 	ServerEngine& serverEngine_ = ServerEngine::instance();
 	serverEngine_.runPreinit();
 	
-	LOGI("[%s]4", __METHOD__);
-	
-	TimeEngine& timeEngine_ = TimeEngine::instance();
-	timeEngine_.runPreinit();
-	
-	LOGI("[%s]5", __METHOD__);
-	
-	cServerTime& serverTime_ = cServerTime::instance();
-	serverTime_.runPreinit();
-	
 	LOGI("[%s]6", __METHOD__);
 	
 	TaskEngine& taskEngine_ = TaskEngine::instance();

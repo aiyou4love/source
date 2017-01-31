@@ -44,6 +44,9 @@ namespace cc {
 		int8_t getType(int8_t nIndex);
 		int8_t getCount();
 		
+		void setSeed(int32_t nSeed);
+		int32_t getSeed();
+		
 		bool checkValue(vector<int16_t>& nIndexs);
 		
 		string getTextTime(int8_t nIndex);
@@ -89,6 +92,8 @@ namespace cc {
 		
 		int16_t mVerMax;
 		int16_t mVerMin;
+		
+		int32_t mSeed;
 		
 		int32_t mIndex;
 	};

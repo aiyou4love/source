@@ -388,6 +388,16 @@ namespace cc {
 		LocalTime localTime_(value_);
 		return localTime_.getTextTime();
 	}
+		
+	void Value::setSeed(int32_t nSeed)
+	{
+		mSeed = nSeed;
+	}
+	
+	int32_t Value::getSeed()
+	{
+		return mSeed;
+	}
 	
 	void Value::runClear()
 	{
@@ -404,6 +414,8 @@ namespace cc {
 		
 		mVerMax = 0;
 		mVerMin = 0;
+		
+		mSeed = 0;
 		
 		mIndex = 0;
 	}

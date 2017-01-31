@@ -92,4 +92,21 @@
 #include "net/accept/SessionMgr.hpp"
 #include "net/accept/AcceptRemove.hpp"
 
+#include "time/time/EtimeBegin.hpp"
+#include "time/time/EtimeCount.hpp"
+#include "time/time/EtimeEnd.hpp"
+#include "time/time/EtimeStart.hpp"
+#include "time/time/EtimeState.hpp"
+#include "time/time/EtimeType.hpp"
+#include "time/time/TimeAdjust.hpp"
+#include "time/time/TimeBegin.hpp"
+#include "time/time/TimeCount.hpp"
+#include "time/time/TimeEnd.hpp"
+#include "time/time/TimeStart.hpp"
+#include "time/time/TimeDuration.hpp"
+#include "time/time/ServerTime.hpp"
+#include "time/time/TimeEngine.hpp"
+#include "time/server/cServerTime.hpp"
+#include "time/client/cServerTime.hpp"
+
 extern void engineInit();
