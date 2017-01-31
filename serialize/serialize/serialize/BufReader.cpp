@@ -211,7 +211,7 @@ namespace cc {
 	
 	void BufReader::runDecrypt(int32_t nSeed)
 	{
-		runDecrypt(mValue, mSize, nSeed);
+		cc::runDecrypt(mValue, mSize, nSeed);
 	}
 	
 	const char * BufReader::getBuffer(int16_t nSize)
