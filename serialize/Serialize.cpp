@@ -48,35 +48,23 @@ void serializeStart()
 		
 	lifeCycle_.runLuaApi();
 	
-	LOGI("[%s]2", __METHOD__);
-	
 	lifeCycle_.loadBegin();
 	lifeCycle_.loading();
 	lifeCycle_.loadEnd();
-	
-	LOGI("[%s]3", __METHOD__);
 	
 	lifeCycle_.initBegin();
 	lifeCycle_.initing();
 	lifeCycle_.initEnd();
 	
-	LOGI("[%s]4", __METHOD__);
-	
 	lifeCycle_.startBegin();
 	lifeCycle_.starting();
 	lifeCycle_.startEnd();
-	
-	LOGI("[%s]5", __METHOD__);
 	
 	lifeCycle_.runBegin();
 	lifeCycle_.running();
 	lifeCycle_.runEnd();
 	
-	LOGI("[%s]6", __METHOD__);
-	
 	lifeCycle_.runJoin();
-	
-	LOGI("[%s]7", __METHOD__);
 	
 	lifeCycle_.stopBegin();
 	lifeCycle_.stoping();

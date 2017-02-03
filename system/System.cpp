@@ -10,24 +10,16 @@ void systemInit()
 	
 	UiManager::instance();
 	
-	LOGI("[%s]2", __METHOD__);
-	
 #ifdef __CLIENT__
 	ConsoleEngine& consoleEngine_ = ConsoleEngine::instance();
 	consoleEngine_.runPreinit();
 #endif
 	
-	LOGI("[%s]3", __METHOD__);
-	
 	ServerEngine& serverEngine_ = ServerEngine::instance();
 	serverEngine_.runPreinit();
 	
-	LOGI("[%s]6", __METHOD__);
-	
 	TaskEngine& taskEngine_ = TaskEngine::instance();
 	taskEngine_.runPreinit();
-	
-	LOGI("[%s]7", __METHOD__);
 	
 #ifdef __CLIENT__
 	ActivityEngine& activityEngine_ = ActivityEngine::instance();
@@ -40,12 +32,8 @@ void systemInit()
 	cRoleEngine& roleEngine_ = cRoleEngine::instance();
 	roleEngine_.runPreinit();
 	
-	LOGI("[%s]8", __METHOD__);
-	
 	ApplicationEngine& applicationEngine_ = ApplicationEngine::instance();
 	applicationEngine_.runPreinit();
-	
-	LOGI("[%s]9", __METHOD__);
 	
 #if ( (defined __CLIENT__) || (defined __AGENT__) )
 	cAccountEngine& accountEngine_ = cAccountEngine::instance();
