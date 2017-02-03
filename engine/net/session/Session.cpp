@@ -191,7 +191,7 @@ namespace cc {
 	
 	void Session::runAccept(ValuePtr& nValue)
 	{
-		if ( mAuthority > Eauthority::mTourist ) {
+		if ( mAuthority > 0 ) {
 			SelectEngine& selectEngine_ = SelectEngine::instance();
 			int32_t selectId_ = nValue->getInt32(1);
 			if ( selectEngine_.isNetSelect(selectId_, mAuthority) ) {
@@ -203,6 +203,22 @@ namespace cc {
 			}
 		} else {
 			this->runAuthority(nValue);
+		}
+	}
+	
+	void Session::runConnect(ValuePtr& nValue)
+	{
+		if ( mAuthority <= 0 ) {
+			mAuthority = nValue->getInt16(1);
+		#ifdef __CLIENT__
+			cServerTime& serverTime_ = cServerTime::instance();
+			int64_t numberTime_ = nValue->getInt64(2);
+			int32_t timeDiff_ = nValue->getInt32(3);
+			serverTime_.setServerTime(numberTime_, timeDiff_);
+			LOGE("[%s]%lld,%d", __METHOD__, numberTime_, timeDiff_);
+		#endif
+		} else {
+			this->runValue(nValue);
 		}
 	}
 	
@@ -234,7 +250,7 @@ namespace cc {
 		if (mIsAccept) {
 			this->runAccept(value_);
 		} else {
-			this->runValue(value_);
+			this->runConnect(value_);
 		}
 	}
 	
@@ -335,10 +351,17 @@ namespace cc {
 		} else {
 			mAuthority = Eauthority::mTourist;
 		}
-		
 		ValuePtr value_(new Value());
 		value_->verInit();
-		value_->pushInt32(__AUTHID__);
+		value_->pushInt16(mAuthority);
+	#ifdef __AGENT__
+		cServerTime& serverTime_ = cServerTime::instance();
+		int64_t numberTime_ = serverTime_.getServerTime();
+		int32_t timeDiff_ = serverTime_.getTimeDiff();
+		LOGE("[%s]%lld,%d", __METHOD__, numberTime_, timeDiff_);
+		value_->pushInt64(numberTime_);
+		value_->pushInt32(timeDiff_);
+	#endif
 		this->runSend(value_);
 	}
 	

@@ -3,27 +3,12 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	void cServerTime::finishAdjust(int64_t nTime, int32_t nDiff)
+	void cServerTime::setServerTime(int64_t nTime, int32_t nDiff)
 	{
 		steady_clock::time_point nowPoint_ = steady_clock::now();
 		duration<int32_t> timeSpan_ = duration_cast<duration<int32_t> >(nowPoint_ - mStartPoint);
-		int32_t value_ = timeSpan_.count() - mNumberTime;
-		if ( (mMaxTime > 0) && (mMaxTime <= value_) ) {
-			return;
-		}
-		mMaxTime = value_;
 		mServerTime = nTime - timeSpan_.count();
-		mServerTime += (mMaxTime / 2);
-		
-		int32_t timeDiff_ = mTimeDiff - nDiff;
-		mServerTime += timeDiff_;
-	}
-	
-	void cServerTime::startAdjust()
-	{
-		steady_clock::time_point nowPoint_ = steady_clock::now();
-		duration<int32_t> timeSpan_ = duration_cast<duration<int32_t> >(nowPoint_ - mStartPoint);
-		mNumberTime = timeSpan_.count();
+		mServerTime += (mTimeDiff - nDiff);
 	}
 	
 	int64_t cServerTime::getServerTime()
@@ -57,16 +42,12 @@ namespace cc {
 	
 	cServerTime::cServerTime()
 		: mServerTime (0)
-		, mNumberTime (0)
-		, mMaxTime (0)
 	{
 	}
 	
 	cServerTime::~cServerTime()
 	{
 		mServerTime = 0;
-		mNumberTime = 0;
-		mMaxTime = 0;
 	}
 	
 	cServerTime cServerTime::mcServerTime;

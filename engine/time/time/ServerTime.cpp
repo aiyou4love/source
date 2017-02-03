@@ -2,6 +2,11 @@
 
 namespace cc {
 	
+	int32_t ServerTime::getTimeDiff()
+	{
+		return mTimeDiff;
+	}
+	
 	void ServerTime::runPreinit()
 	{
 		time_t ltime_ = time(nullptr);

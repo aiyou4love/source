@@ -26,7 +26,6 @@ namespace cc {
 		session_->setException(mExceptionId);
 		session_->setDispatch(mDispatchId);
 		session_->setRemove(&acceptRemove_);
-		session_->setAuthority(Eauthority::mTourist);
 		session_->setIsAccept(true);
 		mSessions[mSessionId] = session_;
 		return mSessions[mSessionId];

@@ -28,6 +28,7 @@ namespace cc {
 		int32_t getReadSeed();
 		
 		void runAccept(ValuePtr& nValue);
+		void runConnect(ValuePtr& nValue);
 		void runValue(ValuePtr& nValue);
 		void runValue();
 		

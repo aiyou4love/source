@@ -6,8 +6,7 @@ namespace cc {
 	class cServerTime : public ServerTime
 	{
 	public:
-		void finishAdjust(int64_t nTime, int32_t nDiff);
-		void startAdjust();
+		void setServerTime(int64_t nTime, int32_t nDiff);
 		
 		int64_t getServerTime();
 		int64_t getLocalTime();

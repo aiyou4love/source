@@ -5,6 +5,8 @@ namespace cc {
 	class ServerTime : noncopyable
 	{
 	public:
+		int32_t getTimeDiff();
+		
 		virtual void runPreinit();
 		
 		ServerTime();

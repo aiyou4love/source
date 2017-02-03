@@ -123,8 +123,6 @@ using namespace rapidxml;
 	#define APPNAME "client"
 #endif
 
-#define __AUTHID__ 99999999
-
 #define SEEDDEF  924
 
 typedef SPTR<std::thread> ThreadPtr;
