@@ -63,6 +63,22 @@ namespace cc {
 		}
 	}
 	
+	int32_t Session::getWriteSeed()
+	{
+		if ( (0 == mWriteValue) || (0 == mWriteNo) || (0 == mWriteType) ) {
+			return SEEDDEF;
+		}
+		if (mIsFirst && mIsAccept) {
+			mIsFirst = false;
+			return SEEDDEF;
+		}
+		SeedEngine& seedEngine_ = SeedEngine::instance();
+		int32_t result_ = seedEngine_.runSeed(mWriteNo, mWriteValue, mWriteType);
+		mWriteNo = result_;
+		mWriteType++;
+		return result_;
+	}
+	
 	void Session::runSend(ValuePtr& nValue)
 	{
 		if ( mClosed ) {
@@ -79,22 +95,6 @@ namespace cc {
 		int32_t seed_ = this->getWriteSeed();
 		nValue->setSeed(seed_);
 		mValues.push_back(nValue);
-	}
-	
-	int32_t Session::getWriteSeed()
-	{
-		if ( (0 == mWriteValue) || (0 == mWriteNo) || (0 == mWriteType) ) {
-			return SEEDDEF;
-		}
-		if (mIsFirst && mIsAccept) {
-			mIsFirst = false;
-			return SEEDDEF;
-		}
-		SeedEngine& seedEngine_ = SeedEngine::instance();
-		int32_t result_ = seedEngine_.runSeed(mWriteNo, mWriteValue, mWriteType);
-		mWriteNo = result_;
-		mWriteType++;
-		return result_;
 	}
 	
 	ValuePtr Session::popValue()
@@ -238,70 +238,14 @@ namespace cc {
 		}
 	}
 	
-	void Session::initSelectId(ConnectInfoPtr& nConnectInfo)
+	void Session::runSelectId(int32_t nSelectId)
 	{
-		mDisconnectId = nConnectInfo->getDisconnectId();
-		mExceptionId = nConnectInfo->getExceptionId();
-		mVerMaxId = nConnectInfo->getVerMaxId();
-		mVerMinId = nConnectInfo->getVerMinId();
-		int16_t dispatchId_ = nConnectInfo->getDispatchId();
-		this->setDispatch(dispatchId_);
-	}
-	
-	void Session::setDisconnect(int32_t nDisconnectId)
-	{
-		mDisconnectId = nDisconnectId;
-	}
-	
-	void Session::setException(int32_t nExceptionId)
-	{
-		mExceptionId = nExceptionId;
-	}
-	
-	void Session::setDispatch(int16_t nDispatchId)
-	{
-		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
-		mDispatch = dispatchEngine_.findDispatch(nDispatchId);
-	}
-	
-	void Session::setSend(PropertyPtr& nSend)
-	{
-		mSend = &nSend;
-	}
-	
-	void Session::setIsAccept(bool nIsAccept)
-	{
-		mIsAccept = nIsAccept;
-	}
-	
-	void Session::setAuthority(int16_t nAuthority)
-	{
-		mAuthority = nAuthority;
-	}
-	
-	void Session::runAuthority(ValuePtr& nValue)
-	{
-		const char * clientB64_ = nValue->getString(1);
-		if ( 0 == strcmp(clientB64_, __CLIENTB64__) ) {
-			mAuthority = Eauthority::mTourist;
-		} else if ( 0 == strcmp(clientB64_, __GMCLIENTB64__) ) {
-			mAuthority = Eauthority::mGM;
-		} else if ( 0 == strcmp(clientB64_, __DECLIENTB64__) ) {
-			mAuthority = Eauthority::mDeveloper;
-		} else if ( 0 == strcmp(clientB64_, __AGENTB64__) ) {
-			mAuthority = Eauthority::mSystem;
-		} else if ( 0 == strcmp(clientB64_, __SOCIALB64__) ) {
-			mAuthority = Eauthority::mSystem;
-		} else if ( 0 == strcmp(clientB64_, __GAMEB64__) ) {
-			mAuthority = Eauthority::mSystem;
-		} else {
-			mAuthority = Eauthority::mTourist;
+		if (nSelectId <= 0) {
+			return;
 		}
-		
 		ValuePtr value_(new Value());
-		value_->verInit();
-		value_->pushInt32(__AUTHID__);
-		this->runSend(value_);
+		value_->pushInt32(nSelectId);
+		this->runValue(value_);
 	}
 	
 	void Session::runDisconnect()
@@ -342,14 +286,68 @@ namespace cc {
 	#endif
 	}
 	
-	void Session::runSelectId(int32_t nSelectId)
+	void Session::initSelectId(ConnectInfoPtr& nConnectInfo)
 	{
-		if (nSelectId <= 0) {
-			return;
+		mDisconnectId = nConnectInfo->getDisconnectId();
+		mExceptionId = nConnectInfo->getExceptionId();
+		mVerMaxId = nConnectInfo->getVerMaxId();
+		mVerMinId = nConnectInfo->getVerMinId();
+		int16_t dispatchId_ = nConnectInfo->getDispatchId();
+		this->setDispatch(dispatchId_);
+	}
+	
+	void Session::setDisconnect(int32_t nDisconnectId)
+	{
+		mDisconnectId = nDisconnectId;
+	}
+	
+	void Session::setException(int32_t nExceptionId)
+	{
+		mExceptionId = nExceptionId;
+	}
+	
+	void Session::setDispatch(int16_t nDispatchId)
+	{
+		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
+		mDispatch = dispatchEngine_.findDispatch(nDispatchId);
+	}
+	
+	void Session::setSend(PropertyPtr& nSend)
+	{
+		mSend = &nSend;
+	}
+	
+	void Session::runAuthority(ValuePtr& nValue)
+	{
+		const char * clientB64_ = nValue->getString(1);
+		if ( 0 == strcmp(clientB64_, __CLIENTB64__) ) {
+			mAuthority = Eauthority::mTourist;
+		} else if ( 0 == strcmp(clientB64_, __GMCLIENTB64__) ) {
+			mAuthority = Eauthority::mGM;
+		} else if ( 0 == strcmp(clientB64_, __DECLIENTB64__) ) {
+			mAuthority = Eauthority::mDeveloper;
+		} else if ( 0 == strcmp(clientB64_, __AGENTB64__) ) {
+			mAuthority = Eauthority::mSystem;
+		} else if ( 0 == strcmp(clientB64_, __SOCIALB64__) ) {
+			mAuthority = Eauthority::mSystem;
+		} else if ( 0 == strcmp(clientB64_, __GAMEB64__) ) {
+			mAuthority = Eauthority::mSystem;
+		} else {
+			mAuthority = Eauthority::mTourist;
 		}
+		
 		ValuePtr value_(new Value());
-		value_->pushInt32(nSelectId);
-		this->runValue(value_);
+		value_->verInit();
+		value_->pushInt32(__AUTHID__);
+		this->runSend(value_);
+	}
+	
+	void Session::sendAuthority()
+	{
+		ValuePtr value_(new Value());
+		value_->verInit();
+		value_->pushString(__EXEBASE64__);
+		this->runSend(value_);
 	}
 	
 	void Session::setRemove(ISessionRemove * nSessionRemove)
@@ -384,38 +382,47 @@ namespace cc {
 		mReadTimer.cancel();
 		
 		mBufReader.runClear();
-		mBufWriter.runClear();
 		mReadBuffer.fill(0);
-		mValues.clear();
-		
-		mSessionRemove = nullptr;
-		mAppId = 0;
-		
-		mClosed = true;
-		mWriting = false;
 		mReading = false;
 		
-		mDispatch = nullptr;
-		mSend = nullptr;
-		mAuthority = 0;
-		
-		mDisconnectId = 0;
-		mExceptionId = 0;
-		mVerMaxId = 0;
-		mVerMinId = 0;
-		mSessionId = 0;
+		mBufWriter.runClear();
+		mValues.clear();
+		mWriting = false;
 		
 		mWriteValue = 0;
 		mWriteNo = 0;
 		mWriteType = 0;
+		mIsFirst = true;
 		
 		mReadValue = 0;
 		mReadNo = 0;
 		mReadType = 0;
 		
-		mIsFirst = true;
+		mDisconnectId = 0;
+		mExceptionId = 0;
+		mVerMaxId = 0;
+		mVerMinId = 0;
 		
+		mDispatch = nullptr;
+		mSend = nullptr;
+		
+		mSessionRemove = nullptr;
+		mAppId = 0;
+		mClosed = true;
+		
+		mAuthority = 0;
+		mSessionId = 0;
 		mIsAccept = false;
+	}
+	
+	void Session::setIsAccept(bool nIsAccept)
+	{
+		mIsAccept = nIsAccept;
+	}
+	
+	void Session::setAuthority(int16_t nAuthority)
+	{
+		mAuthority = nAuthority;
 	}
 	
 	asio::ip::tcp::socket& Session::getSocket()
@@ -432,30 +439,33 @@ namespace cc {
 		: mSocket (nHandle)
 		, mWriteTimer (nHandle)
 		, mReadTimer (nHandle)
-		, mClosed (false)
-		, mWriting(false)
 		, mReading(false)
-		, mSessionId (nSessionId)
-		, mDisconnectId (0)
-		, mExceptionId (0)
-		, mDispatch (nullptr)
-		, mSend (nullptr)
-		, mSessionRemove (nullptr)
-		, mAppId (0)
-		, mAuthority (0)
-		, mVerMaxId (0)
-		, mVerMinId (0)
-		, mIsAccept (false)
+		, mWriting(false)
 		, mWriteValue (0)
 		, mWriteNo (0)
 		, mWriteType (0)
+		, mIsFirst (true)
 		, mReadValue (0)
 		, mReadNo (0)
 		, mReadType (0)
-		, mIsFirst (true)
+		, mDisconnectId (0)
+		, mExceptionId (0)
+		, mVerMaxId (0)
+		, mVerMinId (0)
+		, mDispatch (nullptr)
+		, mSend (nullptr)
+		, mClosed (false)
+		, mSessionRemove (nullptr)
+		, mAppId (0)
+		, mAuthority (0)
+		, mIsAccept (false)
+		, mSessionId (nSessionId)
 	{
 		mReadBuffer.fill(0);
 		mValues.clear();
+		
+		mBufReader.runClear();
+		mBufWriter.runClear();
 	}
 	
 	Session::~Session()

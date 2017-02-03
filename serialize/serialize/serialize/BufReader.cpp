@@ -204,6 +204,7 @@ namespace cc {
 			}
 		}
 		memset(mBuffer, 0, sizeof(mBuffer));
+		mPos += mLength;
 		mLength = 0;
 		mCount = 0;
 		mPos0 = 0;

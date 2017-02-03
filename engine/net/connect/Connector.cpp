@@ -53,9 +53,8 @@ namespace cc {
 			return;
 		}
 		mConnectTimer.cancel();
-		this->runSelectId(mConnectId);
-		
 		(*mSession)->startRead();
+		(*mSession)->sendAuthority();
 	}
 	
 	void Connector::initSelectId(ConnectInfoPtr& nConnectInfo)

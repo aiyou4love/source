@@ -31,6 +31,8 @@ namespace cc {
 		void runValue(ValuePtr& nValue);
 		void runValue();
 		
+		void runSelectId(int32_t nSelectId);
+		
 		void runDisconnect();
 		void runException();
 		void runVerMaxId();
@@ -43,20 +45,19 @@ namespace cc {
 		
 		void setDispatch(int16_t nDispatchId);
 		void setSend(PropertyPtr& nSend);
-		void setAuthority(int16_t nAuthority);
-		void setIsAccept(bool nIsAccept);
-		void runAuthority(ValuePtr& nValue);
 		
-		void runSelectId(int32_t nSelectId);
+		void runAuthority(ValuePtr& nValue);
+		void sendAuthority();
 		
 		void setRemove(ISessionRemove * nSessionRemove);
 		void setAppId(int64_t nAppId);
-		
 		void runClose();
 		void runClear();
 		
 		asio::ip::tcp::socket& getSocket();
 		
+		void setAuthority(int16_t nAuthority);
+		void setIsAccept(bool nIsAccept);
 		int32_t getSessionId();
 		
 		Session(int32_t nSessionId, asio::io_service& nHandle);
@@ -70,6 +71,7 @@ namespace cc {
 		
 		boost::array<int8_t, PACKETSIZE> mReadBuffer;
 		BufReader mBufReader;
+		atomic<bool> mReading;
 		
 		deque<ValuePtr> mValues;
 		atomic<bool> mWriting;
@@ -93,18 +95,16 @@ namespace cc {
 		
 		IDispatch * mDispatch;
 		PropertyPtr * mSend;
-		int16_t mAuthority;
-		bool mIsAccept;
 		
 		ISessionRemove * mSessionRemove;
+		atomic<bool> mClosed;
 		int64_t mAppId;
 		
-		atomic<bool> mReading;
-		atomic<bool> mClosed;
+		int16_t mAuthority;
+		bool mIsAccept;
 		int32_t mSessionId;
 	};
 	typedef SPTR<Session> SessionPtr;
 	typedef WPTR<Session> SessionWtr;
 	
 }
-  
