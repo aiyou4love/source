@@ -2,26 +2,26 @@
 
 namespace cc {
 	
-	SinkPtr * SinkMgr::beginIterator(int16_t nSinkType)
+	Sink * SinkMgr::beginIterator(int16_t nSinkType)
 	{
 		mIter = mSinks.begin();
 		
 		for ( ; mIter != mSinks.end(); ++mIter ) {
-			SinkPtr * sink_ = mIter->second;
-			if ( (*sink_)->getSinkType() == nSinkType ) {
+			Sink * sink_ = mIter->second;
+			if ( sink_->getSinkType() == nSinkType ) {
 				return sink_;
 			}
 		}
 		return nullptr;
 	}
 	
-	SinkPtr * SinkMgr::nextIterator(int16_t nSinkType)
+	Sink * SinkMgr::nextIterator(int16_t nSinkType)
 	{
 		mIter++;
 		
 		for ( ; mIter != mSinks.end(); ++mIter ) {
-			SinkPtr * sink_ = mIter->second;
-			if ( (*sink_)->getSinkType() == nSinkType ) {
+			Sink * sink_ = mIter->second;
+			if ( sink_->getSinkType() == nSinkType ) {
 				return sink_;
 			}
 		}

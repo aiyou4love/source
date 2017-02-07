@@ -163,7 +163,7 @@ namespace cc {
 		return mStrings[index_ - 1].c_str();
 	}
 	
-	BufferPtr * Value::getBuffer(int8_t nIndex)
+	Buffer * Value::getBuffer(int8_t nIndex)
 	{
 		size_t index_ = (size_t)nIndex;
 		if ( (nIndex <= 0) || 
@@ -183,7 +183,8 @@ namespace cc {
 			LOGE("[%s]index:%d", __METHOD__, index_);
 			return nullptr;
 		}
-		return (&(mBuffers[index_ - 1]));
+		BufferPtr& buffer_ = mBuffers[index_ - 1];
+		return ( buffer_.get() );
 	}
 	
 	intptr_t Value::getIntptr(int8_t nIndex)

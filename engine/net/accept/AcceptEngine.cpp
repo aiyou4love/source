@@ -18,13 +18,13 @@ namespace cc {
 	void AcceptEngine::initAccept()
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
-		NetIpPtr * netIp_ = netIpMgr_.findNetIp();
+		NetIp * netIp_ = netIpMgr_.findNetIp();
 		if (nullptr == netIp_) {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
-		const char * port_ = (*netIp_)->getPort();
-		const char * ip_ = (*netIp_)->getIp();
+		const char * port_ = netIp_->getPort();
+		const char * ip_ = netIp_->getIp();
 		
 		IoService& ioService_ = IoService::instance();
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();

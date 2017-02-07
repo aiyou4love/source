@@ -7,33 +7,33 @@ namespace cc {
 		
 	}
 	
-	SinkPtr * IEngine::beginIterator(int16_t nSinkType)
+	Sink * IEngine::beginIterator(int16_t nSinkType)
 	{
 		mIter = mGlobSinks.begin();
 		
 		for ( ; mIter != mGlobSinks.end(); ++mIter ) {
 			SinkPtr& sink_ = mIter->second;
 			if ( sink_->getSinkType() == nSinkType ) {
-				return (&sink_);
+				return ( sink_.get() );
 			}
 		}
 		return nullptr;
 	}
 	
-	SinkPtr * IEngine::nextIterator(int16_t nSinkType)
+	Sink * IEngine::nextIterator(int16_t nSinkType)
 	{
 		mIter++;
 		
 		for ( ; mIter != mGlobSinks.end(); ++mIter ) {
 			SinkPtr& sink_ = mIter->second;
 			if ( sink_->getSinkType() == nSinkType ) {
-				return (&sink_);
+				return ( sink_.get() );
 			}
 		}
 		return nullptr;
 	}
 	
-	SinkPtr * IEngine::findSink(int16_t nSinkId)
+	Sink * IEngine::findSink(int16_t nSinkId)
 	{
 		auto it = mSelfSinks.find(nSinkId);
 		if ( it == mSelfSinks.end() ) {
@@ -41,7 +41,7 @@ namespace cc {
 			return nullptr;
 		}
 		SinkPtr& sink_ = it->second;
-		return (&sink_);
+		return ( sink_.get() );
 	}
 	
 	IEngine::IEngine()

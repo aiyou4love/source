@@ -7,9 +7,9 @@ namespace cc {
 	public:
 		virtual void initSink(int16_t nSinkId, EntityPtr& nEntity);
 		
-		SinkPtr * beginIterator(int16_t nSinkType);
-		SinkPtr * nextIterator(int16_t nSinkType);
-		SinkPtr * findSink(int16_t nSinkId);
+		Sink * beginIterator(int16_t nSinkType);
+		Sink * nextIterator(int16_t nSinkType);
+		Sink * findSink(int16_t nSinkId);
 		
 		IEngine();
 		virtual ~IEngine();

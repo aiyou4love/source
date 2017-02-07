@@ -19,6 +19,7 @@ namespace cc {
 		}
 		
 		void setRoleItem(RoleItemPtr& nRoleItem);
+		void setRoleItem(RoleItem * nRoleItem);
 		
 		int32_t getServerId();
         int32_t getRoleId();

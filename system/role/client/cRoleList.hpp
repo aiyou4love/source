@@ -6,7 +6,7 @@ namespace cc {
 	class cRoleList : noncopyable
 	{
 	public:
-		RoleItemPtr * getRoleItem(int32_t nServerId);
+		RoleItem * getRoleItem(int32_t nServerId);
 		void pushRoleItem(RoleItemPtr& nRoleItem);
 		
 		int8_t runRoleList(int64_t nAccountId);

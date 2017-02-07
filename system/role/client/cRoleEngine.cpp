@@ -6,14 +6,14 @@ namespace cc {
 	int32_t cRoleEngine::setServerId(int32_t nServerId)
 	{
 		cRoleList& roleList_ = cRoleList::instance();
-		RoleItemPtr * roleItem_ = roleList_.getRoleItem(nServerId);
+		RoleItem * roleItem_ = roleList_.getRoleItem(nServerId);
 		if (nullptr == roleItem_) {
 			return 0;
 		}
 		cRolePtr role_ = PTR_DCST<cRole>(mRole);
-		role_->setRoleItem(*roleItem_);
+		role_->setRoleItem(roleItem_);
 		
-		return ((*roleItem_)->getServerId());
+		return (roleItem_->getServerId());
 	}
 	
 	void cRoleEngine::runCancel()

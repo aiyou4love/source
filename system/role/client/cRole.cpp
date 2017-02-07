@@ -14,6 +14,17 @@ namespace cc {
 		mRoleLevel = nRoleItem->getRoleLevel();
 	}
 	
+	void cRole::setRoleItem(RoleItem * nRoleItem)
+	{
+		mServerId = nRoleItem->getServerId();
+		mRoleId = nRoleItem->getRoleId();
+		mRoleType = nRoleItem->getRoleType();
+		mRoleName = nRoleItem->getRoleName();
+		mRoleRace = nRoleItem->getRoleRace();
+		mRoleStep = nRoleItem->getRoleStep();
+		mRoleLevel = nRoleItem->getRoleLevel();
+	}
+	
 	int32_t cRole::getServerId()
 	{
 		return mServerId;

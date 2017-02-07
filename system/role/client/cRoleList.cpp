@@ -3,14 +3,14 @@
 namespace cc {
 	
 #ifdef __CLIENT__
-	RoleItemPtr * cRoleList::getRoleItem(int32_t nServerId)
+	RoleItem * cRoleList::getRoleItem(int32_t nServerId)
 	{
 		auto it = mRoleItems.begin();
 		for ( ; it != mRoleItems.end(); ++it ) {
 			RoleItemPtr& roleItem_ = it->second;
 			int32_t serverId_ = roleItem_->getServerId();
 			if (serverId_ == nServerId) {
-				return (&roleItem_);
+				return ( roleItem_.get() );
 			}
 		}
 		return nullptr;

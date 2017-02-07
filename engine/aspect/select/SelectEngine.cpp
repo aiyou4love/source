@@ -4,10 +4,10 @@ namespace cc {
 	
 	void SelectEngine::runGlobTrigger(EntityPtr& nEntity, int16_t nSinkType, int32_t nValue)
 	{
-		SinkPtr * sink_ = this->beginIterator(nSinkType);
+		Sink * sink_ = this->beginIterator(nSinkType);
 		while (nullptr != sink_) {
-			if ( nValue == (*sink_)->getSinkValue() ) {
-				nEntity->pushTrigger(nEntity, (*sink_));
+			if ( nValue == sink_->getSinkValue() ) {
+				nEntity->pushTrigger(nEntity, sink_);
 			}
 			sink_ = this->nextIterator(nSinkType);
 		}
@@ -15,10 +15,10 @@ namespace cc {
 	
 	void SelectEngine::runSelfTrigger(EntityPtr& nEntity, int16_t nSinkType, int32_t nValue)
 	{
-		SinkPtr * sink_ = nEntity->beginIterator(nSinkType);
+		Sink * sink_ = nEntity->beginIterator(nSinkType);
 		while (nullptr != sink_) {
-			if ( nValue == (*sink_)->getSinkValue() ) {
-				nEntity->pushTrigger(nEntity, (*sink_));
+			if ( nValue == sink_->getSinkValue() ) {
+				nEntity->pushTrigger(nEntity, sink_);
 			}
 			sink_ = nEntity->nextIterator(nSinkType);
 		}
@@ -68,12 +68,12 @@ namespace cc {
 	
 	void SelectEngine::initSink(int16_t nSinkId, EntityPtr& nEntity)
 	{
-		SinkPtr * sink_ = this->findSink(nSinkId);
+		Sink * sink_ = this->findSink(nSinkId);
 		if (nullptr == sink_) {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
-		nEntity->pushTrigger(nEntity, (*sink_));
+		nEntity->pushTrigger(nEntity, sink_);
 	}
 	
 	void SelectEngine::runPreinit()

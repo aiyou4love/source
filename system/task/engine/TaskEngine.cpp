@@ -4,34 +4,34 @@ namespace cc {
 	
 	void TaskEngine::acceptTask(int16_t nTaskId, EntityPtr& nEntity)
 	{
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mTask);
+		Property * property_ = nEntity->getProperty(Eproperty::mTask);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTaskPtr entityTask_ = PTR_DCST<EntityTask>(*property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
 		entityTask_->acceptTask(nTaskId);
 	}
 	
 	bool TaskEngine::isAccept(int16_t nTaskId, EntityPtr& nEntity)
 	{
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mTask);
+		Property * property_ = nEntity->getProperty(Eproperty::mTask);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return false;
 		}
-		EntityTaskPtr entityTask_ = PTR_DCST<EntityTask>(*property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
 		return entityTask_->isAccept(nTaskId);
 	}
 	
 	void TaskEngine::giveupTask(int16_t nTaskId, EntityPtr& nEntity)
 	{
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mTask);
+		Property * property_ = nEntity->getProperty(Eproperty::mTask);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTaskPtr entityTask_ = PTR_DCST<EntityTask>(*property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
 		entityTask_->giveupTask(nTaskId);
 	}
 	
@@ -46,12 +46,12 @@ namespace cc {
 		int16_t taskType_ = taskConfig_->getTaskType();
 		int16_t taskIndex_ = taskConfig_->getTaskIndex();
 		
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mTask);
+		Property * property_ = nEntity->getProperty(Eproperty::mTask);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTaskPtr entityTask_ = PTR_DCST<EntityTask>(*property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
 		if (EtaskType::mDaily == taskType_) {
 			entityTask_->finishDaily(nTaskId);
 		} else if (EtaskType::mNormal == taskType_) {
@@ -72,12 +72,12 @@ namespace cc {
 		int16_t taskType_ = taskConfig_->getTaskType();
 		int16_t taskIndex_ = taskConfig_->getTaskIndex();
 		
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mTask);
+		Property * property_ = nEntity->getProperty(Eproperty::mTask);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return false;
 		}
-		EntityTaskPtr entityTask_ = PTR_DCST<EntityTask>(*property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
 		if (EtaskType::mDaily == taskType_) {
 			return entityTask_->isDaily(nTaskId);
 		} else if (EtaskType::mNormal == taskType_) {
@@ -100,12 +100,12 @@ namespace cc {
 		int16_t taskType_ = taskConfig_->getTaskType();
 		int16_t taskIndex_ = taskConfig_->getTaskIndex();
 		
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mTask);
+		Property * property_ = nEntity->getProperty(Eproperty::mTask);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTaskPtr entityTask_ = PTR_DCST<EntityTask>(*property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
 		if (EtaskType::mDaily == taskType_) {
 			entityTask_->resetDaily(nTaskId);
 		} else if (EtaskType::mNormal == taskType_) {

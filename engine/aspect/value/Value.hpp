@@ -28,7 +28,7 @@ namespace cc {
 		const char * getString(int8_t nIndex);
 		void pushString(const char * nValue);
 		
-		BufferPtr * getBuffer(int8_t nIndex);
+		Buffer * getBuffer(int8_t nIndex);
 		void pushBuffer(BufferPtr& nValue);
 		
 		intptr_t getIntptr(int8_t nIndex);
