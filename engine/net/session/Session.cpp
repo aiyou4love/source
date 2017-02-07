@@ -45,10 +45,10 @@ namespace cc {
 		try {
 			mWriteTimer.expires_from_now(boost::posix_time::seconds(Session::write_timeout));
 			mWriteTimer.async_wait(boost::bind(&Session::handleWriteTimeout,
-				this, boost::asio::placeholders::error));
+				SED_THIS(), boost::asio::placeholders::error));
 				
 			asio::async_write(mSocket, boost::asio::buffer(mBufWriter.getValue(), mBufWriter.getSize()),
-				boost::bind(&Session::handleWrite, this, asio::placeholders::error));
+				boost::bind(&Session::handleWrite, SED_THIS(), asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
 			this->runException();
@@ -159,10 +159,10 @@ namespace cc {
 			
 			mReadTimer.expires_from_now(boost::posix_time::seconds(Session::read_timeout));
 			mReadTimer.async_wait(boost::bind(&Session::handleReadTimeout, 
-				this, boost::asio::placeholders::error));
+				SED_THIS(), boost::asio::placeholders::error));
 				
 			mSocket.async_read_some(boost::asio::buffer(mReadBuffer),
-				boost::bind(&Session::handleRead, this,
+				boost::bind(&Session::handleRead, SED_THIS(),
 				asio::placeholders::error, asio::placeholders::bytes_transferred));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());

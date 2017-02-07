@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class Session : noncopyable
+	class Session : public SPTR_THIS<Session>, noncopyable
 	{
 	public:
 		enum { write_timeout = 300 };
