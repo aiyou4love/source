@@ -45,5 +45,6 @@ namespace cc {
 		deque<ValuePtr> mValues;
 		mutex mMutex;
 	};
+	typedef SPTR<Entity> EntityPtr;
 	
 }
