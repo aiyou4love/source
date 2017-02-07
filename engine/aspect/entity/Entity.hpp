@@ -12,7 +12,7 @@ namespace cc {
 		
 		void pushTrigger(EntityPtr& nEntity, int32_t nActionId);
 		void pushTrigger(EntityPtr& nEntity, ValuePtr& nValue);
-		void pushTrigger(EntityPtr& nEntity, SinkPtr& nSink);
+		void pushTrigger(EntityPtr& nEntity, Sink * nSink);
 		
 		void runTrigger();
 		
@@ -45,6 +45,5 @@ namespace cc {
 		deque<ValuePtr> mValues;
 		mutex mMutex;
 	};
-	typedef SPTR<Entity> EntityPtr;
 	
 }

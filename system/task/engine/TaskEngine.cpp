@@ -9,7 +9,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask *>(property_);
 		entityTask_->acceptTask(nTaskId);
 	}
 	
@@ -20,7 +20,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return false;
 		}
-		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask *>(property_);
 		return entityTask_->isAccept(nTaskId);
 	}
 	
@@ -31,7 +31,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask *>(property_);
 		entityTask_->giveupTask(nTaskId);
 	}
 	
@@ -51,7 +51,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask *>(property_);
 		if (EtaskType::mDaily == taskType_) {
 			entityTask_->finishDaily(nTaskId);
 		} else if (EtaskType::mNormal == taskType_) {
@@ -77,7 +77,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return false;
 		}
-		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask *>(property_);
 		if (EtaskType::mDaily == taskType_) {
 			return entityTask_->isDaily(nTaskId);
 		} else if (EtaskType::mNormal == taskType_) {
@@ -105,7 +105,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		EntityTask * entityTask_ = dynamic_cast<EntityTask>(property_);
+		EntityTask * entityTask_ = dynamic_cast<EntityTask *>(property_);
 		if (EtaskType::mDaily == taskType_) {
 			entityTask_->resetDaily(nTaskId);
 		} else if (EtaskType::mNormal == taskType_) {

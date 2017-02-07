@@ -3,6 +3,7 @@
 namespace cc {
 	
 	class Entity;
+	typedef SPTR<Entity> EntityPtr;
 	class Property : public SinkMgr
 	{
 	public:
@@ -11,6 +12,9 @@ namespace cc {
 		
 		Property();
 		virtual ~Property();
+		
+	private:
+		Entity * mEntity;
 	};
 	typedef SPTR<Property> PropertyPtr;
 	

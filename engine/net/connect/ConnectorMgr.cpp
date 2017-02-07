@@ -48,7 +48,7 @@ namespace cc {
 			mSessions[nAppId] = session0_;
 		}
 		SessionPtr& session1_ = mSessions[nAppId];
-		return ( session1_->get() );
+		return ( session1_.get() );
 	}
 	
 	void ConnectorMgr::removeSession(int64_t nAppId)

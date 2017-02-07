@@ -9,7 +9,7 @@ namespace cc {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		IntEntity * intEntity_ = dynamic_cast<IntEntity>(property_);
+		IntEntity * intEntity_ = dynamic_cast<IntEntity *>(property_);
 		
 		int16_t int_ = nCountIndex->getInt();
 		IntArray * intArray_ = intEntity_->findIntArray(int_);
@@ -65,7 +65,7 @@ namespace cc {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
-		IntEntity * intEntity_ = dynamic_cast<IntEntity>(property_);
+		IntEntity * intEntity_ = dynamic_cast<IntEntity *>(property_);
 		intEntity_->clearIntArray(nType);
 	}
 	

@@ -33,9 +33,9 @@ namespace cc {
 		mSinks.erase(nSinkId);
 	}
 	
-	void SinkMgr::pushSink(SinkPtr& nSink)
+	void SinkMgr::pushSink(Sink * nSink)
 	{
-		mSinks[nSink->getSinkId()] = (&nSink);
+		mSinks[nSink->getSinkId()] = nSink;
 	}
 	
 	SinkMgr::SinkMgr()

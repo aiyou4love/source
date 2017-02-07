@@ -41,7 +41,7 @@ namespace cc {
 		mTriggers.push_back(trigger_);
 	}
 	
-	void Entity::pushTrigger(EntityPtr& nEntity, SinkPtr& nSink)
+	void Entity::pushTrigger(EntityPtr& nEntity, Sink * nSink)
 	{
 		int32_t actionId_ = nSink->getActionId();
 		int32_t deleteId_ = nSink->getDeleteId();
