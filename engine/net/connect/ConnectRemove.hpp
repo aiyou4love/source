@@ -8,7 +8,7 @@ namespace cc {
 		void removeSession(int32_t nSessionId);
 		void removeSession(int64_t nAppId);
 		
-		static ConnectRemove& instance();
+		static ISessionRemove * instance();
 		
 		ConnectRemove();
 		~ConnectRemove();

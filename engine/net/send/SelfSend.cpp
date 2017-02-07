@@ -2,9 +2,9 @@
 
 namespace cc {
 	
-	void SelfSend::setSession(SessionPtr& nSession)
+	void SelfSend::setSession(Session * nSession)
 	{
-		mSession = &nSession;
+		mSession = nSession;
 	}
 	
 	void SelfSend::sendValue(ValuePtr& nValue)
@@ -13,12 +13,12 @@ namespace cc {
 			LOGE("[%s]sendValue", __METHOD__);
 			return;
 		}
-		(*mSession)->runSend(nValue);
+		mSession->runSend(nValue);
 	}
 	
 	void SelfSend::pushValue(ValuePtr& nValue)
 	{
-		EntityPtr& entity_ = this->getEntity();
+		Entity * entity_ = this->getEntity();
 		entity_->pushValue(nValue);
 	}
 	

@@ -7,8 +7,8 @@ namespace cc {
 		this->initSelectId(nConnectInfo);
 		
 		ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
-		mSession = &(connectorMgr_.createSession(mAppId));
-		(*mSession)->initSelectId(nConnectInfo);
+		mSession = connectorMgr_.createSession(mAppId);
+		mSession->initSelectId(nConnectInfo);
 		
 		IoService& ioService_ = IoService::instance();
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();
@@ -18,12 +18,12 @@ namespace cc {
 		asio::ip::tcp::resolver::iterator iterator_ = resolver_.resolve(query_);
 		
 		try {
-			boost::asio::async_connect((*mSession)->getSocket(), iterator_,
-			boost::bind(&Connector::handleConnect, SED_THIS(), boost::asio::placeholders::error));
+			boost::asio::async_connect(mSession->getSocket(), iterator_,
+			boost::bind(&Connector::handleConnect, this, boost::asio::placeholders::error));
 			
 			mConnectTimer.expires_from_now(boost::posix_time::seconds(Connector::connect_timeout));
 			mConnectTimer.async_wait(boost::bind(&Connector::handleConnectTimeout, 
-				SED_THIS(), boost::asio::placeholders::error));
+				this, boost::asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
 			mConnectTimer.cancel();
@@ -53,14 +53,16 @@ namespace cc {
 			return;
 		}
 		mConnectTimer.cancel();
-		(*mSession)->startRead();
-		(*mSession)->sendAuthority();
+		
+		ISessionRemove * connectRemove_ = ConnectRemove::instance();
+		mSession->setRemove(connectRemove_);
+		mSession->sendAuthority();
+		this->runClear();
 	}
 	
 	void Connector::initSelectId(ConnectInfoPtr& nConnectInfo)
 	{
 		mConnectErrorId = nConnectInfo->getConnectErrorId();
-		mConnectId = nConnectInfo->getConnectId();
 		mTimeoutId = nConnectInfo->getTimeoutId();
 		
 		int16_t dispatchId_ = nConnectInfo->getConnectDispatch();
@@ -70,7 +72,7 @@ namespace cc {
 	
 	void Connector::runSelectId(int32_t nSelectId)
 	{
-		this->runClear();
+		this->runClose();
 		
 		if (nSelectId <= 0) return;
 		
@@ -87,6 +89,9 @@ namespace cc {
 	
 	void Connector::runClose()
 	{
+		ConnectEngine& connectEngine_ = ConnectEngine::instance();
+		connectEngine_.removeConnector(mAppId);
+		
 		ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
 		connectorMgr_.removeSession(mAppId);
 	}
@@ -95,7 +100,6 @@ namespace cc {
 		: mConnectTimer (nHandle)
 		, mAppId (nAppId)
 		, mConnectErrorId (0)
-		, mConnectId (0)
 		, mTimeoutId (0)
 		, mSession (nullptr)
 		, mDispatch (nullptr)
@@ -107,7 +111,6 @@ namespace cc {
 		mSession = nullptr;
 		mDispatch = nullptr;
 		mConnectErrorId = 0;
-		mConnectId = 0;
 		mTimeoutId = 0;
 		mAppId = 0;
 	}

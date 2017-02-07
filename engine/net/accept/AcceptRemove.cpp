@@ -15,9 +15,9 @@ namespace cc {
 		sessionMgr_.removeSession(nAppId);
 	}
 	
-	AcceptRemove& AcceptRemove::instance()
+	ISessionRemove * AcceptRemove::instance()
 	{
-		return mAcceptRemove;
+		return (&mAcceptRemove);
 	}
 	
 	AcceptRemove::AcceptRemove()

@@ -6,6 +6,9 @@ namespace cc {
 	{
 		int16_t count_ = int16_t(nValue.length());
 		this->runNumber(count_, nName);
+		if (0 == count_) {
+			return;
+		}
 		if ((mLength + count_) > PACKETSIZE) {
 			LOGE("[%s]%s", __METHOD__, nName);
 			return;
@@ -29,8 +32,12 @@ namespace cc {
 		LOGE("[%s]%s", __METHOD__, nName);
 	}
 	
-	void BufWriter::runBuffer(char *& nValue, int16_t nLength)
+	void BufWriter::runBuffer(char *& nValue, int16_t& nLength)
 	{
+		this->runNumber(nLength, "length");
+		if (0 == nLength) {
+			return;
+		}
 		if ((mLength + nLength) > PACKETSIZE) {
 			LOGE("[%s]%d", __METHOD__, nLength);
 			return;

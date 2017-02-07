@@ -35,22 +35,20 @@ namespace cc {
 		return true;
 	}
 	
-	SessionPtr& ConnectorMgr::createSession(int64_t nAppId)
+	Session * ConnectorMgr::createSession(int64_t nAppId)
 	{
-		ConnectRemove& connectRemove_ = ConnectRemove::instance();
 		IoService& ioService_ = IoService::instance();
 		
 		LKGUD<mutex> lock_(mMutex);
 		auto it = mSessions.find(nAppId);
-		if ( it != mSessions.end() ) {
-			return mSessions[nAppId];
+		if ( it == mSessions.end() ) {
+			asio::io_service& ioHandle_ = ioService_.getIoHandle();
+			SessionPtr session0_(new Session(++mSessionId, ioHandle_));
+			session0_->setAppId(nAppId);
+			mSessions[nAppId] = session0_;
 		}
-		asio::io_service& ioHandle_ = ioService_.getIoHandle();
-		SessionPtr session_(new Session(++mSessionId, ioHandle_));
-		session_->setRemove(&connectRemove_);
-		session_->setAppId(nAppId);
-		mSessions[nAppId] = session_;
-		return mSessions[nAppId];
+		SessionPtr& session1_ = mSessions[nAppId];
+		return ( session1_->get() );
 	}
 	
 	void ConnectorMgr::removeSession(int64_t nAppId)

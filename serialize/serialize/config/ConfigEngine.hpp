@@ -23,14 +23,19 @@ namespace cc {
 		template <class T>
 		void runReader(T * nValue, const char * nUrl, const char * nName)
 		{
+			LOGI("[%s]", __METHOD__);
 			WorkDirectory& workDirectory_ = WorkDirectory::instance();
 			string tablePath_ = workDirectory_.configPath(nUrl);
 			TableReader tableReader_;
+			LOGI("[%s]", __METHOD__);
 			if (tableReader_.loadFile(tablePath_.c_str())) {
+				LOGI("[%s]", __METHOD__);
 				tableReader_.selectStream(nName);
 				if (tableReader_.runChild(nName)) {
+					LOGI("[%s]", __METHOD__);
 					IoReader<TableReader> ioReader_(tableReader_);
 					nValue->headSerialize(ioReader_, nName);
+					LOGI("[%s]", __METHOD__);
 				}
 			}
 		}

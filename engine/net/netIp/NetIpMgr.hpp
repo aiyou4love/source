@@ -5,10 +5,10 @@ namespace cc {
 	class NetIpMgr : noncopyable
 	{
 	public:
-		NetIpPtr * findNetIp(int16_t nAppType, int32_t nAppNo);
-		NetIpPtr * findNetIp(int16_t nAppType);
-		NetIpPtr * findNetIp(int64_t nAppId);
-		NetIpPtr * findNetIp();
+		NetIp * findNetIp(int16_t nAppType, int32_t nAppNo);
+		NetIp * findNetIp(int16_t nAppType);
+		NetIp * findNetIp(int64_t nAppId);
+		NetIp * findNetIp();
 		
 		void pushNetIp(NetIpPtr& nNetIp);
 		

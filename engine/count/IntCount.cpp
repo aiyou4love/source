@@ -27,7 +27,7 @@ namespace cc {
 				mValue[index1_] &= (~(((~nValue) & M) >> (32 - pos0_)));
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	int32_t IntCount::getInt(int16_t nId)
@@ -88,7 +88,7 @@ namespace cc {
 				mValue[index1_] &= (~(((~value_) & M) >> (32 - pos0_)));
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void IntCount::addInt(int16_t nId, bool nCycle)
@@ -108,7 +108,7 @@ namespace cc {
 				this->setInt(i, nValue);
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void IntCount::popInt(int32_t nValue)
@@ -120,7 +120,7 @@ namespace cc {
 				break;
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void IntCount::runReset(int16_t nId)
@@ -146,17 +146,17 @@ namespace cc {
 			mValue[index0_] <<= (32 - pos0_);
 			mValue[index0_] >>= (32 - pos0_);
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
-	void IntCount::runInit(IntArrayPtr& nIntArray, CountIndexPtr& nCountIndex)
+	void IntCount::runInit(IntArray * nIntArray, CountIndexPtr& nCountIndex)
 	{
 		int16_t begin_ = nCountIndex->getBegin();
 		int16_t end_ = nCountIndex->getEnd();
 		int16_t count_ = nCountIndex->getCount();
 		
 		mValue = nIntArray->rangeInts(begin_, end_);
-		mIntArray = (&nIntArray);
+		mIntArray = nIntArray;
 		N = end_ - begin_ + 1;
 		M = static_cast<int32_t>(::pow(2, count_)) - 1;
 		C = count_; I = (32 * N) / C;

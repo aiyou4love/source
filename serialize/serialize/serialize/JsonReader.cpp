@@ -74,7 +74,7 @@ namespace cc {
 		nValue = localTime_.getNumberTime();
 	}
 	
-	void JsonReader::runBuffer(char *& nValue, int16_t nLength)
+	void JsonReader::runBuffer(char *& nValue, int16_t& nLength)
 	{
 		LOGE("[%s]%d", __METHOD__, nLength);
 	}

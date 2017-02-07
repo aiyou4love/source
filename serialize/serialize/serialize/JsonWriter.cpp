@@ -26,7 +26,7 @@ namespace cc {
 		this->runNumbers(value_, nName);
 	}
 	
-	void JsonWriter::runBuffer(char *& nValue, int16_t nLength)
+	void JsonWriter::runBuffer(char *& nValue, int16_t& nLength)
 	{
 		LOGE("[%s]%d", __METHOD__, nLength);
 	}

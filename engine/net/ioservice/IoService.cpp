@@ -40,7 +40,7 @@ namespace cc {
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
 		mSignals->async_wait(boost::bind(&LifeCycle::noticeStop, &lifeCycle_));
 	}
-		
+	
 	void IoService::noticeStart()
 	{
 		mSignals->add(SIGINT); mSignals->add(SIGTERM);

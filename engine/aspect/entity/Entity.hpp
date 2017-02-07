@@ -8,7 +8,7 @@ namespace cc {
 	{
 	public:
 		void insertProperty(int16_t nPropertyId, PropertyPtr& nProperty);
-		PropertyPtr * getProperty(int16_t nPropertyId);
+		Property * getProperty(int16_t nPropertyId);
 		
 		void pushTrigger(EntityPtr& nEntity, int32_t nActionId);
 		void pushTrigger(EntityPtr& nEntity, ValuePtr& nValue);

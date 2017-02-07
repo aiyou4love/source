@@ -30,7 +30,7 @@ namespace cc {
 			mValue[id_] |= value_;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	int8_t Int8Count::getInt(int16_t nId)
@@ -100,7 +100,7 @@ namespace cc {
 			mValue[id_] |= value2_;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int8Count::addInt(int16_t nId)
@@ -146,7 +146,7 @@ namespace cc {
 			mValue[id_] |= value2_;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int8Count::pushInt(int8_t nValue)
@@ -191,7 +191,7 @@ namespace cc {
 			} else {
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int8Count::popInt(int8_t nValue)
@@ -233,7 +233,7 @@ namespace cc {
 			} else {
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int8Count::runReset(int16_t nId)
@@ -254,7 +254,7 @@ namespace cc {
 			mValue[id_] &= 0xFFFFFF;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	Int8Count::Int8Count()

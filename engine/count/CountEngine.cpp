@@ -4,20 +4,20 @@ namespace cc {
 	
 	void CountEngine::initCount(ICount * nCount, EntityPtr& nEntity, CountIndexPtr& nCountIndex)
 	{
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mIntArray);
+		Property * property_ = nEntity->getProperty(Eproperty::mIntArray);
 		if (nullptr == property_) {
 			LOGE("[%s]property", __METHOD__);
 			return;
 		}
-		IntEntityPtr intEntity_ = PTR_DCST<IntEntity>(*property_);
+		IntEntity * intEntity_ = dynamic_cast<IntEntity>(property_);
 		
 		int16_t int_ = nCountIndex->getInt();
-		IntArrayPtr * intArray_ = intEntity_->findIntArray(int_);
+		IntArray * intArray_ = intEntity_->findIntArray(int_);
 		if (nullptr == intArray_) {
 			LOGE("[%s]int:%d", __METHOD__, int_);
 			return;
 		}
-		nCount->runInit((*intArray_), nCountIndex);
+		nCount->runInit(intArray_, nCountIndex);
 	}
 	
 	void CountEngine::initCount(ICount * nCount, EntityPtr& nEntity, const char * nIndex)
@@ -60,12 +60,12 @@ namespace cc {
 	
 	void CountEngine::clearEntity(int16_t nType, EntityPtr& nEntity)
 	{
-		PropertyPtr * property_ = nEntity->getProperty(Eproperty::mIntArray);
+		Property * property_ = nEntity->getProperty(Eproperty::mIntArray);
 		if (nullptr == property_) {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
-		IntEntityPtr intEntity_ = PTR_DCST<IntEntity>(*property_);
+		IntEntity * intEntity_ = dynamic_cast<IntEntity>(property_);
 		intEntity_->clearIntArray(nType);
 	}
 	

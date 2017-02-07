@@ -12,7 +12,7 @@ namespace cc {
 		int16_t bit_ = (nId - 1) % 32;
 		int32_t value_ = (~(0x1 << bit_));
 		mValue[id_] &= value_;
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void BitCount::runTrue(int16_t nId)
@@ -24,7 +24,7 @@ namespace cc {
 		int16_t id_ = (nId - 1) / 32;
 		int16_t bit_ = (nId - 1) % 32;
 		mValue[id_] |= (0x1 << bit_);
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	bool BitCount::isTrue(int16_t nId)

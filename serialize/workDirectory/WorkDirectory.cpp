@@ -205,8 +205,11 @@ namespace cc {
 	void WorkDirectory::runLoad()
 	{
 		ConfigEngine& configEngine_ = ConfigEngine::instance();
+		LOGI("[%s]1", __METHOD__);
 		configEngine_.runReader<WorkDirectory>(this, configUrl(), configName());
+		LOGI("[%s]2", __METHOD__);
 		configEngine_.runReader<WorkDirectory>(this, streamUrl(), streamName());
+		LOGI("[%s]3", __METHOD__);
 	}
 	
 	void WorkDirectory::runClear()

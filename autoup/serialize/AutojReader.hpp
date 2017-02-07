@@ -39,7 +39,7 @@ namespace cc {
 		bool loadFile(const char * nPath);
 		
 		void stringValue(const char * nValue);
-				
+		
 		AutojReader();
 		~AutojReader();
 		

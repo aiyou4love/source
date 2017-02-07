@@ -12,7 +12,7 @@ namespace cc {
 		void removeConnector(int64_t nAppId);
 		
 	private:
-		void initConnect(NetIpPtr& nNetIp, bool nReconnect);
+		void initConnect(NetIp * nNetIp, bool nReconnect);
 		
 	public:
 		template<class T>

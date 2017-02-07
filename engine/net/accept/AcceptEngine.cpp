@@ -10,7 +10,8 @@ namespace cc {
 			this->runStop();
 			return;
 		}
-		(*mNewSession)->startRead();
+		mNewSession->startRead();
+		mNewSession = nullptr;
 		startAccept();
 	}
 	
@@ -43,9 +44,9 @@ namespace cc {
 	{
 		try {
 			AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
-			mNewSession = &(acceptorMgr_.createSession());
+			mNewSession = acceptorMgr_.createSession();
 			
-			mAcceptor->async_accept((*mNewSession)->getSocket(),
+			mAcceptor->async_accept(mNewSession->getSocket(),
 				boost::bind(&AcceptEngine::handleAccept, this,
 				boost::asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
@@ -63,7 +64,7 @@ namespace cc {
 	void AcceptEngine::runStop()
 	{
 		if (nullptr != mNewSession) {
-			int32_t sessionId_ = (*mNewSession)->getSessionId();
+			int32_t sessionId_ = mNewSession->getSessionId();
 			AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
 			acceptorMgr_.removeSession(sessionId_);
 			mNewSession = nullptr;

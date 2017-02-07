@@ -5,7 +5,7 @@ namespace cc {
 	class SelfSend : public ISend
 	{
 	public:
-		void setSession(SessionPtr& nSession);
+		void setSession(Session * nSession);
 		
 		void sendValue(ValuePtr& nValue);
 		void pushValue(ValuePtr& nValue);
@@ -14,7 +14,7 @@ namespace cc {
 		~SelfSend();
 		
 	private:
-		SessionPtr * mSession;
+		Session * mSession;
 	};
 	
 }

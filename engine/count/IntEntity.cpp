@@ -26,7 +26,7 @@ namespace cc {
 		}
 	}
 	
-	IntArrayPtr * IntEntity::findIntArray(int16_t nIntId)
+	IntArray * IntEntity::findIntArray(int16_t nIntId)
 	{
 		auto it = mIntArrays.find(nIntId);
 		if ( it == mIntArrays.end() ) {
@@ -34,7 +34,7 @@ namespace cc {
 			return nullptr;
 		}
 		IntArrayPtr& intArray_ = it->second;
-		return (&intArray_);
+		return ( intArray_.get() );
 	}
 	
 	IntEntity::IntEntity()

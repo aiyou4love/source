@@ -10,13 +10,13 @@ namespace cc {
 		
 		int16_t getN();
 		
-		virtual void runInit(IntArrayPtr& nIntArray, CountIndexPtr& nCountIndex);
+		virtual void runInit(IntArray * nIntArray, CountIndexPtr& nCountIndex);
 		
 		ICount();
 		virtual ~ICount();
 		
 	protected:
-		IntArrayPtr * mIntArray;
+		IntArray * mIntArray;
 		int32_t * mValue;
 		int16_t N;
 	};

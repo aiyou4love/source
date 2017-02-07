@@ -14,9 +14,9 @@ namespace cc {
 		mSessions.erase(it);
 	}
 	
-	SessionPtr& AcceptorMgr::createSession()
+	Session * AcceptorMgr::createSession()
 	{
-		AcceptRemove& acceptRemove_ = AcceptRemove::instance();
+		ISessionRemove * acceptRemove_ = AcceptRemove::instance();
 		IoService& ioService_ = IoService::instance();
 		
 		LKGUD<mutex> lock_(mMutex);
@@ -25,10 +25,10 @@ namespace cc {
 		session_->setDisconnect(mDisconnectId);
 		session_->setException(mExceptionId);
 		session_->setDispatch(mDispatchId);
-		session_->setRemove(&acceptRemove_);
+		session_->setRemove(acceptRemove_);
 		session_->setIsAccept(true);
 		mSessions[mSessionId] = session_;
-		return mSessions[mSessionId];
+		return ( session_.get() );
 	}
 	
 	const char * AcceptorMgr::streamName()

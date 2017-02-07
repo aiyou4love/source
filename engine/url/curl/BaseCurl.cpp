@@ -20,7 +20,7 @@ namespace cc {
 	
 	void BaseCurl::setUrlInfo(UrlInfoPtr& nUrlInfo)
 	{
-		mUrlInfo = (&nUrlInfo);
+		mUrlInfo = nUrlInfo;
 	}
 	
 	void BaseCurl::setValue(ValuePtr& nValue)
@@ -46,7 +46,7 @@ namespace cc {
 		string value_ = mCurlValue->getValue();
 	#endif
 		mValue->pushString(value_.c_str());
-		int16_t dispatchId_ = (*mUrlInfo)->getDispatchId();
+		int16_t dispatchId_ = mUrlInfo->getDispatchId();
 		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
 		IDispatch * dispatch_ = dispatchEngine_.findDispatch(dispatchId_);
 		dispatch_->pushValue(mValue);
@@ -92,16 +92,16 @@ namespace cc {
 	
 	BaseCurl::BaseCurl()
 		: mHandle (nullptr)
-		, mUrlInfo (nullptr)
 		, mUrlValue ("")
 	{
 		mCurlValue.reset();
+		mUrlInfo.reset();
 	}
 	
 	BaseCurl::~BaseCurl()
 	{
 		mCurlValue.reset();
-		mUrlInfo = nullptr;
+		mUrlInfo.reset();
 		mUrlValue = "";
 		
 		curl_easy_cleanup(mHandle);

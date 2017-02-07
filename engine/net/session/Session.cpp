@@ -57,7 +57,7 @@ namespace cc {
 	
 	void Session::startWrite()
 	{
-		if ( mReading && (!mWriting) ) {
+		if ( (false == mClosed) && (false == mWriting) ) {
 			mWriting = true;
 			this->internalWrite();
 		}
@@ -81,7 +81,7 @@ namespace cc {
 	
 	void Session::runSend(ValuePtr& nValue)
 	{
-		if ( mClosed ) {
+		if ( true == mClosed ) {
 			LOGE("[%s]", __METHOD__);
 			return;
 		}
@@ -172,9 +172,8 @@ namespace cc {
 	
 	void Session::startRead()
 	{
-		mReading = true;
+		mClosed = false;
 		this->runRead();
-		this->startWrite();
 	}
 	
 	int32_t Session::getReadSeed()
@@ -310,6 +309,8 @@ namespace cc {
 		mVerMinId = nConnectInfo->getVerMinId();
 		int16_t dispatchId_ = nConnectInfo->getDispatchId();
 		this->setDispatch(dispatchId_);
+		
+		LOGI("[%s]%lld", __METHOD__, (int64_t)this);
 	}
 	
 	void Session::setDisconnect(int32_t nDisconnectId)
@@ -367,10 +368,16 @@ namespace cc {
 	
 	void Session::sendAuthority()
 	{
+		LOGI("[%s]%lld", __METHOD__, (int64_t)this);
+		
+		mClosed = false;
+		
 		ValuePtr value_(new Value());
 		value_->verInit();
 		value_->pushString(__EXEBASE64__);
 		this->runSend(value_);
+		
+		this->runRead();
 	}
 	
 	void Session::setRemove(ISessionRemove * nSessionRemove)
@@ -385,6 +392,7 @@ namespace cc {
 	
 	void Session::runClose()
 	{
+		LOGI("[%s]", __METHOD__);
 		if (nullptr != mSessionRemove) {
 			if (mAppId > 0) {
 				mSessionRemove->removeSession(mAppId);
@@ -406,7 +414,6 @@ namespace cc {
 		
 		mBufReader.runClear();
 		mReadBuffer.fill(0);
-		mReading = false;
 		
 		mBufWriter.runClear();
 		mValues.clear();
@@ -443,11 +450,6 @@ namespace cc {
 		mIsAccept = nIsAccept;
 	}
 	
-	void Session::setAuthority(int16_t nAuthority)
-	{
-		mAuthority = nAuthority;
-	}
-	
 	asio::ip::tcp::socket& Session::getSocket()
 	{
 		return mSocket;
@@ -462,7 +464,6 @@ namespace cc {
 		: mSocket (nHandle)
 		, mWriteTimer (nHandle)
 		, mReadTimer (nHandle)
-		, mReading(false)
 		, mWriting(false)
 		, mWriteValue (0)
 		, mWriteNo (0)
@@ -477,7 +478,7 @@ namespace cc {
 		, mVerMinId (0)
 		, mDispatch (nullptr)
 		, mSend (nullptr)
-		, mClosed (false)
+		, mClosed (true)
 		, mSessionRemove (nullptr)
 		, mAppId (0)
 		, mAuthority (0)

@@ -16,7 +16,7 @@ namespace cc {
 		
 		void runReset(int16_t nId);
 		
-		void runInit(IntArrayPtr& nIntArray, CountIndexPtr& nCountIndex);
+		void runInit(IntArray * nIntArray, CountIndexPtr& nCountIndex);
 		
 		IntCount();
 		~IntCount();

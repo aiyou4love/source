@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	NetIpPtr * NetIpMgr::findNetIp(int16_t nAppType, int32_t nAppNo)
+	NetIp * NetIpMgr::findNetIp(int16_t nAppType, int32_t nAppNo)
 	{
 		auto it = mNetIps.begin();
 		for ( ; it != mNetIps.end(); ++it ) {
@@ -11,26 +11,26 @@ namespace cc {
 			int32_t appNo_ = netIp_->getAppNo();
 			if ( (appType_ == nAppType) 
 				&& (appNo_ == nAppNo) ) {
-				return (&netIp_);
+				return ( netIp_.get() );
 			}
 		}
 		return nullptr;
 	}
 	
-	NetIpPtr * NetIpMgr::findNetIp(int16_t nAppType)
+	NetIp * NetIpMgr::findNetIp(int16_t nAppType)
 	{
 		auto it = mNetIps.begin();
 		for ( ; it != mNetIps.end(); ++it ) {
 			NetIpPtr& netIp_ = it->second;
 			int16_t appType_ = netIp_->getAppType();
 			if ( nAppType == appType_ ) {
-				return (&netIp_);
+				return ( netIp_.get() );
 			}
 		}
 		return nullptr;
 	}
 	
-	NetIpPtr * NetIpMgr::findNetIp(int64_t nAppId)
+	NetIp * NetIpMgr::findNetIp(int64_t nAppId)
 	{
 		auto it = mNetIps.find(nAppId);
 		if ( it == mNetIps.end() ) {
@@ -38,10 +38,10 @@ namespace cc {
 			return nullptr;
 		}
 		NetIpPtr& netIp_ = it->second;
-		return (&netIp_);
+		return ( netIp_.get() );
 	}
 	
-	NetIpPtr * NetIpMgr::findNetIp()
+	NetIp * NetIpMgr::findNetIp()
 	{
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
 		int16_t appType0_ = workDirectory_.getAppType();
@@ -54,7 +54,7 @@ namespace cc {
 			int32_t appNo1_ = netIp_->getAppNo();
 			if ( (appType1_ == appType0_) 
 				&& (appNo1_ == appNo0_) ) {
-				return (&netIp_);
+				return ( netIp_.get() );
 			}
 		}
 		return nullptr;

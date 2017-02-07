@@ -9,17 +9,19 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, nPropertyId);
 			return;
 		}
+		nProperty->setEntity(this);
 		mPropertys[nPropertyId] = nProperty;
 	}
 	
-	PropertyPtr * Entity::getProperty(int16_t nPropertyId)
+	Property * Entity::getProperty(int16_t nPropertyId)
 	{
 		auto it = mPropertys.find(nPropertyId);
 		if (it == mPropertys.end()) {
 			LOGE("[%s]%d", __METHOD__, nPropertyId);
 			return nullptr;
 		}
-		return (&(it->second));
+		PropertyPtr& property_ = it->second;
+		return ( property_.get() );
 	}
 	
 	void Entity::pushTrigger(EntityPtr& nEntity, int32_t nActionId)

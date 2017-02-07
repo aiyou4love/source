@@ -22,7 +22,7 @@ namespace cc {
 		string value_ = localTime_.getStringTime();
 		this->runNumber(value_, nName);
 	}
-		
+	
 	void XmlWriter::runTimes(int64_t& nValue, const char * nName)
 	{
 		LocalTime localTime_(nValue);
@@ -30,7 +30,7 @@ namespace cc {
 		this->runNumbers(value_, nName);
 	}
 	
-	void XmlWriter::runBuffer(char *& nValue, int16_t nLength)
+	void XmlWriter::runBuffer(char *& nValue, int16_t& nLength)
 	{
 		LOGE("[%s]%d", __METHOD__, nLength);
 	}

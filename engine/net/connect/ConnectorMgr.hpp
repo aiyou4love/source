@@ -9,7 +9,7 @@ namespace cc {
 		void sendValue(int16_t nAppType, ValuePtr& nValue);
 		bool sendValue(int64_t nAppId, ValuePtr& nValue);
 		
-		SessionPtr& createSession(int64_t nAppId);
+		Session * createSession(int64_t nAppId);
 		void removeSession(int64_t nAppId);
 		
 		void runPreinit();

@@ -30,7 +30,7 @@ namespace cc {
 		int64_t mAccountId;
 		int32_t mErrorCode;
 	};
-	typedef std::shared_ptr<cRoleResult> cRoleResultPtr;
+	typedef SPTR<cRoleResult> cRoleResultPtr;
 #endif
 	
 }

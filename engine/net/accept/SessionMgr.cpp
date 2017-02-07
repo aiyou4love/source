@@ -12,11 +12,11 @@ namespace cc {
 			LOGE("[%s]%d,%d", __METHOD__, nAppType, nAppNo);
 			return;
 		}
-		SessionPtr * session_ = it->second;
-		(*session_)->runSend(nValue);
+		Session * session_ = it->second;
+		session_->runSend(nValue);
 	}
 	
-	void SessionMgr::addSession(int16_t nAppType, int32_t nAppNo, SessionPtr& nSession)
+	void SessionMgr::addSession(int16_t nAppType, int32_t nAppNo, Session * nSession)
 	{
 		int64_t appId_ = linkInt32(nAppType, nAppNo);
 		LKGUD<mutex> lock_(mMutex);
@@ -26,7 +26,7 @@ namespace cc {
 			return;
 		}
 		nSession->setAppId(appId_);
-		mSessions[appId_] = &nSession;
+		mSessions[appId_] = nSession;
 	}
 	
 	void SessionMgr::removeSession(int64_t nAppId)

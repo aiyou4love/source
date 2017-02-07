@@ -2,14 +2,14 @@
 
 namespace cc {
 	
-	void Property::setEntity(EntityPtr& nEntity)
+	void Property::setEntity(Entity * nEntity)
 	{
-		mEntity = (&nEntity);
+		mEntity = nEntity;
 	}
 	
-	EntityPtr& Property::getEntity()
+	Entity * Property::getEntity()
 	{
-		return (*mEntity);
+		return mEntity;
 	}
 	
 	Property::Property()

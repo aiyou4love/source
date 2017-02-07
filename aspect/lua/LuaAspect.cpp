@@ -105,7 +105,7 @@ namespace cc {
 			mLuaThreads[value_] = luaThread_;
 		}
 	}
-		
+	
 	void LuaAspect::runClear()
 	{
 		mLuaConditions.clear();

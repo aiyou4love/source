@@ -18,7 +18,7 @@ namespace cc {
 			mValue[id_] &= 0xFFFF;
 			mValue[id_] |= value_;
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	int16_t Int16Count::getInt(int16_t nId)
@@ -83,7 +83,7 @@ namespace cc {
 			mValue[id_] &= 0xFFFF;
 			mValue[id_] |= value0_;
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int16Count::addInt(int16_t nId)
@@ -108,7 +108,7 @@ namespace cc {
 			mValue[id_] &= 0xFFFF;
 			mValue[id_] |= value0_;
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int16Count::pushInt(int16_t nValue)
@@ -133,7 +133,7 @@ namespace cc {
 				break;
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int16Count::popInt(int16_t nValue)
@@ -157,7 +157,7 @@ namespace cc {
 				break;
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int16Count::runReset(int16_t nId)
@@ -173,7 +173,7 @@ namespace cc {
 		} else {
 			mValue[bit_] &= 0xFFFF;
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	Int16Count::Int16Count()

@@ -50,7 +50,7 @@ namespace cc {
 			mValue[id_] |= value_;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	int8_t Int4Count::getInt(int16_t nId)
@@ -184,7 +184,7 @@ namespace cc {
 			mValue[id_] |= value2_;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int4Count::addInt(int16_t nId)
@@ -282,7 +282,7 @@ namespace cc {
 			mValue[id_] |= value2_;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int4Count::pushInt(int8_t nValue)
@@ -363,7 +363,7 @@ namespace cc {
 			} else {
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int4Count::popInt(int8_t nValue)
@@ -437,7 +437,7 @@ namespace cc {
 			} else {
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int4Count::runReset(int16_t nId)
@@ -466,7 +466,7 @@ namespace cc {
 			mValue[id_] &= 0xFFF0FFF;
 		} else {
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	Int4Count::Int4Count()

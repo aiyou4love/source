@@ -6,7 +6,7 @@ namespace cc {
 	class SessionMgr : noncopyable
 	{
 	public:
-		void addSession(int16_t nAppType, int32_t nAppNo, SessionPtr& nSession);
+		void addSession(int16_t nAppType, int32_t nAppNo, Session * nSession);
 		void removeSession(int64_t nAppId);
 		
 		void sendValue(int16_t nAppType, int32_t nAppNo, ValuePtr& nValue);
@@ -20,7 +20,7 @@ namespace cc {
 		~SessionMgr();
 		
 	private:
-		map<int64_t, SessionPtr *> mSessions;
+		map<int64_t, Session *> mSessions;
 		mutex mMutex;
 		
 		static SessionMgr mSessionMgr;

@@ -9,7 +9,7 @@ namespace cc {
 			return;
 		}
 		mValue[nId - 1] = nValue;
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	int32_t Int32Count::getInt(int16_t nId)
@@ -28,7 +28,7 @@ namespace cc {
 			return;
 		}
 		mValue[nId - 1] += nValue;
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int32Count::addInt(int16_t nId)
@@ -38,7 +38,7 @@ namespace cc {
 			return;
 		}
 		mValue[nId - 1] += 1;
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int32Count::pushInt(int32_t nValue)
@@ -49,7 +49,7 @@ namespace cc {
 				break;
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int32Count::popInt16(int16_t nValue)
@@ -60,7 +60,7 @@ namespace cc {
 				break;
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int32Count::popInt(int32_t nValue)
@@ -71,7 +71,7 @@ namespace cc {
 				break;
 			}
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	void Int32Count::runReset(int16_t nId)

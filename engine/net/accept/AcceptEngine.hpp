@@ -23,7 +23,7 @@ namespace cc {
 		
 	private:
 		SPTR<asio::ip::tcp::acceptor> mAcceptor;
-		SessionPtr * mNewSession;
+		Session * mNewSession;
 		
 		static AcceptEngine mAcceptEngine;
 	};

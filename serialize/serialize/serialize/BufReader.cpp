@@ -6,6 +6,9 @@ namespace cc {
 	{
 		int16_t count_ = 0;
 		this->runNumber<int16_t>(count_, nName);
+		if (0 == count_) {
+			return;
+		}
 		const char * buffer = this->getBuffer(count_);
 		if (nullptr == buffer) {
 			LOGE("[%s]%s", __METHOD__, nName);
@@ -29,15 +32,21 @@ namespace cc {
 		LOGE("[%s]%s", __METHOD__, nName);
 	}
 	
-	void BufReader::runBuffer(char *& nValue, int16_t nLength)
+	void BufReader::runBuffer(char *& nValue, int16_t& nLength)
 	{
+		this->runNumber(nLength, "length");
+		if (0 == nLength) {
+			return;
+		}
 		const char * buffer_ = this->getBuffer(nLength);
 		if (nullptr == buffer_) {
 			LOGE("[%s]%d", __METHOD__, nLength);
 			return;
 		}
-		nValue = new char[nLength];
-		memset(nValue, 0, nLength);
+		if (nullptr == nValue) {
+			nValue = new char[nLength];
+			memset(nValue, 0, nLength);
+		}
 		memcpy(nValue, buffer_, nLength);
 	}
 	
@@ -190,24 +199,27 @@ namespace cc {
 	
 	void BufReader::runDecompress(char * nBuffer, int8_t nType)
 	{
+		memset(mValue, 0, sizeof(mValue));
+		mSize = 0;
+		mPos0 = 0;
 		if (EcompressType::mLz4 == nType) {
-			if ( mCount > 0 ) {
+			if ( mCount <= 0 ) {
 				lz4decompress(nBuffer + mPos, mValue, mSize);
+				mPos += mLength;
 			} else {
 				lz4decompress(mBuffer, mValue, mSize);
 			}
 		} else {
 			if ( mCount <= 0 ) {
 				zstdecompress(nBuffer + mPos, mLength, mValue, mSize);
+				mPos += mLength;
 			} else {
 				zstdecompress(mBuffer, mLength, mValue, mSize);
 			}
 		}
 		memset(mBuffer, 0, sizeof(mBuffer));
-		mPos += mLength;
 		mLength = 0;
 		mCount = 0;
-		mPos0 = 0;
 	}
 	
 	void BufReader::runDecrypt(int32_t nSeed)

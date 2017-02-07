@@ -10,9 +10,6 @@ namespace cc {
 		
 		int64_t getServerTime();
 		int64_t getLocalTime();
-		int32_t getBootTime();
-		
-		void runPreinit();
 		
 		static cServerTime& instance();
 		
@@ -22,10 +19,6 @@ namespace cc {
 	private:
 		static cServerTime mcServerTime;
 		
-		steady_clock::time_point mStartPoint;
-		
-		int32_t mNumberTime;
-		int32_t mMaxTime;
 		int64_t mServerTime;
 	};
 #endif

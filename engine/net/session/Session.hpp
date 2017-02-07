@@ -57,7 +57,6 @@ namespace cc {
 		
 		asio::ip::tcp::socket& getSocket();
 		
-		void setAuthority(int16_t nAuthority);
 		void setIsAccept(bool nIsAccept);
 		int32_t getSessionId();
 		
@@ -72,7 +71,6 @@ namespace cc {
 		
 		boost::array<int8_t, PACKETSIZE> mReadBuffer;
 		BufReader mBufReader;
-		atomic<bool> mReading;
 		
 		deque<ValuePtr> mValues;
 		atomic<bool> mWriting;

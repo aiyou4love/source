@@ -7,7 +7,7 @@ namespace cc {
 	{
 	public:
 		void removeSession(int32_t nSessionId);
-		SessionPtr& createSession();
+		Session * createSession();
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)

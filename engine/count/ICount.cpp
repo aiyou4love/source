@@ -7,7 +7,7 @@ namespace cc {
 		for (int16_t i = 0; i < N; ++i) {
 			mValue[i] = 0;
 		}
-		(*mIntArray)->runDirty();
+		mIntArray->runDirty();
 	}
 	
 	int16_t ICount::getN()
@@ -15,13 +15,13 @@ namespace cc {
 		return N;
 	}
 	
-	void ICount::runInit(IntArrayPtr& nIntArray, CountIndexPtr& nCountIndex)
+	void ICount::runInit(IntArray * nIntArray, CountIndexPtr& nCountIndex)
 	{
 		int16_t begin_ = nCountIndex->getBegin();
 		int16_t end_ = nCountIndex->getEnd();
 		
 		mValue = nIntArray->rangeInts(begin_, end_);
-		mIntArray = (&nIntArray);
+		mIntArray = nIntArray;
 		N = end_ - begin_ + 1;
 	}
 	

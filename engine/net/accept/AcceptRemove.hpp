@@ -9,7 +9,7 @@ namespace cc {
 		void removeSession(int32_t nSessionId);
 		void removeSession(int64_t nAppId);
 		
-		static AcceptRemove& instance();
+		static ISessionRemove * instance();
 		
 		AcceptRemove();
 		~AcceptRemove();

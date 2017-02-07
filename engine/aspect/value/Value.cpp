@@ -399,6 +399,23 @@ namespace cc {
 		return mSeed;
 	}
 	
+	int32_t Value::getTime()
+	{
+		return mTime;
+	}
+	
+	void Value::beginTime()
+	{
+		cServerTime& serverTime_ = cServerTime::instance();
+		mTime = serverTime_.getBootTime();
+	}
+	
+	void Value::endTime()
+	{
+		cServerTime& serverTime_ = cServerTime::instance();
+		mTime = serverTime_.getBootTime() - mTime;
+	}
+	
 	void Value::runClear()
 	{
 		mIndexs.clear();
@@ -416,6 +433,7 @@ namespace cc {
 		mVerMin = 0;
 		
 		mSeed = 0;
+		mTime = 0;
 		
 		mIndex = 0;
 	}

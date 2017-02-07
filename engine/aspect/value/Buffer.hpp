@@ -8,7 +8,6 @@ namespace cc {
 		template<class T>
 		void serialize(T * nSerialize, const char * nName, int8_t nCount)
 		{
-			nSerialize->runNumber(mLength, "length");
 			nSerialize->runBuffer(mValue, mLength);
 		}
 		

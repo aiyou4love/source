@@ -6,6 +6,9 @@ namespace cc {
 	{
 		int16_t count_ = (int16_t)(nValue.size());
 		this->runNumber(count_, nName);
+		if (0 == count_) {
+			return;
+		}
 		mStream.write((char *)(&nValue[0]), count_);
 	}
 	
@@ -24,8 +27,12 @@ namespace cc {
 		LOGE("[%s]%s", __METHOD__, nName);
 	}
 	
-	void BinWriter::runBuffer(char *& nValue, int16_t nLength)
+	void BinWriter::runBuffer(char *& nValue, int16_t& nLength)
 	{
+		this->runNumber(nLength, "length");
+		if (0 == nLength) {
+			return;
+		}
 		mStream.write(((char *)nValue), nLength);
 	}
 	

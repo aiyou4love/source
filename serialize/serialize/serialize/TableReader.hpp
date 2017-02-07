@@ -8,6 +8,9 @@ namespace cc {
 		template <typename T>
 		void runNumber(T& nValue, const char * nName)
 		{
+			if ( mValue->IsNull() ) {
+				return;
+			}
 			if ( !mValue->HasMember(nName) ) {
 				return;
 			}
@@ -28,7 +31,7 @@ namespace cc {
 		void runTime(int64_t& nValue, const char * nName);
 		void runTimes(int64_t& nValue, const char * nName);
 		
-		void runBuffer(char *& nValue, int16_t nLength);
+		void runBuffer(char *& nValue, int16_t& nLength);
 		
 		void runPush(const char * nName);
 		bool runChild(const char * nName);

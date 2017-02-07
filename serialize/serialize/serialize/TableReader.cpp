@@ -4,6 +4,9 @@ namespace cc {
 	
 	void TableReader::runNumber(string& nValue, const char * nName)
 	{
+		if ( mValue->IsNull() ) {
+			return;
+		}
 		if ( !mValue->HasMember(nName) ) {
 			return;
 		}
@@ -33,7 +36,7 @@ namespace cc {
 		this->runTime(nValue, nName);
 	}
 	
-	void TableReader::runBuffer(char *& nValue, int16_t nLength)
+	void TableReader::runBuffer(char *& nValue, int16_t& nLength)
 	{
 		LOGE("[%s]%d", __METHOD__, nLength);
 	}

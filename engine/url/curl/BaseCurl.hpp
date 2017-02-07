@@ -33,7 +33,7 @@ namespace cc {
 		
 		string mUrlValue;
 		
-		UrlInfoPtr * mUrlInfo;
+		UrlInfoPtr mUrlInfo;
 		ValuePtr mValue;
 		
 		CURL * mHandle;

@@ -15,9 +15,9 @@ namespace cc {
 		connectEngine_.initConnect(nAppId);
 	}
 	
-	ConnectRemove& ConnectRemove::instance()
+	ISessionRemove * ConnectRemove::instance()
 	{
-		return mConnectRemove;
+		return (&mConnectRemove);
 	}
 	
 	ConnectRemove::ConnectRemove()

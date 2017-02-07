@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class Connector : public SPTR_THIS<Connector>, noncopyable
+	class Connector : noncopyable
 	{
 	public:
 		void runConnect(const char * nIp, const char * nPort, ConnectInfoPtr& nConnectInfo);
@@ -25,12 +25,11 @@ namespace cc {
 	private:
 		asio::deadline_timer mConnectTimer;
 		
-		SessionPtr * mSession;
 		IDispatch * mDispatch;
+		Session * mSession;
 		
 		int32_t mConnectErrorId;
 		int32_t mTimeoutId;
-		int32_t mConnectId;
 		
 		int64_t mAppId;
 	};

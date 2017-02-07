@@ -5,37 +5,37 @@ namespace cc {
 	void ConnectEngine::initConnect(int16_t nAppType, int32_t nAppNo)
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
-		NetIpPtr * netIp_ = netIpMgr_.findNetIp(nAppType, nAppNo);
+		NetIp * netIp_ = netIpMgr_.findNetIp(nAppType, nAppNo);
 		if (nullptr == netIp_) {
 			LOGE("[%s]%d,%d", __METHOD__, nAppType, nAppNo);
 			return;
 		}
-		this->initConnect(*netIp_, false);
+		this->initConnect(netIp_, false);
 	}
 	
 	void ConnectEngine::initConnect(int16_t nAppType)
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
-		NetIpPtr * netIp_ = netIpMgr_.findNetIp(nAppType);
+		NetIp * netIp_ = netIpMgr_.findNetIp(nAppType);
 		if (nullptr == netIp_) {
 			LOGE("[%s]%d", __METHOD__, nAppType);
 			return;
 		}
-		this->initConnect(*netIp_, false);
+		this->initConnect(netIp_, false);
 	}
 	
 	void ConnectEngine::initConnect(int64_t nAppId)
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
-		NetIpPtr * netIp_ = netIpMgr_.findNetIp(nAppId);
+		NetIp * netIp_ = netIpMgr_.findNetIp(nAppId);
 		if (nullptr == netIp_) {
 			LOGE("[%s]%d", __METHOD__, nAppId);
 			return;
 		}
-		this->initConnect(*netIp_, true);
+		this->initConnect(netIp_, true);
 	}
 	
-	void ConnectEngine::initConnect(NetIpPtr& nNetIp, bool nReconnect)
+	void ConnectEngine::initConnect(NetIp * nNetIp, bool nReconnect)
 	{
 		const char * port_ = nNetIp->getPort();
 		const char * ip_ = nNetIp->getIp();
@@ -55,7 +55,7 @@ namespace cc {
 		IoService& ioService_ = IoService::instance();
 		LKGUD<mutex> lock_(mMutex);
 		auto it1 = mConnectors.find(appId_);
-		if (it1 != mConnectors.end()) {
+		if ( it1 != mConnectors.end() ) {
 			LOGE("[%s]%d", __METHOD__, appId_);
 			return;
 		}

@@ -125,7 +125,7 @@ namespace cc {
 			}
 		}
 		
-		void runBuffer(char *& nValue, int16_t nLength)
+		void runBuffer(char *& nValue, int16_t& nLength)
 		{
 			mArchive.runBuffer(nValue, nLength);
 		}

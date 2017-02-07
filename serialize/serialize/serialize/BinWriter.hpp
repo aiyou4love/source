@@ -23,7 +23,7 @@ namespace cc {
 		void runTime(int64_t& nValue, const char * nName);
 		void runTimes(int64_t& nValue, const char * nName);
 		
-		void runBuffer(char *& nValue, int16_t nLength);
+		void runBuffer(char *& nValue, int16_t& nLength);
 		
 		void runPush(const char * nName);
 		void runPop(const char * nName);
