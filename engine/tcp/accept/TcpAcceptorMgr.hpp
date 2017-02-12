@@ -3,11 +3,11 @@
 namespace cc {
 	
 #ifndef __CLIENT__
-	class AcceptorMgr : noncopyable
+	class TcpAcceptorMgr : noncopyable
 	{
 	public:
 		void removeSession(int32_t nSessionId);
-		Session * createSession();
+		TcpSession * createSession();
 		
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
@@ -23,13 +23,13 @@ namespace cc {
 		void runLoad();
 		void runStop();
 		
-		static AcceptorMgr& instance();
+		static TcpAcceptorMgr& instance();
 		
-		AcceptorMgr();
-		~AcceptorMgr();
+		TcpAcceptorMgr();
+		~TcpAcceptorMgr();
 		
 	private:
-		map<int32_t, SessionPtr> mSessions;
+		map<int32_t, TcpSessionPtr> mSessions;
 		
 		int32_t mSessionId;
 		mutex mMutex;
@@ -38,7 +38,7 @@ namespace cc {
 		int32_t mExceptionId;
 		int16_t mDispatchId;
 		
-		static AcceptorMgr mAcceptorMgr;
+		static TcpAcceptorMgr mTcpAcceptorMgr;
 	};
 #endif
 	

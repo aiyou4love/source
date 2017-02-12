@@ -2,19 +2,19 @@
 
 namespace cc {
 	
-	class SelfSend : public ISend
+	class SelfTcpSend : public ISend
 	{
 	public:
-		void setSession(Session * nSession);
+		void setSession(TcpSession * nTcpSession);
 		
 		void sendValue(ValuePtr& nValue);
 		void pushValue(ValuePtr& nValue);
 		
-		SelfSend();
-		~SelfSend();
+		SelfTcpSend();
+		~SelfTcpSend();
 		
 	private:
-		Session * mSession;
+		TcpSession * mTcpSession;
 	};
 	
 }

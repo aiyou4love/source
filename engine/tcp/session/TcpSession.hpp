@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class Session : public SPTR_THIS<Session>, noncopyable
+	class TcpSession : public SPTR_THIS<TcpSession>, noncopyable
 	{
 	public:
 		enum { write_timeout = 300 };
@@ -27,6 +27,8 @@ namespace cc {
 		void startRead();
 		int32_t getReadSeed();
 		
+		void runSeed();
+		
 		void runAccept(ValuePtr& nValue);
 		void runConnect(ValuePtr& nValue);
 		void runValue(ValuePtr& nValue);
@@ -39,13 +41,13 @@ namespace cc {
 		void runVerMaxId();
 		void runVerMinId();
 		
-		void initSelectId(ConnectInfoPtr& nConnectInfo);
+		void initSelectId(TcpConnectInfoPtr& nTcpConnectInfo);
 		
 		void setDisconnect(int32_t nDisconnectId);
 		void setException(int32_t nExceptionId);
 		
 		void setDispatch(int16_t nDispatchId);
-		void setSend(PropertyPtr& nSend);
+		void setSend(Property * nSend);
 		
 		void runAuthority(ValuePtr& nValue);
 		void sendAuthority();
@@ -60,8 +62,8 @@ namespace cc {
 		void setIsAccept(bool nIsAccept);
 		int32_t getSessionId();
 		
-		Session(int32_t nSessionId, asio::io_service& nHandle);
-		~Session();
+		TcpSession(int32_t nSessionId, asio::io_service& nHandle);
+		~TcpSession();
 		
 	private:
 		asio::ip::tcp::socket mSocket;
@@ -87,13 +89,14 @@ namespace cc {
 		int16_t mReadType;
 		
 		int32_t mDisconnectId;
+		int32_t mConnectId;
 		int32_t mExceptionId;
 		
 		int32_t mVerMaxId;
 		int32_t mVerMinId;
 		
 		IDispatch * mDispatch;
-		PropertyPtr * mSend;
+		Property * mSend;
 		
 		ISessionRemove * mSessionRemove;
 		atomic<bool> mClosed;
@@ -103,7 +106,7 @@ namespace cc {
 		bool mIsAccept;
 		int32_t mSessionId;
 	};
-	typedef SPTR<Session> SessionPtr;
-	typedef WPTR<Session> SessionWtr;
+	typedef SPTR<TcpSession> TcpSessionPtr;
+	typedef WPTR<TcpSession> TcpSessionWtr;
 	
 }

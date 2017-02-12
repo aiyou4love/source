@@ -45,27 +45,25 @@ void engineInit()
 	
 	IoService& ioService_ = IoService::instance();
 	ioService_.runPreinit();
-	
 #ifndef __CLIENT__
-	AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
-	acceptorMgr_.runPreinit();
+	TcpAcceptorMgr& tcpAcceptorMgr_ = TcpAcceptorMgr::instance();
+	tcpAcceptorMgr_.runPreinit();
 	
-	SessionMgr& sessionMgr_ = SessionMgr::instance();
-	sessionMgr_.runPreinit();
+	TcpSessionMgr& tcpSessionMgr_ = TcpSessionMgr::instance();
+	tcpSessionMgr_.runPreinit();
 	
-	AcceptEngine& acceptEngine_ = AcceptEngine::instance();
-	acceptEngine_.runPreinit();
+	TcpAcceptEngine& tcpAcceptEngine_ = TcpAcceptEngine::instance();
+	tcpAcceptEngine_.runPreinit();
 	
-	AcceptRemove::instance();
+	TcpAcceptRemove::instance();
 #endif
+	TcpConnectorMgr& tcpConnectorMgr_ = TcpConnectorMgr::instance();
+	tcpConnectorMgr_.runPreinit();
 	
-	ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
-	connectorMgr_.runPreinit();
+	TcpConnectEngine& tcpConnectEngine_ = TcpConnectEngine::instance();
+	tcpConnectEngine_.runPreinit();
 	
-	ConnectEngine& connectEngine_ = ConnectEngine::instance();
-	connectEngine_.runPreinit();
-	
-	ConnectRemove::instance();
+	TcpConnectRemove::instance();
 	
 	TimeEngine& timeEngine_ = TimeEngine::instance();
 	timeEngine_.runPreinit();

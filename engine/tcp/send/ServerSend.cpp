@@ -5,8 +5,8 @@ namespace cc {
 #ifndef __CLIENT__
 	void ServerSend::sendValue(ValuePtr& nValue)
 	{
-		SessionMgr& sessionMgr_ = SessionMgr::instance();
-		sessionMgr_.sendValue(mAppType, mAppNo, nValue);
+		TcpSessionMgr& tcpSessionMgr_ = TcpSessionMgr::instance();
+		tcpSessionMgr_.sendValue(mAppType, mAppNo, nValue);
 	}
 	
 	void ServerSend::setAppType(int16_t nAppType)

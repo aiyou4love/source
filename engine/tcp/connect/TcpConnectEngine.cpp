@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	void ConnectEngine::initConnect(int16_t nAppType, int32_t nAppNo)
+	void TcpConnectEngine::initConnect(int16_t nAppType, int32_t nAppNo)
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
 		NetIp * netIp_ = netIpMgr_.findNetIp(nAppType, nAppNo);
@@ -13,7 +13,7 @@ namespace cc {
 		this->initConnect(netIp_, false);
 	}
 	
-	void ConnectEngine::initConnect(int16_t nAppType)
+	void TcpConnectEngine::initConnect(int16_t nAppType)
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
 		NetIp * netIp_ = netIpMgr_.findNetIp(nAppType);
@@ -24,7 +24,7 @@ namespace cc {
 		this->initConnect(netIp_, false);
 	}
 	
-	void ConnectEngine::initConnect(int64_t nAppId)
+	void TcpConnectEngine::initConnect(int64_t nAppId)
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
 		NetIp * netIp_ = netIpMgr_.findNetIp(nAppId);
@@ -35,7 +35,7 @@ namespace cc {
 		this->initConnect(netIp_, true);
 	}
 	
-	void ConnectEngine::initConnect(NetIp * nNetIp, bool nReconnect)
+	void TcpConnectEngine::initConnect(NetIp * nNetIp, bool nReconnect)
 	{
 		const char * port_ = nNetIp->getPort();
 		const char * ip_ = nNetIp->getIp();
@@ -47,8 +47,8 @@ namespace cc {
 			LOGE("[%s]%d", __METHOD__, appType_);
 			return;
 		}
-		ConnectInfoPtr& connectInfo_ = it0->second;
-		if ( nReconnect && (!connectInfo_->isReconnect()) ) {
+		TcpConnectInfoPtr& tcpConnectInfo_ = it0->second;
+		if ( nReconnect && (!tcpConnectInfo_->isReconnect()) ) {
 			return;
 		}
 		
@@ -61,12 +61,12 @@ namespace cc {
 		}
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();
 		
-		ConnectorPtr connector_(new Connector(appId_, ioHandle_));
-		connector_->runConnect(ip_, port_, connectInfo_);
-		mConnectors[appId_] = connector_;
+		TcpConnectorPtr tcpConnector_(new TcpConnector(appId_, ioHandle_));
+		tcpConnector_->runConnect(ip_, port_, tcpConnectInfo_);
+		mConnectors[appId_] = tcpConnector_;
 	}
 	
-	void ConnectEngine::removeConnector(int64_t nAppId)
+	void TcpConnectEngine::removeConnector(int64_t nAppId)
 	{
 		LKGUD<mutex> lock_(mMutex);
 		auto it = mConnectors.find(nAppId);
@@ -77,30 +77,30 @@ namespace cc {
 		mConnectors.erase(it);
 	}
 	
-	const char * ConnectEngine::streamName()
+	const char * TcpConnectEngine::streamName()
 	{
-		return "connectEngine";
+		return "tcpConnectEngine";
 	}
 	
-	const char * ConnectEngine::streamUrl()
+	const char * TcpConnectEngine::streamUrl()
 	{
-		return "connectEngine.json";
+		return "tcpConnectEngine.json";
 	}
 	
-	void ConnectEngine::runPreinit()
+	void TcpConnectEngine::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
-		lifeCycle_.m_tLoadBegin.connect(bind(&ConnectEngine::runLoad, this));
-		lifeCycle_.m_tStopBegin.connect(bind(&ConnectEngine::runStop, this));
+		lifeCycle_.m_tLoadBegin.connect(bind(&TcpConnectEngine::runLoad, this));
+		lifeCycle_.m_tStopBegin.connect(bind(&TcpConnectEngine::runStop, this));
 	}
 	
-	void ConnectEngine::runLoad()
+	void TcpConnectEngine::runLoad()
 	{
 		TableEngine& tableEngine_ = TableEngine::instance();
-		tableEngine_.runReader<ConnectEngine>(this, streamUrl(), streamName());
+		tableEngine_.runReader<TcpConnectEngine>(this, streamUrl(), streamName());
 	}
 	
-	void ConnectEngine::runStop()
+	void TcpConnectEngine::runStop()
 	{
 		mConnectInfos.clear();
 		
@@ -108,23 +108,23 @@ namespace cc {
 		mConnectors.clear();
 	}
 	
-	ConnectEngine& ConnectEngine::instance()
+	TcpConnectEngine& TcpConnectEngine::instance()
 	{
-		return mConnectEngine;
+		return mTcpConnectEngine;
 	}
 	
-	ConnectEngine::ConnectEngine()
+	TcpConnectEngine::TcpConnectEngine()
 	{
 		mConnectInfos.clear();
 		mConnectors.clear();
 	}
 	
-	ConnectEngine::~ConnectEngine()
+	TcpConnectEngine::~TcpConnectEngine()
 	{
-		mConnectInfos.clear(); 
+		mConnectInfos.clear();
 		mConnectors.clear();
 	}
 	
-	ConnectEngine ConnectEngine::mConnectEngine;
+	TcpConnectEngine TcpConnectEngine::mTcpConnectEngine;
 	
 }

@@ -2,13 +2,13 @@
 
 namespace cc {
 	
-	void Connector::runConnect(const char * nIp, const char * nPort, ConnectInfoPtr& nConnectInfo)
+	void TcpConnector::runConnect(const char * nIp, const char * nPort, TcpConnectInfoPtr& nTcpConnectInfo)
 	{
-		this->initSelectId(nConnectInfo);
+		this->initSelectId(nTcpConnectInfo);
 		
-		ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
-		mSession = connectorMgr_.createSession(mAppId);
-		mSession->initSelectId(nConnectInfo);
+		TcpConnectorMgr& tcpConnectorMgr_ = TcpConnectorMgr::instance();
+		mSession = tcpConnectorMgr_.createSession(mAppId);
+		mSession->initSelectId(nTcpConnectInfo);
 		
 		IoService& ioService_ = IoService::instance();
 		asio::io_service& ioHandle_ = ioService_.getIoHandle();
@@ -19,10 +19,10 @@ namespace cc {
 		
 		try {
 			boost::asio::async_connect(mSession->getSocket(), iterator_,
-			boost::bind(&Connector::handleConnect, this, boost::asio::placeholders::error));
+			boost::bind(&TcpConnector::handleConnect, this, boost::asio::placeholders::error));
 			
-			mConnectTimer.expires_from_now(boost::posix_time::seconds(Connector::connect_timeout));
-			mConnectTimer.async_wait(boost::bind(&Connector::handleConnectTimeout, 
+			mConnectTimer.expires_from_now(boost::posix_time::seconds(TcpConnector::connect_timeout));
+			mConnectTimer.async_wait(boost::bind(&TcpConnector::handleConnectTimeout, 
 				this, boost::asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
@@ -31,10 +31,9 @@ namespace cc {
 		}
 	}
 	
-	void Connector::handleConnectTimeout(const boost::system::error_code& nError)
+	void TcpConnector::handleConnectTimeout(const boost::system::error_code& nError)
 	{
 		if (nError) {
-			this->runClose();
 			return;
 		}
 		if (mConnectTimer.expires_at() <= asio::deadline_timer::traits_type::now()) {
@@ -44,7 +43,7 @@ namespace cc {
 		}
 	}
 	
-	void Connector::handleConnect(const boost::system::error_code& nError)
+	void TcpConnector::handleConnect(const boost::system::error_code& nError)
 	{
 		if (nError) {
 			LOGE("[%s]%s", __METHOD__, nError.message().c_str());
@@ -54,23 +53,23 @@ namespace cc {
 		}
 		mConnectTimer.cancel();
 		
-		ISessionRemove * connectRemove_ = ConnectRemove::instance();
-		mSession->setRemove(connectRemove_);
+		ISessionRemove * sessionRemove_ = TcpConnectRemove::instance();
+		mSession->setRemove(sessionRemove_);
 		mSession->sendAuthority();
 		this->runClear();
 	}
 	
-	void Connector::initSelectId(ConnectInfoPtr& nConnectInfo)
+	void TcpConnector::initSelectId(TcpConnectInfoPtr& nTcpConnectInfo)
 	{
-		mConnectErrorId = nConnectInfo->getConnectErrorId();
-		mTimeoutId = nConnectInfo->getTimeoutId();
+		mConnectErrorId = nTcpConnectInfo->getConnectErrorId();
+		mTimeoutId = nTcpConnectInfo->getTimeoutId();
 		
-		int16_t dispatchId_ = nConnectInfo->getConnectDispatch();
+		int16_t dispatchId_ = nTcpConnectInfo->getConnectDispatch();
 		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
 		mDispatch = dispatchEngine_.findDispatch(dispatchId_);
 	}
 	
-	void Connector::runSelectId(int32_t nSelectId)
+	void TcpConnector::runSelectId(int32_t nSelectId)
 	{
 		this->runClose();
 		
@@ -81,22 +80,22 @@ namespace cc {
 		mDispatch->pushValue(value_);
 	}
 	
-	void Connector::runClear()
+	void TcpConnector::runClear()
 	{
-		ConnectEngine& connectEngine_ = ConnectEngine::instance();
-		connectEngine_.removeConnector(mAppId);
+		TcpConnectEngine& tcpConnectEngine_ = TcpConnectEngine::instance();
+		tcpConnectEngine_.removeConnector(mAppId);
 	}
 	
-	void Connector::runClose()
+	void TcpConnector::runClose()
 	{
-		ConnectEngine& connectEngine_ = ConnectEngine::instance();
-		connectEngine_.removeConnector(mAppId);
+		TcpConnectEngine& tcpConnectEngine_ = TcpConnectEngine::instance();
+		tcpConnectEngine_.removeConnector(mAppId);
 		
-		ConnectorMgr& connectorMgr_ = ConnectorMgr::instance();
-		connectorMgr_.removeSession(mAppId);
+		TcpConnectorMgr& tcpConnectorMgr_ = TcpConnectorMgr::instance();
+		tcpConnectorMgr_.removeSession(mAppId);
 	}
 	
-	Connector::Connector(int64_t nAppId, asio::io_service& nHandle)
+	TcpConnector::TcpConnector(int64_t nAppId, asio::io_service& nHandle)
 		: mConnectTimer (nHandle)
 		, mAppId (nAppId)
 		, mConnectErrorId (0)
@@ -106,7 +105,7 @@ namespace cc {
 	{
 	}
 	
-	Connector::~Connector()
+	TcpConnector::~TcpConnector()
 	{
 		mSession = nullptr;
 		mDispatch = nullptr;

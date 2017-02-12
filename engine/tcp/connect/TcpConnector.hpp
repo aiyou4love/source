@@ -2,16 +2,16 @@
 
 namespace cc {
 	
-	class Connector : noncopyable
+	class TcpConnector : noncopyable
 	{
 	public:
-		void runConnect(const char * nIp, const char * nPort, ConnectInfoPtr& nConnectInfo);
+		void runConnect(const char * nIp, const char * nPort, TcpConnectInfoPtr& nTcpConnectInfo);
 		
 	private:
 		void handleConnectTimeout(const boost::system::error_code& nError);
 		void handleConnect(const boost::system::error_code& nError);
 		
-		void initSelectId(ConnectInfoPtr& nConnectInfo);
+		void initSelectId(TcpConnectInfoPtr& nTcpConnectInfo);
 		void runSelectId(int32_t nSelectId);
 		void runClear();
 		void runClose();
@@ -19,20 +19,20 @@ namespace cc {
 	public:
 		enum { connect_timeout = 120 };
 		
-		Connector(int64_t nAppId, asio::io_service& nHandle);
-		~Connector();
+		TcpConnector(int64_t nAppId, asio::io_service& nHandle);
+		~TcpConnector();
 		
 	private:
 		asio::deadline_timer mConnectTimer;
 		
 		IDispatch * mDispatch;
-		Session * mSession;
+		TcpSession * mSession;
 		
 		int32_t mConnectErrorId;
 		int32_t mTimeoutId;
 		
 		int64_t mAppId;
 	};
-	typedef SPTR<Connector> ConnectorPtr;
+	typedef SPTR<TcpConnector> TcpConnectorPtr;
 	
 }

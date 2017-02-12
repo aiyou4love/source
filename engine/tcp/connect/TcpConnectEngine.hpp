@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class ConnectEngine : noncopyable
+	class TcpConnectEngine : noncopyable
 	{
 	public:
 		void initConnect(int16_t nAppType, int32_t nAppNo);
@@ -18,7 +18,7 @@ namespace cc {
 		template<class T>
 		void headSerialize(T& nSerialize, const char * nName)
 		{
-			nSerialize.template runMapStreamPtrs<int16_t, ConnectInfoPtr>(mConnectInfos, "connectInfos", "connectInfo");
+			nSerialize.template runMapStreamPtrs<int16_t, TcpConnectInfoPtr>(mConnectInfos, "connectInfos", "connectInfo");
 		}
 		const char * streamName();
 		const char * streamUrl();
@@ -27,18 +27,18 @@ namespace cc {
 		void runLoad();
 		void runStop();
 		
-		static ConnectEngine& instance();
+		static TcpConnectEngine& instance();
 		
-		ConnectEngine();
-		~ConnectEngine();
+		TcpConnectEngine();
+		~TcpConnectEngine();
 		
 	private:
-		map<int16_t, ConnectInfoPtr> mConnectInfos;
+		map<int16_t, TcpConnectInfoPtr> mConnectInfos;
 		
-		map<int64_t, ConnectorPtr> mConnectors;
+		map<int64_t, TcpConnectorPtr> mConnectors;
 		mutex mMutex;
 		
-		static ConnectEngine mConnectEngine;
+		static TcpConnectEngine mTcpConnectEngine;
 	};
 	
 }

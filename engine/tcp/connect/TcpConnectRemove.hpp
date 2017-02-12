@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class ConnectRemove : public ISessionRemove
+	class TcpConnectRemove : public ISessionRemove
 	{
 	public:
 		void removeSession(int32_t nSessionId);
@@ -10,11 +10,11 @@ namespace cc {
 		
 		static ISessionRemove * instance();
 		
-		ConnectRemove();
-		~ConnectRemove();
+		TcpConnectRemove();
+		~TcpConnectRemove();
 		
 	private:
-		static ConnectRemove mConnectRemove;
+		static TcpConnectRemove mTcpConnectRemove;
 	};
 	
 }

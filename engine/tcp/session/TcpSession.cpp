@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	void Session::handleWriteTimeout(const boost::system::error_code& nError)
+	void TcpSession::handleWriteTimeout(const boost::system::error_code& nError)
 	{
 		if (mWriteTimer.expires_at() <= asio::deadline_timer::traits_type::now()) {
 			mWriteTimer.expires_at(boost::posix_time::pos_infin);
@@ -12,7 +12,7 @@ namespace cc {
 		}
 	}
 	
-	void Session::handleWrite(const boost::system::error_code& nError)
+	void TcpSession::handleWrite(const boost::system::error_code& nError)
 	{
 		if (nError) {
 			LOGE("[%s]%s", __METHOD__, nError.message().c_str());
@@ -23,7 +23,7 @@ namespace cc {
 		this->internalWrite();
 	}
 	
-	void Session::internalWrite()
+	void TcpSession::internalWrite()
 	{
 		ValuePtr value_ = this->popValue();
 		if (!value_) {
@@ -40,22 +40,22 @@ namespace cc {
 		this->runWrite();
 	}
 	
-	void Session::runWrite()
+	void TcpSession::runWrite()
 	{
 		try {
-			mWriteTimer.expires_from_now(boost::posix_time::seconds(Session::write_timeout));
-			mWriteTimer.async_wait(boost::bind(&Session::handleWriteTimeout,
+			mWriteTimer.expires_from_now(boost::posix_time::seconds(TcpSession::write_timeout));
+			mWriteTimer.async_wait(boost::bind(&TcpSession::handleWriteTimeout,
 				SED_THIS(), boost::asio::placeholders::error));
 				
 			asio::async_write(mSocket, boost::asio::buffer(mBufWriter.getValue(), mBufWriter.getSize()),
-				boost::bind(&Session::handleWrite, SED_THIS(), asio::placeholders::error));
+				boost::bind(&TcpSession::handleWrite, SED_THIS(), asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
 			this->runException();
 		}
 	}
 	
-	void Session::startWrite()
+	void TcpSession::startWrite()
 	{
 		if ( (false == mClosed) && (false == mWriting) ) {
 			mWriting = true;
@@ -63,7 +63,7 @@ namespace cc {
 		}
 	}
 	
-	int32_t Session::getWriteSeed()
+	int32_t TcpSession::getWriteSeed()
 	{
 		if ( (0 == mWriteValue) || (0 == mWriteNo) || (0 == mWriteType) ) {
 			return SEEDDEF;
@@ -79,7 +79,7 @@ namespace cc {
 		return result_;
 	}
 	
-	void Session::runSend(ValuePtr& nValue)
+	void TcpSession::runSend(ValuePtr& nValue)
 	{
 		if ( true == mClosed ) {
 			LOGE("[%s]", __METHOD__);
@@ -89,7 +89,7 @@ namespace cc {
 		this->startWrite();
 	}
 	
-	void Session::pushValue(ValuePtr& nValue)
+	void TcpSession::pushValue(ValuePtr& nValue)
 	{
 		LKGUD<mutex> lock_(mMutex);
 		int32_t seed_ = this->getWriteSeed();
@@ -97,7 +97,7 @@ namespace cc {
 		mValues.push_back(nValue);
 	}
 	
-	ValuePtr Session::popValue()
+	ValuePtr TcpSession::popValue()
 	{
 		LKGUD<mutex> lock_(mMutex);
 		ValuePtr value_;
@@ -108,7 +108,7 @@ namespace cc {
 		return value_;
 	}
 	
-	void Session::handleRead(const boost::system::error_code& nError, size_t nBytes)
+	void TcpSession::handleRead(const boost::system::error_code& nError, size_t nBytes)
 	{
 		if (nError) {
 			LOGE("[%s]%s", __METHOD__, nError.message().c_str());
@@ -123,7 +123,7 @@ namespace cc {
 		this->internalRead(nBytes);
 	}
 	
-	void Session::handleReadTimeout(const boost::system::error_code& nError)
+	void TcpSession::handleReadTimeout(const boost::system::error_code& nError)
 	{
 		if (mReadTimer.expires_at() <= asio::deadline_timer::traits_type::now()) {
 			mReadTimer.expires_at(boost::posix_time::pos_infin);
@@ -133,7 +133,7 @@ namespace cc {
 		}
 	}
 	
-	void Session::internalRead(size_t nBytes)
+	void TcpSession::internalRead(size_t nBytes)
 	{
 		char * buf_ = (char *)(mReadBuffer.data());
 		int16_t size_ = (int16_t)nBytes;
@@ -152,17 +152,17 @@ namespace cc {
 		this->runRead();
 	}
 	
-	void Session::runRead()
+	void TcpSession::runRead()
 	{
 		try {
 			mReadBuffer.assign(0);
 			
-			mReadTimer.expires_from_now(boost::posix_time::seconds(Session::read_timeout));
-			mReadTimer.async_wait(boost::bind(&Session::handleReadTimeout, 
+			mReadTimer.expires_from_now(boost::posix_time::seconds(TcpSession::read_timeout));
+			mReadTimer.async_wait(boost::bind(&TcpSession::handleReadTimeout, 
 				SED_THIS(), boost::asio::placeholders::error));
 				
 			mSocket.async_read_some(boost::asio::buffer(mReadBuffer),
-				boost::bind(&Session::handleRead, SED_THIS(),
+				boost::bind(&TcpSession::handleRead, SED_THIS(),
 				asio::placeholders::error, asio::placeholders::bytes_transferred));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
@@ -170,13 +170,13 @@ namespace cc {
 		}
 	}
 	
-	void Session::startRead()
+	void TcpSession::startRead()
 	{
 		mClosed = false;
 		this->runRead();
 	}
 	
-	int32_t Session::getReadSeed()
+	int32_t TcpSession::getReadSeed()
 	{
 		if ( (0 == mReadValue) || (0 == mReadNo) || (0 == mReadType) ) {
 			return SEEDDEF;
@@ -188,7 +188,23 @@ namespace cc {
 		return result_;
 	}
 	
-	void Session::runAccept(ValuePtr& nValue)
+	void TcpSession::runSeed()
+	{
+		SeedEngine& seedEngine_ = SeedEngine::instance();
+		int16_t size_ = seedEngine_.getSize();
+		
+		RandomEngine& randomEngine_ = RandomEngine::instance();
+		
+		mWriteValue = randomEngine_.runRandom(249, 3924);
+		mWriteNo = randomEngine_.runRandom(249, 3924);
+		mWriteType = randomEngine_.runRandom(1, size_);
+		
+		mReadValue = randomEngine_.runRandom(249, 3924);
+		mReadNo = randomEngine_.runRandom(249, 3924);
+		mReadType = randomEngine_.runRandom(1, size_);
+	}
+	
+	void TcpSession::runAccept(ValuePtr& nValue)
 	{
 		if ( mAuthority > 0 ) {
 			SelectEngine& selectEngine_ = SelectEngine::instance();
@@ -205,33 +221,39 @@ namespace cc {
 		}
 	}
 	
-	void Session::runConnect(ValuePtr& nValue)
+	void TcpSession::runConnect(ValuePtr& nValue)
 	{
 		if ( mAuthority <= 0 ) {
 			mAuthority = nValue->getInt16(1);
+			mWriteValue = nValue->getInt16(2);
+			mWriteNo = nValue->getInt32(3);
+			mWriteType = nValue->getInt16(4);
+			mReadValue = nValue->getInt16(5);
+			mReadNo = nValue->getInt32(6);
+			mReadType = nValue->getInt16(7);
 		#ifdef __CLIENT__
 			cServerTime& serverTime_ = cServerTime::instance();
-			int64_t numberTime_ = nValue->getInt64(2);
-			int32_t timeDiff_ = nValue->getInt32(3);
+			int64_t numberTime_ = nValue->getInt64(8);
+			int32_t timeDiff_ = nValue->getInt32(9);
 			serverTime_.setServerTime(numberTime_, timeDiff_);
-			LOGE("[%s]%lld,%d", __METHOD__, numberTime_, timeDiff_);
 		#endif
+			this->runSelectId(mConnectId);
 		} else {
 			this->runValue(nValue);
 		}
 	}
 	
-	void Session::runValue(ValuePtr& nValue)
+	void TcpSession::runValue(ValuePtr& nValue)
 	{
 		if (nullptr != mSend) {
-			SendPtr send_ = PTR_DCST<ISend>(*mSend);
+			Send * send_ = dynamic_cast<ISend *>(mSend);
 			send_->pushValue(nValue);
 		} else {
 			mDispatch->pushValue(nValue);
 		}
 	}
 	
-	void Session::runValue()
+	void TcpSession::runValue()
 	{
 		ValuePtr value_(new Value());
 		IoReader<BufReader> ioReader_(mBufReader);
@@ -253,7 +275,7 @@ namespace cc {
 		}
 	}
 	
-	void Session::runSelectId(int32_t nSelectId)
+	void TcpSession::runSelectId(int32_t nSelectId)
 	{
 		if (nSelectId <= 0) {
 			return;
@@ -263,21 +285,21 @@ namespace cc {
 		this->runValue(value_);
 	}
 	
-	void Session::runDisconnect()
+	void TcpSession::runDisconnect()
 	{
 		this->runClose();
 		
 		this->runSelectId(mDisconnectId);
 	}
 	
-	void Session::runException()
+	void TcpSession::runException()
 	{
 		this->runClose();
 		
 		this->runSelectId(mExceptionId);
 	}
 	
-	void Session::runVerMaxId()
+	void TcpSession::runVerMaxId()
 	{
 	#ifdef __AGENT__
 		ValuePtr value_(new Value());
@@ -292,7 +314,7 @@ namespace cc {
 	#endif
 	}
 	
-	void Session::runVerMinId()
+	void TcpSession::runVerMinId()
 	{
 	#ifdef __CLIENT__
 		if (mVerMinId > 0) {
@@ -301,40 +323,39 @@ namespace cc {
 	#endif
 	}
 	
-	void Session::initSelectId(ConnectInfoPtr& nConnectInfo)
+	void TcpSession::initSelectId(TcpConnectInfoPtr& nTcpConnectInfo)
 	{
-		mDisconnectId = nConnectInfo->getDisconnectId();
-		mExceptionId = nConnectInfo->getExceptionId();
-		mVerMaxId = nConnectInfo->getVerMaxId();
-		mVerMinId = nConnectInfo->getVerMinId();
-		int16_t dispatchId_ = nConnectInfo->getDispatchId();
+		mDisconnectId = nTcpConnectInfo->getDisconnectId();
+		mConnectId = nTcpConnectInfo->getConnectId();
+		mExceptionId = nTcpConnectInfo->getExceptionId();
+		mVerMaxId = nTcpConnectInfo->getVerMaxId();
+		mVerMinId = nTcpConnectInfo->getVerMinId();
+		int16_t dispatchId_ = nTcpConnectInfo->getDispatchId();
 		this->setDispatch(dispatchId_);
-		
-		LOGI("[%s]%lld", __METHOD__, (int64_t)this);
 	}
 	
-	void Session::setDisconnect(int32_t nDisconnectId)
+	void TcpSession::setDisconnect(int32_t nDisconnectId)
 	{
 		mDisconnectId = nDisconnectId;
 	}
 	
-	void Session::setException(int32_t nExceptionId)
+	void TcpSession::setException(int32_t nExceptionId)
 	{
 		mExceptionId = nExceptionId;
 	}
 	
-	void Session::setDispatch(int16_t nDispatchId)
+	void TcpSession::setDispatch(int16_t nDispatchId)
 	{
 		DispatchEngine& dispatchEngine_ = DispatchEngine::instance();
 		mDispatch = dispatchEngine_.findDispatch(nDispatchId);
 	}
 	
-	void Session::setSend(PropertyPtr& nSend)
+	void TcpSession::setSend(Property * nSend)
 	{
-		mSend = &nSend;
+		mSend = nSend;
 	}
 	
-	void Session::runAuthority(ValuePtr& nValue)
+	void TcpSession::runAuthority(ValuePtr& nValue)
 	{
 		const char * clientB64_ = nValue->getString(1);
 		if ( 0 == strcmp(clientB64_, __CLIENTB64__) ) {
@@ -352,24 +373,29 @@ namespace cc {
 		} else {
 			mAuthority = Eauthority::mTourist;
 		}
+		this->runSeed();
+		
 		ValuePtr value_(new Value());
 		value_->verInit();
 		value_->pushInt16(mAuthority);
+		value_->pushInt16(mWriteValue);
+		value_->pushInt32(mWriteNo);
+		value_->pushInt16(mWriteType);
+		value_->pushInt16(mReadValue);
+		value_->pushInt32(mReadNo);
+		value_->pushInt16(mReadType);
 	#ifdef __AGENT__
 		cServerTime& serverTime_ = cServerTime::instance();
 		int64_t numberTime_ = serverTime_.getServerTime();
 		int32_t timeDiff_ = serverTime_.getTimeDiff();
-		LOGE("[%s]%lld,%d", __METHOD__, numberTime_, timeDiff_);
 		value_->pushInt64(numberTime_);
 		value_->pushInt32(timeDiff_);
 	#endif
 		this->runSend(value_);
 	}
 	
-	void Session::sendAuthority()
+	void TcpSession::sendAuthority()
 	{
-		LOGI("[%s]%lld", __METHOD__, (int64_t)this);
-		
 		mClosed = false;
 		
 		ValuePtr value_(new Value());
@@ -380,17 +406,17 @@ namespace cc {
 		this->runRead();
 	}
 	
-	void Session::setRemove(ISessionRemove * nSessionRemove)
+	void TcpSession::setRemove(ISessionRemove * nSessionRemove)
 	{
 		mSessionRemove = nSessionRemove;
 	}
 	
-	void Session::setAppId(int64_t nAppId)
+	void TcpSession::setAppId(int64_t nAppId)
 	{
 		mAppId = nAppId;
 	}
 	
-	void Session::runClose()
+	void TcpSession::runClose()
 	{
 		LOGI("[%s]", __METHOD__);
 		if (nullptr != mSessionRemove) {
@@ -402,7 +428,7 @@ namespace cc {
 		this->runClear();
 	}
 	
-	void Session::runClear()
+	void TcpSession::runClear()
 	{
 		if (mSocket.is_open()) {
 			boost::system::error_code error_;
@@ -429,6 +455,7 @@ namespace cc {
 		mReadType = 0;
 		
 		mDisconnectId = 0;
+		mConnectId = 0;
 		mExceptionId = 0;
 		mVerMaxId = 0;
 		mVerMinId = 0;
@@ -445,22 +472,22 @@ namespace cc {
 		mIsAccept = false;
 	}
 	
-	void Session::setIsAccept(bool nIsAccept)
+	void TcpSession::setIsAccept(bool nIsAccept)
 	{
 		mIsAccept = nIsAccept;
 	}
 	
-	asio::ip::tcp::socket& Session::getSocket()
+	asio::ip::tcp::socket& TcpSession::getSocket()
 	{
 		return mSocket;
 	}
 	
-	int32_t Session::getSessionId()
+	int32_t TcpSession::getSessionId()
 	{
 		return mSessionId;
 	}
 	
-	Session::Session(int32_t nSessionId, asio::io_service& nHandle)
+	TcpSession::TcpSession(int32_t nSessionId, asio::io_service& nHandle)
 		: mSocket (nHandle)
 		, mWriteTimer (nHandle)
 		, mReadTimer (nHandle)
@@ -473,6 +500,7 @@ namespace cc {
 		, mReadNo (0)
 		, mReadType (0)
 		, mDisconnectId (0)
+		, mConnectId (0)
 		, mExceptionId (0)
 		, mVerMaxId (0)
 		, mVerMinId (0)
@@ -492,7 +520,7 @@ namespace cc {
 		mBufWriter.runClear();
 	}
 	
-	Session::~Session()
+	TcpSession::~TcpSession()
 	{
 		this->runClear();
 	}

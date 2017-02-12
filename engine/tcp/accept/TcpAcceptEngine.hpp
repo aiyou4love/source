@@ -3,7 +3,7 @@
 namespace cc {
 	
 #ifndef __CLIENT__
-	class AcceptEngine : noncopyable
+	class TcpAcceptEngine : noncopyable
 	{
 	public:
 		void initAccept();
@@ -16,16 +16,16 @@ namespace cc {
 		void runPreinit();
 		void runStop();
 		
-		static AcceptEngine& instance();
+		static TcpAcceptEngine& instance();
 		
-		AcceptEngine();
-		~AcceptEngine();
+		TcpAcceptEngine();
+		~TcpAcceptEngine();
 		
 	private:
 		SPTR<asio::ip::tcp::acceptor> mAcceptor;
-		Session * mNewSession;
+		TcpSession * mNewSession;
 		
-		static AcceptEngine mAcceptEngine;
+		static TcpAcceptEngine mTcpAcceptEngine;
 	};
 #endif
 	

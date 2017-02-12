@@ -2,69 +2,69 @@
 
 namespace cc {
 	
-	int16_t ConnectInfo::getConnectDispatch()
+	int16_t TcpConnectInfo::getConnectDispatch()
 	{
 		return mConnectDispatch;
 	}
 	
-	int32_t ConnectInfo::getConnectErrorId()
+	int32_t TcpConnectInfo::getConnectErrorId()
 	{
 		return mConnectErrorId;
 	}
 	
-	int32_t ConnectInfo::getConnectId()
+	int32_t TcpConnectInfo::getConnectId()
 	{
 		return mConnectId;
 	}
 	
-	int32_t ConnectInfo::getTimeoutId()
+	int32_t TcpConnectInfo::getTimeoutId()
 	{
 		return mTimeoutId;
 	}
 	
-	int32_t ConnectInfo::getDisconnectId()
+	int32_t TcpConnectInfo::getDisconnectId()
 	{
 		return mDisconnectId;
 	}
 	
-	int32_t ConnectInfo::getExceptionId()
+	int32_t TcpConnectInfo::getExceptionId()
 	{
 		return mExceptionId;
 	}
 	
-	int16_t ConnectInfo::getDispatchId()
+	int16_t TcpConnectInfo::getDispatchId()
 	{
 		return mDispatchId;
 	}
 	
-	int32_t ConnectInfo::getVerMaxId()
+	int32_t TcpConnectInfo::getVerMaxId()
 	{
 		return mVerMaxId;
 	}
 	
-	int32_t ConnectInfo::getVerMinId()
+	int32_t TcpConnectInfo::getVerMinId()
 	{
 		return mVerMinId;
 	}
 	
-	bool ConnectInfo::isReconnect()
+	bool TcpConnectInfo::isReconnect()
 	{
 		return mReconnect;
 	}
 	
-	bool ConnectInfo::isDefault()
+	bool TcpConnectInfo::isDefault()
 	{
 		return ((0 == mConnectId) || (0 == mTimeoutId) || (0 == mConnectErrorId)
 			|| (0 == mDisconnectId) || (0 == mExceptionId) || (0 == mAppType)
 			|| (0 == mDispatchId) || (0 == mConnectDispatch) );
 	}
 	
-	int16_t ConnectInfo::getKey()
+	int16_t TcpConnectInfo::getKey()
 	{
 		return mAppType;
 	}
 	
-	ConnectInfo::ConnectInfo()
+	TcpConnectInfo::TcpConnectInfo()
 		: mAppType (0)
 		, mConnectDispatch (0)
 		, mConnectErrorId (0)
@@ -79,7 +79,7 @@ namespace cc {
 	{
 	}
 	
-	ConnectInfo::~ConnectInfo()
+	TcpConnectInfo::~TcpConnectInfo()
 	{
 		mAppType = 0;
 		

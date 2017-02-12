@@ -3,7 +3,7 @@
 namespace cc {
 	
 #ifndef __CLIENT__
-	class AcceptRemove : public ISessionRemove
+	class TcpAcceptRemove : public ISessionRemove
 	{
 	public:
 		void removeSession(int32_t nSessionId);
@@ -11,11 +11,11 @@ namespace cc {
 		
 		static ISessionRemove * instance();
 		
-		AcceptRemove();
-		~AcceptRemove();
+		TcpAcceptRemove();
+		~TcpAcceptRemove();
 		
 	private:
-		static AcceptRemove mAcceptRemove;
+		static TcpAcceptRemove mTcpAcceptRemove;
 	};
 #endif
 	

@@ -2,7 +2,7 @@
 
 namespace cc {
 	
-	class ConnectInfo : noncopyable
+	class TcpConnectInfo : noncopyable
 	{
 	public:
 		int32_t getConnectErrorId();
@@ -39,8 +39,8 @@ namespace cc {
 		bool isDefault();
 		int16_t getKey();
 		
-		ConnectInfo();
-		~ConnectInfo();
+		TcpConnectInfo();
+		~TcpConnectInfo();
 		
 	private:
 		int16_t mAppType;
@@ -58,6 +58,6 @@ namespace cc {
 		
 		bool mReconnect;
 	};
-	typedef SPTR<ConnectInfo> ConnectInfoPtr;
+	typedef SPTR<TcpConnectInfo> TcpConnectInfoPtr;
 	
 }

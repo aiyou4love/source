@@ -3,7 +3,7 @@
 namespace cc {
 	
 #ifndef __CLIENT__
-	void AcceptEngine::handleAccept(const boost::system::error_code& nError)
+	void TcpAcceptEngine::handleAccept(const boost::system::error_code& nError)
 	{
 		if (nError) {
 			LOGE("[%s]%s", __METHOD__, nError.message().c_str());
@@ -15,7 +15,7 @@ namespace cc {
 		startAccept();
 	}
 	
-	void AcceptEngine::initAccept()
+	void TcpAcceptEngine::initAccept()
 	{
 		NetIpMgr& netIpMgr_ = NetIpMgr::instance();
 		NetIp * netIp_ = netIpMgr_.findNetIp();
@@ -40,14 +40,14 @@ namespace cc {
 		startAccept();
 	}
 	
-	void AcceptEngine::startAccept()
+	void TcpAcceptEngine::startAccept()
 	{
 		try {
-			AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
-			mNewSession = acceptorMgr_.createSession();
+			TcpAcceptorMgr& tcpAcceptorMgr_ = TcpAcceptorMgr::instance();
+			mNewSession = tcpAcceptorMgr_.createSession();
 			
 			mAcceptor->async_accept(mNewSession->getSocket(),
-				boost::bind(&AcceptEngine::handleAccept, this,
+				boost::bind(&TcpAcceptEngine::handleAccept, this,
 				boost::asio::placeholders::error));
 		} catch (boost::system::system_error& e) {
 			LOGE("[%s]%s", __METHOD__, e.what());
@@ -55,18 +55,18 @@ namespace cc {
 		}
 	}
 	
-	void AcceptEngine::runPreinit()
+	void TcpAcceptEngine::runPreinit()
 	{
 		LifeCycle& lifeCycle_ = LifeCycle::instance();
-		lifeCycle_.m_tStopBegin.connect(bind(&AcceptEngine::runStop, this));
+		lifeCycle_.m_tStopBegin.connect(bind(&TcpAcceptEngine::runStop, this));
 	}
 	
-	void AcceptEngine::runStop()
+	void TcpAcceptEngine::runStop()
 	{
 		if (nullptr != mNewSession) {
 			int32_t sessionId_ = mNewSession->getSessionId();
-			AcceptorMgr& acceptorMgr_ = AcceptorMgr::instance();
-			acceptorMgr_.removeSession(sessionId_);
+			TcpAcceptorMgr& tcpAcceptorMgr_ = TcpAcceptorMgr::instance();
+			tcpAcceptorMgr_.removeSession(sessionId_);
 			mNewSession = nullptr;
 		}
 		if (!mAcceptor) {
@@ -75,22 +75,22 @@ namespace cc {
  		mAcceptor->close();
 	}
 	
-	AcceptEngine& AcceptEngine::instance()
+	TcpAcceptEngine& TcpAcceptEngine::instance()
 	{
-		return mAcceptEngine;
+		return mTcpAcceptEngine;
 	}
 	
-	AcceptEngine::AcceptEngine()
+	TcpAcceptEngine::TcpAcceptEngine()
 		: mNewSession(nullptr)
 	{
 	}
 	
-	AcceptEngine::~AcceptEngine()
+	TcpAcceptEngine::~TcpAcceptEngine()
 	{
 		mNewSession = nullptr;
 	}
 	
-	AcceptEngine AcceptEngine::mAcceptEngine;
+	TcpAcceptEngine TcpAcceptEngine::mTcpAcceptEngine;
 #endif
 	
 }

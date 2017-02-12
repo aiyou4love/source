@@ -2,30 +2,30 @@
 
 namespace cc {
 	
-	class ConnectorMgr : noncopyable
+	class TcpConnectorMgr : noncopyable
 	{
 	public:
 		void sendValue(int16_t nAppType, int32_t nAppNo, ValuePtr& nValue);
 		void sendValue(int16_t nAppType, ValuePtr& nValue);
 		bool sendValue(int64_t nAppId, ValuePtr& nValue);
 		
-		Session * createSession(int64_t nAppId);
+		TcpSession * createSession(int64_t nAppId);
 		void removeSession(int64_t nAppId);
 		
 		void runPreinit();
 		void runStop();
 		
-		static ConnectorMgr& instance();
+		static TcpConnectorMgr& instance();
 		
-		ConnectorMgr();
-		~ConnectorMgr();
+		TcpConnectorMgr();
+		~TcpConnectorMgr();
 		
 	private:
-		map<int64_t, SessionPtr> mSessions;
+		map<int64_t, TcpSessionPtr> mSessions;
 		int32_t mSessionId;
 		mutex mMutex;
 		
-		static ConnectorMgr mConnectorMgr;
+		static TcpConnectorMgr mTcpConnectorMgr;
 	};
 	
 }
