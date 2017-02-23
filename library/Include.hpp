@@ -89,6 +89,9 @@ using namespace rapidxml;
 
 #define PACKETSIZE 8192
 
+
+#define SEEDDEF  924
+
 #define EXITIME "2017.09.24|00:00:00"
 
 #define __CLIENTB64__ "Y2xpZW50"
@@ -122,7 +125,5 @@ using namespace rapidxml;
 	#define __EXEBASE64__ __CLIENTB64EX__
 	#define APPNAME "client"
 #endif
-
-#define SEEDDEF  924
 
 typedef SPTR<std::thread> ThreadPtr;
