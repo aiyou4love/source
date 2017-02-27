@@ -286,7 +286,7 @@ namespace cc {
 		return mIndex;
 	}
 	
-	int8_t Value::verCheck(bool nHigh)
+	int8_t Value::checkVersion(bool nHigh)
 	{
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
 		int16_t verMax_ = workDirectory_.getVerMax();
@@ -309,7 +309,7 @@ namespace cc {
 		return 1;
 	}
 	
-	void Value::verInit()
+	void Value::initVersion()
 	{
 		WorkDirectory& workDirectory_ = WorkDirectory::instance();
 		mVerMax = workDirectory_.getVerMax();

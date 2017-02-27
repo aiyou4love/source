@@ -37,8 +37,8 @@ namespace cc {
 		void setIndex(int32_t nIndex);
 		int32_t getIndex();
 		
-		int8_t verCheck(bool nHigh); 
-		void verInit();
+		int8_t checkVersion(bool nHigh); 
+		void initVersion();
 		
 		void printType(int8_t nIndex);
 		int8_t getType(int8_t nIndex);
